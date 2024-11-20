@@ -12,14 +12,18 @@ import {
 import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 
-export default function SkinSelect() {
+interface SkinSelectProps {
+  label: string;
+}
+
+export default function SkinSelect({ label }: SkinSelectProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <>
       <div className="w-[208px] h-[56px]">
         <Button className="w-full h-full" onPress={onOpen}>
-          选择皮肤
+          {label || "选择皮肤"}
         </Button>
       </div>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
