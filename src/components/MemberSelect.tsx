@@ -6,9 +6,10 @@ import LazyLoadAvatar from "./LazyLoadAvatar";
 interface MemberSelectProps {
   name?: string;
   label?: string;
+  data?: (typeof memberNameAvatarMap)[0][];
 }
 
-export default function MemberSelect({ name, label }: MemberSelectProps) {
+export default function MemberSelect({ name, label, data }: MemberSelectProps) {
   const [select, setSelect] =
     useState<(typeof memberNameAvatarMap)[0]["name"]>();
   return (
@@ -20,11 +21,10 @@ export default function MemberSelect({ name, label }: MemberSelectProps) {
         inputMode="search"
         value={select}
         onChange={(e) => {
-          //   console.log(e);
           setSelect(e.target.value);
         }}
       >
-        {memberNameAvatarMap.map((item) => (
+        {(data || memberNameAvatarMap).map((item) => (
           <SelectItem key={item.name} textValue={item.name}>
             <div className="flex items-center">
               <LazyLoadAvatar url={item.avatar} useAvatar />
