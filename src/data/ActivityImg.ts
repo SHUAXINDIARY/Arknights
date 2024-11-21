@@ -688,7 +688,7 @@ export const ActivityList = [
         "img": "https://media.prts.wiki/thumb/6/67/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E9%BB%84%E9%93%81%E8%A1%8C%E5%8A%A8_01.jpg/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E9%BB%84%E9%93%81%E8%A1%8C%E5%8A%A8_01.jpg"
     },
     {
-        "name": "一周年庆典",
+        "name": "一周年庆典/苦难摇篮",
         "img": "https://media.prts.wiki/thumb/a/a1/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%B8%80%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_01.jpg/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%B8%80%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_01.jpg"
     },
     {
@@ -786,5 +786,9 @@ export const ActivityList = [
     {
         "name": "公测开服活动",
         "img": "https://media.prts.wiki/thumb/1/12/%E5%85%AC%E6%B5%8B%E5%BC%80%E6%9C%8D%E6%B4%BB%E5%8A%A8-%E6%96%B0%E6%89%8B%E5%8D%A1%E6%B1%A0.png/650px-%E5%85%AC%E6%B5%8B%E5%BC%80%E6%9C%8D%E6%B4%BB%E5%8A%A8-%E6%96%B0%E6%89%8B%E5%8D%A1%E6%B1%A0.png"
-    }
+    },
+    {
+        "name: "怒号光明",
+        "img": "https://media.prts.wiki/b/bd/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E6%84%9F%E8%B0%A2%E5%BA%86%E5%85%B82020_01.jpg"
+    },
 ]
