@@ -8,11 +8,12 @@ import {
   useDisclosure,
   Card,
   CardBody,
+  Input,
 } from "@nextui-org/react";
 import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useEffect, useState } from "react";
-
+import { useThrottleFn } from "ahooks";
 
 interface SkinSelectProps {
   label?: string;
@@ -22,12 +23,30 @@ interface SkinSelectProps {
 export default function SkinSelect({ label, onSave }: SkinSelectProps) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [currentSelect, setCurrentSelect] = useState<(typeof skinList)[0]>();
+  // 页面数据
+  const [pageData, setPageData] = useState(skinList);
+  // 搜索数据
+  const [search, setSearch] = useState("");
+  const { run: updateSearch } = useThrottleFn(
+    (val) => {
+      setSearch(val);
+    },
+    { wait: 500 }
+  );
+  const { run: updatePageData } = useThrottleFn(
+    (val) => {
+      setPageData(val);
+    },
+    { wait: 500 }
+  );
+
   useEffect(() => {
     if (currentSelect?.img) {
       onSave?.(currentSelect?.img);
       onClose();
     }
   }, [currentSelect]);
+
   return (
     <div className="flex w-full justify-center">
       <div className="w-[208px] h-14">
@@ -45,8 +64,28 @@ export default function SkinSelect({ label, onSave }: SkinSelectProps) {
                 选择皮肤
               </ModalHeader>
               <ModalBody className="overflow-y-scroll">
-                <div className="flex flex-wrap gap-2">
-                  {skinList.map((item) => {
+                <div className="p-2 flex">
+                  <Input
+                    defaultValue={search}
+                    placeholder="输入皮肤或干员名搜索"
+                    className="mr-4"
+                    onValueChange={(val) => {
+                      updateSearch(val);
+                      updatePageData(
+                        skinList.filter(
+                          (item) =>
+                            item.name.includes(val) ||
+                            item.skinName.includes(val)
+                        )
+                      );
+                    }}
+                    onClear={() => {
+                      updatePageData(skinList);
+                    }}
+                  />
+                </div>
+                <div className="flex justify-center flex-wrap gap-2">
+                  {pageData.map((item) => {
                     return (
                       <div
                         key={item.img}

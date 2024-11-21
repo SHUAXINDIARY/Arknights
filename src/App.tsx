@@ -10,7 +10,7 @@ function App() {
   const [showRes, setShowRes] = useState(false);
   if (showRes) {
     return (
-      <div className="max-w-lg text-center">
+      <div className="max-w-96 text-center">
         <ShowRes
           data={formState!}
           onClose={() => {
