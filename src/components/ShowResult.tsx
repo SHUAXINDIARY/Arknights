@@ -1,9 +1,10 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Footer from "./Footer";
 import { FieldNameMap, FormField } from "./FormRender";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@nextui-org/react";
+import { captureScreen } from "../utils";
 
 interface ShowRes {
   data: typeof FieldNameMap;
@@ -45,10 +46,13 @@ const testData = {
   name: "刷新",
 } as Partial<ShowRes["data"]>;
 
-const captureScreen = async () => {};
-
 const ShowRes = (props: ShowRes) => {
   const { data = testData } = props;
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, []);
   const skin = {
     firstSkin: data.firstSkin,
     favoriteSkin: data.favoriteSkin,

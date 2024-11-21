@@ -18,7 +18,7 @@ export default function RenderTextCard(props: RenderTextCardProps) {
   //   const [isFollowed, setIsFollowed] = React.useState(false);
 
   return (
-    <Card className="max-w-[340px]">
+    <Card>
       <CardHeader className="justify-between">
         <div className="flex gap-5">
           <Avatar isBordered radius="full" size="md" src={props.avatarUrl} />
@@ -57,7 +57,7 @@ export default function RenderTextCard(props: RenderTextCardProps) {
               <div>
                 <span>{FieldNameMap[_key]}</span>
                 <div className="mt-2">
-                  <Chip color="primary">{props.text[_key] || '-'}</Chip>
+                  <Chip color="primary">{props.text[_key] || "-"}</Chip>
                 </div>
               </div>
             </div>
