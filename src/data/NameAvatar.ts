@@ -2425,7 +2425,7 @@ const memberSort = {
   ],
 } as const;
 
-type Keys = keyof typeof memberSort;
+export type Keys = keyof typeof memberSort;
 
 // 分类key枚举
 export const MEMBER_SORT_KEY = (Object.keys(memberSort) as Keys[]).reduce(

@@ -291,4 +291,11 @@ export const FormMap = [
   //     label: "请输入最喜欢的CP",
   //   } as InputProps,
   // },
-];
+] as const;
+
+type FormField = (typeof FormMap)[number]["field"];
+
+export const FieldNameMap = Object.values(FormMap).reduce((total, item) => {
+  total[item.field as FormField] = item.name;
+  return total;
+}, {} as Record<FormField, string>);

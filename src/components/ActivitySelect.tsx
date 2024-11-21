@@ -25,7 +25,7 @@ export default function ActivitySelect({
         }}
       >
         {ActivityList.map((item) => (
-          <SelectItem textValue={item.name} key={item.img + item.name}>
+          <SelectItem textValue={item.name} key={item.img}>
             <div className="text-center">
               <LazyLoadAvatar url={item.img!} useAvatar={false} />
               <span className="mt-2">{item.name}</span>
