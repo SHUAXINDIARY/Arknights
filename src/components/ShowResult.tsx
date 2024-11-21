@@ -42,7 +42,7 @@ const testData = {
     "https://media.prts.wiki/thumb/d/dc/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%BA%94%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_02.JPG/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%BA%94%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_02.JPG",
   favoriteMode: "萨卡兹肉鸽",
   favoriteEP: "All",
-  hopeMember: "克莱莎",
+  hopeMember: "克莱门莎",
   name: "刷新",
 } as Partial<ShowRes["data"]>;
 
