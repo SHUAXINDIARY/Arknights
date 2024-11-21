@@ -790,5 +790,5 @@ export const ActivityList = [
     {
         "name: "怒号光明",
         "img": "https://media.prts.wiki/b/bd/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E6%84%9F%E8%B0%A2%E5%BA%86%E5%85%B82020_01.jpg"
-    },
+    }
 ]
