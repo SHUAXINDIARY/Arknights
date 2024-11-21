@@ -13,8 +13,9 @@ import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useEffect, useState } from "react";
 
+
 interface SkinSelectProps {
-  label: string;
+  label?: string;
   onSave?: (val: string) => void;
 }
 

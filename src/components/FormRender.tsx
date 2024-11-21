@@ -210,7 +210,7 @@ export const FormMap = [
   },
   {
     name: "最喜欢的男干员",
-    field: "Unfortunate",
+    field: "favoriteBoy",
     components: MemberSelect,
     params: {
       label: "最喜欢的男干员",
@@ -220,7 +220,7 @@ export const FormMap = [
   },
   {
     name: "最喜欢的女干员",
-    field: "Unfortunate",
+    field: "favoriteGirl",
     components: MemberSelect,
     params: {
       label: "最喜欢的女干员",
@@ -273,6 +273,15 @@ export const FormMap = [
       label: "请输入最期待的卫星",
     } as InputProps,
   },
+  {
+    name: "您的名称",
+    field: "name",
+    components: CustomInput,
+    params: {
+      placeholder: "请输入您的名称",
+      label: "请输入您的名称",
+    } as InputProps,
+  },
   // {
   //   name: "最喜欢的宣传图",
   //   field: "favoriteImg",
@@ -293,7 +302,7 @@ export const FormMap = [
   // },
 ] as const;
 
-type FormField = (typeof FormMap)[number]["field"];
+export type FormField = (typeof FormMap)[number]["field"];
 
 export const FieldNameMap = Object.values(FormMap).reduce((total, item) => {
   total[item.field as FormField] = item.name;

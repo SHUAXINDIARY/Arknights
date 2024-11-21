@@ -152,14 +152,16 @@ export const ActivityList = [
         "img": "https://media.prts.wiki/thumb/8/87/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E6%80%80%E9%BB%8D%E7%A6%BB_23.jpg/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E6%80%80%E9%BB%8D%E7%A6%BB_23.jpg"
     },
     {
-        "name": "沙洲遗闻"
+        "name": "沙洲遗闻",
+        "img": 'https://media.prts.wiki/thumb/1/16/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E6%80%80%E9%BB%8D%E7%A6%BB_03.jpg/1300px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E6%80%80%E9%BB%8D%E7%A6%BB_03.jpg'
     },
     {
         "name": "怀黍离",
         "img": "https://media.prts.wiki/thumb/8/87/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E6%80%80%E9%BB%8D%E7%A6%BB_01.png/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E6%80%80%E9%BB%8D%E7%A6%BB_01.png"
     },
     {
-        "name": "大地与繁星交汇之际"
+        "name": "大地与繁星交汇之际",
+        "img": "https://media.prts.wiki/thumb/2/21/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%A4%A7%E5%9C%B0%E4%B8%8E%E7%B9%81%E6%98%9F%E4%BA%A4%E6%B1%87%E4%B9%8B%E9%99%85_01s.jpg/1300px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%A4%A7%E5%9C%B0%E4%B8%8E%E7%B9%81%E6%98%9F%E4%BA%A4%E6%B1%87%E4%B9%8B%E9%99%85_01s.jpg"
     },
     {
         "name": "登临意2024",
@@ -222,7 +224,8 @@ export const ActivityList = [
         "img": "https://media.prts.wiki/thumb/b/b4/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%BA%98%E5%8F%A4%E9%95%BF%E6%98%8E_01.jpg/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%BA%98%E5%8F%A4%E9%95%BF%E6%98%8E_01.jpg"
     },
     {
-        "name": "明日方舟×中国国家地理合作活动"
+        "name": "明日方舟×中国国家地理合作活动",
+        "img": "https://media.prts.wiki/thumb/4/45/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%B8%8D%E4%B9%89%E4%B9%8B%E8%B4%A2_05.jpg/1520px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%B8%8D%E4%B9%89%E4%B9%8B%E8%B4%A2_05.jpg"
     },
     {
         "name": "不义之财",
@@ -249,7 +252,8 @@ export const ActivityList = [
         "img": "https://media.prts.wiki/thumb/0/0b/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E7%BB%BF%E9%87%8E%E5%B9%BB%E6%A2%A62023_01.jpg/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E7%BB%BF%E9%87%8E%E5%B9%BB%E6%A2%A62023_01.jpg"
     },
     {
-        "name": "探索者的银凇止境"
+        "name": "探索者的银凇止境",
+        "img": "https://media.prts.wiki/f/f7/%E4%B8%BB%E9%A2%98%E5%9B%BE_%E6%8E%A2%E7%B4%A2%E8%80%85%E7%9A%84%E9%93%B6%E5%87%87%E6%AD%A2%E5%A2%83.png"
     },
     {
         "name": "眠于树影之中",
@@ -376,7 +380,8 @@ export const ActivityList = [
         "img": "https://media.prts.wiki/thumb/0/0a/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_11%E7%AB%A0%E9%A2%84%E7%83%AD_02.jpg/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_11%E7%AB%A0%E9%A2%84%E7%83%AD_02.jpg"
     },
     {
-        "name": "水月与深蓝之树"
+        "name": "水月与深蓝之树",
+        "img": "https://media.prts.wiki/e/e5/%E4%B8%BB%E9%A2%98%E5%9B%BE_%E6%B0%B4%E6%9C%88%E4%B8%8E%E6%B7%B1%E8%93%9D%E4%B9%8B%E6%A0%91.png"
     },
     {
         "name": "主题曲第十一章预热",
@@ -487,7 +492,8 @@ export const ActivityList = [
         "img": "https://media.prts.wiki/thumb/6/67/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%90%89%E5%85%86%E5%91%88%E7%A5%A5_03.jpg/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%90%89%E5%85%86%E5%91%88%E7%A5%A5_03.jpg"
     },
     {
-        "name": "傀影与猩红孤钻"
+        "name": "傀影与猩红孤钻",
+        "img": "https://media.prts.wiki/b/bd/%E4%B8%BB%E9%A2%98%E5%9B%BE_%E5%82%80%E5%BD%B1%E4%B8%8E%E7%8C%A9%E7%BA%A2%E5%AD%A4%E9%92%BB.png"
     },
     {
         "name": "跨年纪念2022",

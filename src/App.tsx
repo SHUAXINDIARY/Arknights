@@ -1,12 +1,23 @@
 import "./App.css";
 import { Button, Chip } from "@nextui-org/react";
-import { FormMap } from "./components/FormRender";
+import { FieldNameMap, FormMap } from "./components/FormRender";
 import { useState } from "react";
 import Footer from "./components/Footer";
+import ShowRes from "./components/ShowResult";
 
 function App() {
-  const [formState, setFormState] = useState({});
+  const [formState, setFormState] = useState<typeof FieldNameMap>();
   const [showRes, setShowRes] = useState(false);
+  if (showRes) {
+    return (
+      <ShowRes
+        data={formState!}
+        onClose={() => {
+          setShowRes(false);
+        }}
+      />
+    );
+  }
   return (
     <>
       <div className="mb-10">
@@ -21,7 +32,8 @@ function App() {
           return <div key={item.field + item.name}>占位</div>;
         }
         const onSave = (val: string) => {
-          setFormState((old) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          setFormState((old: any) => {
             return {
               ...old,
               [item.field]: val,
@@ -31,7 +43,8 @@ function App() {
         return (
           <div key={item.field + item.name}>
             <Com
-              {...(params || {})}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              {...((params || {}) as any)}
               onSave={(val: string) => {
                 onSave(val);
               }}
@@ -44,6 +57,7 @@ function App() {
         className="w-52 h-14"
         onPress={() => {
           console.log(formState);
+          setShowRes(true);
         }}
       >
         生成

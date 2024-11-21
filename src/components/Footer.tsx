@@ -36,7 +36,7 @@ const Footer = () => {
           <Link
             isBlock
             showAnchorIcon
-            href="https://bento.me/shuaxin"
+            href="https://www.xiaohongshu.com/user/profile/617ce3ac000000000201bc2c?xhsshare=CopyLink&appuid=617ce3ac000000000201bc2c&apptime=1652512227"
             color="foreground"
             target="_blank"
           >
