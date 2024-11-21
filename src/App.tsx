@@ -22,6 +22,7 @@ function App() {
   }
   return (
     <>
+      <Footer />
       <div className="mb-10">
         <Chip size="lg" color="primary">
           明日方舟生涯生成器
@@ -64,7 +65,6 @@ function App() {
       >
         生成
       </Button>
-      <Footer />
     </>
   );
 }
