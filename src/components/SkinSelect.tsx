@@ -11,19 +11,30 @@ import {
 } from "@nextui-org/react";
 import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
+import { useEffect, useState } from "react";
+
 
 interface SkinSelectProps {
-  label: string;
+  label?: string;
+  onSave?: (val: string) => void;
 }
 
-export default function SkinSelect({ label }: SkinSelectProps) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+export default function SkinSelect({ label, onSave }: SkinSelectProps) {
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [currentSelect, setCurrentSelect] = useState<(typeof skinList)[0]>();
+  useEffect(() => {
+    if (currentSelect?.img) {
+      onSave?.(currentSelect?.img);
+      onClose();
+    }
+  }, [currentSelect]);
   return (
-    <>
-      <div className="w-[208px] h-[56px]">
+    <div className="flex w-full justify-center">
+      <div className="w-[208px] h-14">
         <Button className="w-full h-full" onPress={onOpen}>
-          {label || "选择皮肤"}
+          {currentSelect?.name || label || "选择皮肤"}
+          {"\n"}
+          {currentSelect ? currentSelect.skinName : ""}
         </Button>
       </div>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -37,11 +48,18 @@ export default function SkinSelect({ label }: SkinSelectProps) {
                 <div className="flex flex-wrap gap-2">
                   {skinList.map((item) => {
                     return (
-                      <Card className="py-4 overflow-scroll h-36 w-20">
-                        <CardBody className="overflow-visible py-2 h-full w-full">
-                          <LazyLoadAvatar useAvatar={false} url={item.img} />
-                        </CardBody>
-                      </Card>
+                      <div
+                        key={item.img}
+                        onClick={() => {
+                          setCurrentSelect?.(item);
+                        }}
+                      >
+                        <Card className="py-4 overflow-scroll h-36 w-20">
+                          <CardBody className="overflow-visible py-2 h-full w-full">
+                            <LazyLoadAvatar useAvatar={false} url={item.img} />
+                          </CardBody>
+                        </Card>
+                      </div>
                     );
                   })}
                 </div>
@@ -58,6 +76,6 @@ export default function SkinSelect({ label }: SkinSelectProps) {
           )}
         </ModalContent>
       </Modal>
-    </>
+    </div>
   );
 }

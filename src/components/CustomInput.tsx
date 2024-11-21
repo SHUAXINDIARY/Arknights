@@ -1,9 +1,21 @@
 import { Input, InputProps } from "@nextui-org/react";
 
 interface CustomInputProps extends InputProps {
-  onSave?: () => void;
+  onSave?: (val: string) => void;
 }
 const CustomInput = (props: CustomInputProps) => {
-  return <Input label="Email" placeholder="Enter your email" {...props} />;
+  return (
+    <div className="flex w-full justify-center">
+      <Input
+        className="w-[208px]"
+        onValueChange={(val) => {
+          props.onSave?.(val);
+        }}
+        label="Email"
+        placeholder="Enter your email"
+        {...props}
+      />
+    </div>
+  );
 };
 export default CustomInput;

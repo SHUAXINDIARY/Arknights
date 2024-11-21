@@ -1,31 +1,35 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { memberNameAvatarMap } from "../data/NameAvatar";
-import { useState } from "react";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 
 interface MemberSelectProps {
   name?: string;
   label?: string;
+  // 数据源
+  data?: (typeof memberNameAvatarMap)[0][];
+  // 保存到表单
+  onSave?: (val: string) => void;
 }
 
-export default function MemberSelect({ name, label }: MemberSelectProps) {
-  const [select, setSelect] =
-    useState<(typeof memberNameAvatarMap)[0]["name"]>();
+export default function MemberSelect({
+  name,
+  label,
+  data,
+  onSave,
+}: MemberSelectProps) {
   return (
-    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+    <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Select
         label={label || "主推"}
         placeholder={name || "选择干员"}
         className="w-52 "
         inputMode="search"
-        value={select}
         onChange={(e) => {
-          //   console.log(e);
-          setSelect(e.target.value);
+          onSave?.(e.target.value);
         }}
       >
-        {memberNameAvatarMap.map((item) => (
-          <SelectItem key={item.name} textValue={item.name}>
+        {(data || memberNameAvatarMap).map((item) => (
+          <SelectItem key={item.avatar} textValue={item.name}>
             <div className="flex items-center">
               <LazyLoadAvatar url={item.avatar} useAvatar />
               <span className="ml-3">{item.name}</span>
