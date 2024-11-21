@@ -81,8 +81,8 @@ const ShowRes = (props: ShowRes) => {
   const ref = useRef(null);
   return (
     <div ref={ref}>
+      <Footer />
       <h2 className="text-2xl mb-5">明日方舟生涯表</h2>
-
       {/* 渲染干员 */}
       <div className="flex flex-wrap gap-2 justify-center mb-5 mt-5">
         {Object.keys(filterData).map((key) => {
@@ -154,7 +154,6 @@ const ShowRes = (props: ShowRes) => {
           返回
         </Button>
       </ButtonGroup>
-      <Footer />
     </div>
   );
 };
