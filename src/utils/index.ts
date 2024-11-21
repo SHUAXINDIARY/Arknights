@@ -19,6 +19,8 @@ export const captureScreen = async () => {
     const data = await domtoimage.toJpeg(document.body, {
         quality: 1,
         bgcolor: "white",
+        width: document.body.clientWidth,
+        height: document.body.clientHeight,
         style: {
             color: "black",
         },
