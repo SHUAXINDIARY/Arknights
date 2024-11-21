@@ -4,7 +4,7 @@ import { FieldNameMap, FormField } from "./FormRender";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@nextui-org/react";
-import { captureScreen } from "../utils";
+// import { captureScreen } from "../utils";
 
 interface ShowRes {
   data: typeof FieldNameMap;
@@ -137,14 +137,14 @@ const ShowRes = (props: ShowRes) => {
         text={text}
       />
       <ButtonGroup className="mt-5">
-        <Button
+        {/* <Button
           color="success"
           onPress={() => {
             captureScreen();
           }}
         >
           截图分享
-        </Button>
+        </Button> */}
         <Button
           color="warning"
           onPress={() => {
