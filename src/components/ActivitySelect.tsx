@@ -1,4 +1,10 @@
-import { Select, SelectItem } from "@nextui-org/react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  // Select,
+  // SelectItem,
+  Autocomplete,
+  AutocompleteItem,
+} from "@nextui-org/react";
 import { ActivityList } from "../data/ActivityImg";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 
@@ -15,24 +21,46 @@ export default function ActivitySelect({
 }: ActivitySelectProps) {
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
-      <Select
-        label={label || "活动"}
-        placeholder={name || "选择活动"}
+      <Autocomplete
+        label={label}
+        placeholder={name}
         className="w-52 "
-        inputMode="search"
-        onChange={(e) => {
-          onSave?.(e.target.value);
+        defaultItems={ActivityList}
+        onSelectionChange={(val: any) => {
+          onSave?.(val);
         }}
       >
-        {ActivityList.map((item) => (
-          <SelectItem textValue={item.name} key={item.img}>
+        {(item) => (
+          <AutocompleteItem key={item.img} textValue={item.name}>
             <div className="text-center">
               <LazyLoadAvatar url={item.img!} useAvatar={false} />
               <span className="mt-2">{item.name}</span>
             </div>
-          </SelectItem>
-        ))}
-      </Select>
+          </AutocompleteItem>
+        )}
+      </Autocomplete>
     </div>
   );
+  // return (
+  //   <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
+  //     <Select
+  //       label={label || "活动"}
+  //       placeholder={name || "选择活动"}
+  //       className="w-52 "
+  //       inputMode="search"
+  //       onChange={(e) => {
+  //         onSave?.(e.target.value);
+  //       }}
+  //     >
+  //       {ActivityList.map((item) => (
+  //         <SelectItem textValue={item.name} key={item.img}>
+  //           <div className="text-center">
+  //             <LazyLoadAvatar url={item.img!} useAvatar={false} />
+  //             <span className="mt-2">{item.name}</span>
+  //           </div>
+  //         </SelectItem>
+  //       ))}
+  //     </Select>
+  //   </div>
+  // );
 }
