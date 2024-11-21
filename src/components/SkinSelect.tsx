@@ -93,7 +93,7 @@ export default function SkinSelect({ label, onSave }: SkinSelectProps) {
                           setCurrentSelect?.(item);
                         }}
                       >
-                        <Card className="py-4 overflow-scroll h-36 w-20">
+                        <Card className="py-4 h-36 w-20">
                           <CardBody className="overflow-visible py-2 h-full w-full">
                             <LazyLoadAvatar useAvatar={false} url={item.img} />
                           </CardBody>
