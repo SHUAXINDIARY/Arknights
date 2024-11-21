@@ -788,7 +788,7 @@ export const ActivityList = [
         "img": "https://media.prts.wiki/thumb/1/12/%E5%85%AC%E6%B5%8B%E5%BC%80%E6%9C%8D%E6%B4%BB%E5%8A%A8-%E6%96%B0%E6%89%8B%E5%8D%A1%E6%B1%A0.png/650px-%E5%85%AC%E6%B5%8B%E5%BC%80%E6%9C%8D%E6%B4%BB%E5%8A%A8-%E6%96%B0%E6%89%8B%E5%8D%A1%E6%B1%A0.png"
     },
     {
-        "name: "怒号光明",
+        "name": "怒号光明",
         "img": "https://media.prts.wiki/b/bd/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E6%84%9F%E8%B0%A2%E5%BA%86%E5%85%B82020_01.jpg"
     }
 ]
