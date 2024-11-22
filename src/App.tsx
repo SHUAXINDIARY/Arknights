@@ -6,7 +6,6 @@ import Footer from "./components/Footer";
 import ShowRes from "./components/ShowResult";
 import { generateData } from "./utils";
 import { testData } from "./data/testData";
-import InfoModal from "./components/InfoModal";
 
 function App() {
   const [formState, setFormState] = useState<typeof FieldNameMap>();
@@ -29,7 +28,6 @@ function App() {
   }
   return (
     <div>
-      <InfoModal />
       <Footer />
       <div className="mb-10">
         <Chip size="lg" color="primary">
