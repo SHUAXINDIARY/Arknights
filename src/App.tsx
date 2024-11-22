@@ -1,16 +1,21 @@
 import "./App.css";
 import { Button, Chip } from "@nextui-org/react";
 import { FieldNameMap, FormMap } from "./components/FormRender";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import ShowRes from "./components/ShowResult";
+import { generateData } from "./utils";
+import { testData } from "./data/testData";
 
 function App() {
   const [formState, setFormState] = useState<typeof FieldNameMap>();
   const [showRes, setShowRes] = useState(false);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [showRes]);
   if (showRes) {
     return (
-      <div className="max-w-96 text-center">
+      <div className="max-w-96 text-center bg-white">
         <ShowRes
           data={formState!}
           onClose={() => {
@@ -21,7 +26,7 @@ function App() {
     );
   }
   return (
-    <>
+    <div className="bg-white">
       <Footer />
       <div className="mb-10">
         <Chip size="lg" color="primary">
@@ -58,14 +63,15 @@ function App() {
       })}
       <Button
         className="w-52 h-14"
-        onPress={() => {
-          console.log(formState);
+        onPress={async () => {
+          // setFormState(await generateData(formState));
+          setFormState(await generateData(testData));
           setShowRes(true);
         }}
       >
         生成
       </Button>
-    </>
+    </div>
   );
 }
 

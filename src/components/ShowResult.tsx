@@ -1,12 +1,13 @@
-import { useEffect, useRef } from "react";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import { useRef, useState } from "react";
 import Footer from "./Footer";
 import { FieldNameMap, FormField } from "./FormRender";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
-import { ButtonGroup, Button } from "@nextui-org/react";
+import { ButtonGroup, Button, Spinner } from "@nextui-org/react";
 import { testData } from "../data/testData";
-// import { captureScreen } from "../utils";
-
+import { savePngByCanvas } from "../utils";
 interface ShowRes {
   data: typeof FieldNameMap;
   onClose?: () => void;
@@ -14,11 +15,8 @@ interface ShowRes {
 
 const ShowRes = (props: ShowRes) => {
   const { data = testData } = props;
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
-  }, []);
+  // console.log(data);
+  const [isCapture, setIsCapture] = useState(false);
   const skin = {
     firstSkin: data.firstSkin,
     favoriteSkin: data.favoriteSkin,
@@ -47,6 +45,7 @@ const ShowRes = (props: ShowRes) => {
   const ref = useRef(null);
   return (
     <div ref={ref}>
+      {/* {BrowserJs.getParser(window.navigator.userAgent).parsedResult.engine.name} */}
       <Footer />
       <h2 className="text-2xl mb-5">明日方舟生涯表</h2>
       {/* 渲染干员 */}
@@ -107,17 +106,36 @@ const ShowRes = (props: ShowRes) => {
         })}
       </div>
       <RenderTextCard avatarUrl={data.main!} name={data.name!} text={text} />
-      <ButtonGroup className="mt-5">
-        {/* <Button
+      <ButtonGroup
+        className="mt-5"
+        style={{
+          visibility: !isCapture ? "visible" : "hidden",
+        }}
+      >
+        <Button
+          isDisabled={isCapture}
           color="success"
-          onPress={() => {
-            captureScreen();
+          onPress={async () => {
+            setIsCapture(true);
+            await savePngByCanvas();
+            // window.navigator.userAgent.includes("Chrome")
+            //   ? await savePngByCanvas()
+            //   : await savePngByBlob();
+            setIsCapture(false);
           }}
         >
-          截图分享
-        </Button> */}
+          {isCapture ? <Spinner color="primary" size="sm" /> : "截图分享"}
+        </Button>
         <Button
           color="warning"
+          onPress={() => {
+            props.onClose?.();
+          }}
+        >
+          编辑
+        </Button>
+        <Button
+          color="danger"
           onPress={() => {
             props.onClose?.();
           }}

@@ -33,4 +33,4 @@ export const testData = {
     favoriteEP: "All",
     hopeMember: "克莱门莎",
     name: "刷新",
-} as Partial<typeof FieldNameMap>;
+} as typeof FieldNameMap;
