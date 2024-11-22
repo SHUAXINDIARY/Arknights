@@ -20,11 +20,11 @@ const Footer = () => {
           <Link
             isBlock
             showAnchorIcon
-            href="https://github.com/SHUAXINDIARY/Arknights/blob/main/README.md"
+            href="https://www.xiaohongshu.com/user/profile/617ce3ac000000000201bc2c?xhsshare=CopyLink&appuid=617ce3ac000000000201bc2c&apptime=1652512227"
             color="foreground"
             target="_blank"
           >
-            Doc
+            开发Author
           </Link>
         </div>
         <Divider orientation="vertical" />
@@ -32,11 +32,11 @@ const Footer = () => {
           <Link
             isBlock
             showAnchorIcon
-            href="https://www.xiaohongshu.com/user/profile/617ce3ac000000000201bc2c?xhsshare=CopyLink&appuid=617ce3ac000000000201bc2c&apptime=1652512227"
+            href="https://www.xiaohongshu.com/user/profile/62d47a26000000000e00d3cd?xhsshare=CopyLink&appuid=617ce3ac000000000201bc2c&apptime=1732271959&share_id=16d16c386cd64b92a6a2b7a5d09231ae"
             color="foreground"
             target="_blank"
           >
-            Author
+            表格作者
           </Link>
         </div>
       </div>
