@@ -45,7 +45,6 @@ const ShowRes = (props: ShowRes) => {
   const ref = useRef(null);
   return (
     <div ref={ref}>
-      {/* {BrowserJs.getParser(window.navigator.userAgent).parsedResult.engine.name} */}
       <Footer />
       <h2 className="text-2xl mb-5">明日方舟生涯表</h2>
       {/* 渲染干员 */}
@@ -118,22 +117,19 @@ const ShowRes = (props: ShowRes) => {
           onPress={async () => {
             setIsCapture(true);
             await savePngByCanvas();
-            // window.navigator.userAgent.includes("Chrome")
-            //   ? await savePngByCanvas()
-            //   : await savePngByBlob();
             setIsCapture(false);
           }}
         >
           {isCapture ? <Spinner color="primary" size="sm" /> : "截图分享"}
         </Button>
-        <Button
-          color="warning"
-          onPress={() => {
-            props.onClose?.();
-          }}
-        >
-          编辑
-        </Button>
+        {/* <Button
+            color="warning"
+            onPress={() => {
+              props.onClose?.();
+            }}
+          >
+            编辑
+          </Button> */}
         <Button
           color="danger"
           onPress={() => {

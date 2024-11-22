@@ -1,6 +1,5 @@
 import domtoimage from "dom-to-image";
 import { saveAs } from 'file-saver';
-// import { toSvg } from 'html-to-image'
 import { FieldNameMap, FormField } from "../components/FormRender";
 
 export const downloadBase64Image = (base64Data: string, filename: string) => {
@@ -17,16 +16,6 @@ export const downloadBase64Image = (base64Data: string, filename: string) => {
     // 清理临时元素（可选）
     link.remove();
 }
-
-export const savePngByBlob = async () => {
-    const blobData = await domtoimage.toBlob(document.querySelector('html')!)
-    return new Promise((res) => {
-        saveAs(blobData, 'Arknights生涯生成表.png');
-        res(true)
-    })
-
-}
-
 const getColorScheme = () => {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return 'dark'; // 当前是深色模式
@@ -39,7 +28,6 @@ export const savePngByCanvas = async () => {
     const svgString = await domtoimage.toSvg(document.body!, {
         bgcolor: getColorScheme() === 'dark' ? 'black' : "white",
     });
-    console.log(svgString)
 
     return new Promise((res) => {
         // 超采样倍率
@@ -49,7 +37,6 @@ export const savePngByCanvas = async () => {
             document.body.clientWidth * scaleFactor,
             document.body.clientHeight * scaleFactor
         );
-
         const ctx = canvas.getContext("2d");
         ctx?.scale(scaleFactor, scaleFactor);
         // 创建图像对象
@@ -59,12 +46,13 @@ export const savePngByCanvas = async () => {
         img.onload = async () => {
             // 将图像绘制到 Canvas 上
             ctx!.drawImage(img!, 0, 0);
-
-            // 导出为 PNG
-            const data = await canvas.convertToBlob({
-                quality: 1
-            });
-            saveAs(data!, 'Arknights生涯生成表.png');
+            const a = document.createElement('a'); // 创建 a 标签
+            console.log(img.src)
+            a.href = URL.createObjectURL(await canvas.convertToBlob()); // 设置图片的 URL
+            a.download = 'downloaded-image.png'; // 设置文件名
+            document.body.appendChild(a); // 将 a 标签临时添加到 DOM
+            a.click(); // 自动触发点击事件
+            document.body.removeChild(a); // 移除 a 标签
             res(true);
         };
 
