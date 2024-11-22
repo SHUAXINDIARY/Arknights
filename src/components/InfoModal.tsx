@@ -1,0 +1,84 @@
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
+import { useEffect } from "react";
+import XHS from "../assets/img_v3_02gq_7ed31f29-4562-44e3-b3e9-fc76fea30ecg.png";
+const InfoModal = () => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  useEffect(() => {
+    onOpen();
+  }, []);
+  return (
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className="flex flex-col gap-1">提前声明</ModalHeader>
+            <ModalBody>
+              <p>
+                灵感来自
+                <a
+                  target="_blank"
+                  href="https://www.xiaohongshu.com/user/profile/62d47a26000000000e00d3cd?xhsshare=CopyLink&appuid=617ce3ac000000000201bc2c&apptime=1732271959&share_id=16d16c386cd64b92a6a2b7a5d09231ae"
+                >
+                  随便吧丶不如跳舞
+                </a>
+                制作的生涯图：
+                <img className="w-1/5 h-1/2 m-auto" src={XHS} alt="cover" />
+              </p>
+              <p>
+                数据来自
+                <a
+                  target="_blank"
+                  href="https://m.prts.wiki/w/%E9%A6%96%E9%A1%B5"
+                >
+                  prts
+                </a>
+              </p>
+              <p>
+                网站开发均为本人，联系方式如下：
+                <a
+                  target="_blank"
+                  href="https://www.xiaohongshu.com/user/profile/617ce3ac000000000201bc2c?xhsshare=CopyLink&appuid=617ce3ac000000000201bc2c&apptime=1652512227"
+                >
+                  小红书
+                </a>
+                、
+                <a target="_blank" href="https://github.com/SHUAXINDIARY">
+                  Github
+                </a>
+                、
+                <a
+                  target="_blank"
+                  href="https://space.bilibili.com/6517765?spm_id_from=333.1007.0.0"
+                >
+                  B站
+                </a>
+              </p>
+              <p>
+                没有官方、prts授权等，纯粹自己做的玩图一乐，也没有任何推广等，官方相关工作的同学看到如果需要下架什么的私戳上述联系方式，看到第一时间处理🙏🏻
+              </p>
+              <p>最后感谢你的喜欢，希望给你带来一点快乐~！</p>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="light" onPress={onClose}>
+                确认
+              </Button>
+              {/* <Button color="primary" onPress={onClose}>
+                
+              </Button> */}
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  );
+};
+
+export default InfoModal;

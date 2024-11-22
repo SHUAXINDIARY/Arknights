@@ -1,5 +1,4 @@
 import domtoimage from "dom-to-image";
-import { saveAs } from 'file-saver';
 import { FieldNameMap, FormField } from "../components/FormRender";
 
 export const downloadBase64Image = (base64Data: string, filename: string) => {
@@ -49,7 +48,7 @@ export const savePngByCanvas = async () => {
             const a = document.createElement('a'); // 创建 a 标签
             console.log(img.src)
             a.href = URL.createObjectURL(await canvas.convertToBlob()); // 设置图片的 URL
-            a.download = 'downloaded-image.png'; // 设置文件名
+            a.download = 'Arknights.png'; // 设置文件名
             document.body.appendChild(a); // 将 a 标签临时添加到 DOM
             a.click(); // 自动触发点击事件
             document.body.removeChild(a); // 移除 a 标签
