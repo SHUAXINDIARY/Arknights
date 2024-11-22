@@ -4,8 +4,8 @@ import { FieldNameMap, FormMap } from "./components/FormRender";
 import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import ShowRes from "./components/ShowResult";
-import { generateData } from "./utils";
-import { testData } from "./data/testData";
+// import { generateData } from "./utils";
+// import { testData } from "./data/testData";
 
 function App() {
   const [formState, setFormState] = useState<typeof FieldNameMap>();
@@ -66,7 +66,7 @@ function App() {
         className="w-52 h-14"
         onPress={async () => {
           // setFormState(await generateData(formState));
-          setFormState(await generateData(testData));
+          // setFormState(await generateData(testData));
           setShowRes(true);
         }}
       >
