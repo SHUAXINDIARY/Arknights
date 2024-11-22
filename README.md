@@ -13,3 +13,15 @@
 # 技术栈
 
 React + Vite + [@nextui-org/react](https://nextui.org/docs/frameworks/vite) + Cloudflare
+
+# 食用指南
+
+## 预览生成效果
+
+什么都不填，直接生成即可看到最后的生成效果（数据是我自己的）
+
+## 必填
+
+暂无，所有都是选填
+
+
