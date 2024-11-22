@@ -27,13 +27,17 @@ export const savePngByBlob = async () => {
 
 }
 
+const getColorScheme = () => {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark'; // 当前是深色模式
+    } else {
+        return 'light'; // 当前是浅色模式
+    }
+}
 
 export const savePngByCanvas = async () => {
     const svgString = await domtoimage.toSvg(document.body!, {
-        bgcolor: 'white',
-        style: {
-            color: 'black'
-        }
+        bgcolor: getColorScheme() === 'dark' ? 'black' : "white",
     });
     console.log(svgString)
 

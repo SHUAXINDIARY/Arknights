@@ -15,7 +15,7 @@ function App() {
   }, [showRes]);
   if (showRes) {
     return (
-      <div className="max-w-96 text-center bg-white">
+      <div className="max-w-96 text-center">
         <ShowRes
           data={formState!}
           onClose={() => {
@@ -26,7 +26,7 @@ function App() {
     );
   }
   return (
-    <div className="bg-white">
+    <div>
       <Footer />
       <div className="mb-10">
         <Chip size="lg" color="primary">
