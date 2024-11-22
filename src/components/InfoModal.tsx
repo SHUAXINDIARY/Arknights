@@ -9,6 +9,7 @@ import {
 } from "@nextui-org/react";
 import { useEffect } from "react";
 import XHS from "../assets/img_v3_02gq_7ed31f29-4562-44e3-b3e9-fc76fea30ecg.png";
+
 const InfoModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   useEffect(() => {
@@ -62,7 +63,7 @@ const InfoModal = () => {
                 </a>
               </p>
               <p>
-                没有官方、prts授权等，纯粹自己做的玩图一乐，也没有任何推广等，官方相关工作的同学看到如果需要下架什么的私戳上述联系方式，看到第一时间处理🙏🏻
+                没有官方、prts授权等，也没有打算用来做任何商业推广等，纯粹自己做的玩图一乐，官方相关工作的同学看到如果需要下架什么的私戳上述联系方式，看到第一时间处理🙏🏻
               </p>
               <p>最后感谢你的喜欢，希望给你带来一点快乐~！</p>
             </ModalBody>
