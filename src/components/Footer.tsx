@@ -12,7 +12,7 @@ const Footer = () => {
             color="foreground"
             target="_blank"
           >
-            GITHUB
+            Github
           </Link>
         </div>
         <Divider orientation="vertical" />
@@ -24,7 +24,7 @@ const Footer = () => {
             color="foreground"
             target="_blank"
           >
-            开发Author
+            站点作者
           </Link>
         </div>
         <Divider orientation="vertical" />
