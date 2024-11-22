@@ -12,4 +12,4 @@
 
 # 技术栈
 
-React + Vite + Vercel + Cloudflare
+React + Vite + [@nextui-org/react](https://nextui.org/docs/frameworks/vite) + Cloudflare
