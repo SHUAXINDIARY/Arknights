@@ -252,7 +252,7 @@ export const FormMap = [
     components: CustomInput,
     params: {
       placeholder: "请输入最喜欢的常驻模式",
-      label: "请输入最喜欢的常驻模式",
+      label: "最喜欢的常驻模式",
     } as InputProps,
   },
   {
@@ -261,7 +261,7 @@ export const FormMap = [
     components: CustomInput,
     params: {
       placeholder: "请输入最喜欢的EP",
-      label: "请输入最喜欢的EP",
+      label: "最喜欢的EP",
     } as InputProps,
   },
   {
@@ -270,7 +270,7 @@ export const FormMap = [
     components: CustomInput,
     params: {
       placeholder: "请输入最期待的卫星",
-      label: "请输入最期待的卫星",
+      label: "最期待的卫星",
     } as InputProps,
   },
   {

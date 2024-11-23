@@ -15,6 +15,7 @@ interface MemberSelectProps {
   data?: (typeof memberNameAvatarMap)[0][];
   // 保存到表单
   onSave?: (val: string) => void;
+  formValue?: string;
 }
 
 export default function MemberSelect({
@@ -22,16 +23,21 @@ export default function MemberSelect({
   label,
   data,
   onSave,
+  formValue,
 }: MemberSelectProps) {
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Autocomplete
+        defaultSelectedKey={formValue}
         label={label}
         placeholder={name}
         className="w-52 "
         defaultItems={data || memberNameAvatarMap}
         onSelectionChange={(val: any) => {
           onSave?.(val);
+        }}
+        listboxProps={{
+          emptyContent: "暂无搜索项",
         }}
       >
         {(item) => (
@@ -45,26 +51,4 @@ export default function MemberSelect({
       </Autocomplete>
     </div>
   );
-  // return (
-  //   <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
-  //     <Select
-  //       label={label || "主推"}
-  //       placeholder={name || "选择干员"}
-  //       className="w-52 "
-  //       inputMode="search"
-  //       onChange={(e) => {
-  //         onSave?.(e.target.value);
-  //       }}
-  //     >
-  //       {(data || memberNameAvatarMap).map((item) => (
-  //         <SelectItem key={item.avatar} textValue={item.name}>
-  //           <div className="flex items-center">
-  //             <LazyLoadAvatar url={item.avatar} useAvatar />
-  //             <span className="ml-3">{item.name}</span>
-  //           </div>
-  //         </SelectItem>
-  //       ))}
-  //     </Select>
-  //   </div>
-  // );
 }

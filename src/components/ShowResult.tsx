@@ -4,17 +4,15 @@ import { FieldNameMap, FormField } from "./FormRender";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@nextui-org/react";
-import { testData } from "../data/testData";
 // import { savePngByCanvas } from "../utils";
 interface ShowRes {
   data: typeof FieldNameMap;
   onClose?: () => void;
+  onClear?: () => void;
 }
 
 const ShowRes = (props: ShowRes) => {
-  const { data = testData } = props;
-  // console.log(data);
-  // const [isCapture, setIsCapture] = useState(false);
+  const { data } = props;
   const skin = {
     firstSkin: data.firstSkin,
     favoriteSkin: data.favoriteSkin,
@@ -49,6 +47,9 @@ const ShowRes = (props: ShowRes) => {
       <div className="flex flex-wrap gap-2 justify-center mb-5 mt-5">
         {Object.keys(filterData).map((key) => {
           const _key = key as FormField;
+          if (!filterData[_key]) {
+            return "";
+          }
           return (
             <div key={filterData[_key] + _key} className="w-16">
               <div className="text-center flex flex-col justify-center items-center">
@@ -70,6 +71,9 @@ const ShowRes = (props: ShowRes) => {
       <div>
         {Object.keys(activity).map((key) => {
           const _key = key as FormField;
+          if (!activity[_key]) {
+            return "";
+          }
           return (
             <div key={_key + activity[_key]} className="mb-5">
               <div>
@@ -88,10 +92,14 @@ const ShowRes = (props: ShowRes) => {
       <div className="flex justify-between">
         {Object.keys(skin).map((key) => {
           const _key = key as FormField;
+          if (!skin[_key]) {
+            return "";
+          }
           return (
             <div key={_key + skin[_key]} className="p-5">
               <div>
                 <LazyLoadAvatar
+                  className="min-h-52"
                   useLazyLoad={false}
                   useAvatar={false}
                   url={skin[_key]!}
@@ -120,18 +128,19 @@ const ShowRes = (props: ShowRes) => {
         >
           {isCapture ? <Spinner color="primary" size="sm" /> : "截图分享"}
         </Button> */}
-        {/* <Button
-            color="warning"
-            onPress={() => {
-              props.onClose?.();
-            }}
-          >
-            编辑
-          </Button> */}
+        <Button
+          color="warning"
+          onPress={() => {
+            props.onClose?.();
+          }}
+        >
+          编辑
+        </Button>
         <Button
           color="danger"
           onPress={() => {
             props.onClose?.();
+            props.onClear?.();
           }}
         >
           返回
