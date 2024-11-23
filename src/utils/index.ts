@@ -1,6 +1,9 @@
 import domtoimage from "dom-to-image";
 import { FieldNameMap, FormField } from "../components/FormRender";
 import { saveAs } from "file-saver";
+import { UAParser } from "ua-parser-js";
+
+const userDevice = UAParser(window.navigator.userAgent);
 
 export const downloadImage = (base64Data: string, filename: string) => {
   // 创建一个临时链接元素
@@ -59,17 +62,21 @@ export const savePngByCanvas = async (isDown = false) => {
     img.id = "result";
     // img.crossOrigin = "anonymous"; // 设置跨域
     img.onload = async (e) => {
-      console.log(e);
-      //   window.requestAnimationFrame(async () => {
-      console.log(12);
-      // 将图像绘制到 Canvas 上
       if (e.target) {
         ctx!.drawImage(img, 0, 0);
-        waitFrames(5, async () => {
-          if (isDown) {
-            saveAs(await canvas.convertToBlob(), "Arknights.png");
-          }
-        });
+        if (
+          userDevice.os.name === "iOS" ||
+          userDevice.browser.name?.includes("Safari")
+        ) {
+          waitFrames(5, async () => {
+            if (isDown) {
+              saveAs(await canvas.convertToBlob(), "Arknights.png");
+            }
+          });
+        } else {
+          saveAs(await canvas.convertToBlob(), "Arknights.png");
+        }
+
         res(true);
       }
       res(true);
