@@ -103,7 +103,7 @@ function App() {
             setShowRes(true);
           }}
         >
-          预览效果
+          预览示例
         </Button>
       </ButtonGroup>
     </div>
