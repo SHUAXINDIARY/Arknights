@@ -5,8 +5,9 @@ import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@nextui-org/react";
 import { savePngByCanvas } from "../utils";
-// import { savePngByCanvas } from "../utils";
+import { UAParser } from "ua-parser-js";
 
+const userDevice = UAParser(window.navigator.userAgent);
 interface ShowRes {
   data: typeof FieldNameMap;
   onClose?: () => void;
@@ -116,9 +117,17 @@ const ShowRes = (props: ShowRes) => {
       <ButtonGroup className="mt-5">
         <Button
           onPress={async () => {
-            await savePngByCanvas();
-            await savePngByCanvas();
-            await savePngByCanvas(true);
+            console.log(userDevice.browser.name);
+            if (
+              userDevice.os.name === "iOS" ||
+              userDevice.browser.name?.includes("Safari")
+            ) {
+              await savePngByCanvas();
+              await savePngByCanvas();
+              await savePngByCanvas(true);
+            } else {
+              await savePngByCanvas(true);
+            }
           }}
         >
           导出结果
