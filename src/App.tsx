@@ -14,7 +14,7 @@ import ShowRes from "./components/ShowResult";
 import { testData } from "./data/testData";
 
 function App() {
-  const [formState, setFormState] = useState<typeof FieldNameMap>();
+  const [formState, setFormState] = useState<typeof FieldNameMap | null>();
   const [showRes, setShowRes] = useState(false);
   const [isShowPopover, setIsShowPopover] = useState(false);
 
@@ -27,6 +27,9 @@ function App() {
       <div className="max-w-96 text-center">
         <ShowRes
           data={formState!}
+          onClear={() => {
+            setFormState(null);
+          }}
           onClose={() => {
             setShowRes(false);
           }}
@@ -62,6 +65,7 @@ function App() {
             <Com
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               {...((params || {}) as any)}
+              formValue={formState ? formState[item.field] : ""}
               onSave={(val: string) => {
                 onSave(val);
               }}

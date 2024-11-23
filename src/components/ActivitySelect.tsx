@@ -12,16 +12,19 @@ interface ActivitySelectProps {
   name?: string;
   label?: string;
   onSave?: (val: string) => void;
+  formValue?: string;
 }
 
 export default function ActivitySelect({
   name,
   label,
   onSave,
+  formValue,
 }: ActivitySelectProps) {
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Autocomplete
+        defaultSelectedKey={formValue}
         label={label}
         placeholder={name}
         className="w-52 "

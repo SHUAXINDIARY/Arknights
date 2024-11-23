@@ -15,6 +15,7 @@ interface MemberSelectProps {
   data?: (typeof memberNameAvatarMap)[0][];
   // 保存到表单
   onSave?: (val: string) => void;
+  formValue?: string;
 }
 
 export default function MemberSelect({
@@ -22,10 +23,12 @@ export default function MemberSelect({
   label,
   data,
   onSave,
+  formValue,
 }: MemberSelectProps) {
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Autocomplete
+        defaultSelectedKey={formValue}
         label={label}
         placeholder={name}
         className="w-52 "

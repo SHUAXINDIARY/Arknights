@@ -18,9 +18,14 @@ import { useThrottleFn } from "ahooks";
 interface SkinSelectProps {
   label?: string;
   onSave?: (val: string) => void;
+  formValue?: string;
 }
 
-export default function SkinSelect({ label, onSave }: SkinSelectProps) {
+export default function SkinSelect({
+  label,
+  onSave,
+  formValue,
+}: SkinSelectProps) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [currentSelect, setCurrentSelect] = useState<(typeof skinList)[0]>();
   // 页面数据
@@ -39,6 +44,13 @@ export default function SkinSelect({ label, onSave }: SkinSelectProps) {
     },
     { wait: 500 }
   );
+
+  useEffect(() => {
+    if (formValue) {
+      const [initVal] = pageData.filter((item) => item.img === formValue);
+      setCurrentSelect(initVal);
+    }
+  }, []);
 
   useEffect(() => {
     if (currentSelect?.img) {
