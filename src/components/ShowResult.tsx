@@ -99,6 +99,7 @@ const ShowRes = (props: ShowRes) => {
             <div key={_key + skin[_key]} className="p-5">
               <div>
                 <LazyLoadAvatar
+                  className="min-h-52"
                   useLazyLoad={false}
                   useAvatar={false}
                   url={skin[_key]!}
