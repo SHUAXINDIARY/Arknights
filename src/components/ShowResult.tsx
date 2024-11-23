@@ -4,7 +4,9 @@ import { FieldNameMap, FormField } from "./FormRender";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@nextui-org/react";
+import { savePngByCanvas } from "../utils";
 // import { savePngByCanvas } from "../utils";
+
 interface ShowRes {
   data: typeof FieldNameMap;
   onClose?: () => void;
@@ -111,23 +113,16 @@ const ShowRes = (props: ShowRes) => {
         })}
       </div>
       <RenderTextCard avatarUrl={data.main!} name={data.name!} text={text} />
-      <ButtonGroup
-        className="mt-5"
-        // style={{
-        //   visibility: !isCapture ? "visible" : "hidden",
-        // }}
-      >
-        {/* <Button
-          isDisabled={isCapture}
-          color="success"
+      <ButtonGroup className="mt-5">
+        <Button
           onPress={async () => {
-            setIsCapture(true);
             await savePngByCanvas();
-            setIsCapture(false);
+            await savePngByCanvas();
+            await savePngByCanvas(true);
           }}
         >
-          {isCapture ? <Spinner color="primary" size="sm" /> : "截图分享"}
-        </Button> */}
+          导出结果
+        </Button>
         <Button
           color="warning"
           onPress={() => {
