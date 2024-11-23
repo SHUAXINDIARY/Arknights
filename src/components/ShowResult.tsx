@@ -4,7 +4,6 @@ import { FieldNameMap, FormField } from "./FormRender";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@nextui-org/react";
-import { testData } from "../data/testData";
 // import { savePngByCanvas } from "../utils";
 interface ShowRes {
   data: typeof FieldNameMap;
@@ -12,9 +11,7 @@ interface ShowRes {
 }
 
 const ShowRes = (props: ShowRes) => {
-  const { data = testData } = props;
-  // console.log(data);
-  // const [isCapture, setIsCapture] = useState(false);
+  const { data } = props;
   const skin = {
     firstSkin: data.firstSkin,
     favoriteSkin: data.favoriteSkin,
