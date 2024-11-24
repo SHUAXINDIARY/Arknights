@@ -4,10 +4,7 @@ import { FieldNameMap, FormField } from "./FormRender";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@nextui-org/react";
-import { savePngByCanvas } from "../utils";
-import { UAParser } from "ua-parser-js";
-
-const userDevice = UAParser(window.navigator.userAgent);
+import { isApple, savePngByCanvas } from "../utils";
 interface ShowRes {
   data: typeof FieldNameMap;
   onClose?: () => void;
@@ -117,11 +114,7 @@ const ShowRes = (props: ShowRes) => {
       <ButtonGroup className="mt-5">
         <Button
           onPress={async () => {
-            console.log(userDevice.browser.name);
-            if (
-              userDevice.os.name === "iOS" ||
-              userDevice.browser.name?.includes("Safari")
-            ) {
+            if (isApple()) {
               await savePngByCanvas();
               await savePngByCanvas();
               await savePngByCanvas(true);

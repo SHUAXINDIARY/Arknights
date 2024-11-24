@@ -5,6 +5,14 @@ import { UAParser } from "ua-parser-js";
 
 const userDevice = UAParser(window.navigator.userAgent);
 
+export const isApple = () => {
+  return (
+    userDevice.os.name === "iOS" ||
+    userDevice.browser.name?.includes("Safari") ||
+    window.navigator.userAgent.includes("Safari")
+  );
+};
+
 export const downloadImage = (base64Data: string, filename: string) => {
   // 创建一个临时链接元素
   const link = document.createElement("a");
@@ -64,10 +72,7 @@ export const savePngByCanvas = async (isDown = false) => {
     img.onload = async (e) => {
       if (e.target) {
         ctx!.drawImage(img, 0, 0);
-        if (
-          userDevice.os.name === "iOS" ||
-          userDevice.browser.name?.includes("Safari")
-        ) {
+        if (isApple()) {
           waitFrames(5, async () => {
             if (isDown) {
               saveAs(await canvas.convertToBlob(), "Arknights.png");
