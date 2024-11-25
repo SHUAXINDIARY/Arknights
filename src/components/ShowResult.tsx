@@ -120,11 +120,11 @@ const ShowRes = (props: ShowRes) => {
         })}
       </div>
       <RenderTextCard avatarUrl={data.main!} name={data.name!} text={text} />
-      <div>
+      <div className="mt-5">
         {qrCodeUrl ? (
           <div className="flex justify-center">
             <div>
-              <img src={qrCodeUrl} className="m-auto" />
+              <img src={qrCodeUrl} className="m-auto mb-2" />
               扫码填写
             </div>
           </div>
