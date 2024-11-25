@@ -1,10 +1,11 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Footer from "./Footer";
 import { FieldNameMap, FormField } from "./FormRender";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@nextui-org/react";
 import { isApple, savePngByCanvas } from "../utils";
+import QRcode from "qrcode";
 interface ShowRes {
   data: typeof FieldNameMap;
   onClose?: () => void;
@@ -39,6 +40,14 @@ const ShowRes = (props: ShowRes) => {
   }, {} as Partial<ShowRes["data"]>);
 
   const ref = useRef(null);
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
+  useEffect(() => {
+    (async () => {
+      const data = await QRcode.toDataURL(window.location.href);
+      console.log(data);
+      setQrCodeUrl(data);
+    })();
+  }, []);
   return (
     <div ref={ref}>
       <Footer />
@@ -111,15 +120,31 @@ const ShowRes = (props: ShowRes) => {
         })}
       </div>
       <RenderTextCard avatarUrl={data.main!} name={data.name!} text={text} />
+      <div>
+        {qrCodeUrl ? (
+          <div className="flex justify-center">
+            <div>
+              <img src={qrCodeUrl} className="m-auto" />
+              扫码填写
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
       <ButtonGroup className="mt-5">
         <Button
           onPress={async () => {
-            if (isApple()) {
-              await savePngByCanvas();
-              await savePngByCanvas();
-              await savePngByCanvas(true);
-            } else {
-              await savePngByCanvas(true);
+            try {
+              if (isApple()) {
+                await savePngByCanvas();
+                await savePngByCanvas();
+                await savePngByCanvas(true);
+              } else {
+                await savePngByCanvas(true);
+              }
+            } catch (error) {
+              alert(error);
             }
           }}
         >

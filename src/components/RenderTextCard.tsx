@@ -8,6 +8,7 @@ import {
 import { FieldNameMap, FormField } from "./FormRender";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 
+
 interface RenderTextCardProps {
   avatarUrl: string;
   name: string;
@@ -15,6 +16,7 @@ interface RenderTextCardProps {
 }
 
 export default function RenderTextCard(props: RenderTextCardProps) {
+ 
   return (
     <Card className="shadow-none border">
       <CardHeader className="justify-between">
@@ -28,22 +30,25 @@ export default function RenderTextCard(props: RenderTextCardProps) {
         </div>
       </CardHeader>
       <CardBody className="px-3 py-0 text-small text-default-400 text-center">
-        {Object.keys(props.text).map((key) => {
-          const _key = key as FormField;
-          if (_key === "name") {
-            return "";
-          }
-          return (
-            <div key={_key + props.text[_key]} className="mb-3">
-              <div>
-                <span>{FieldNameMap[_key]}</span>
-                <div className="mt-2">
-                  <Chip color="primary">{props.text[_key] || "-"}</Chip>
+        <div>
+          {Object.keys(props.text).map((key) => {
+            const _key = key as FormField;
+            if (_key === "name") {
+              return "";
+            }
+            return (
+              <div key={_key + props.text[_key]} className="mb-3">
+                <div>
+                  <span>{FieldNameMap[_key]}</span>
+                  <div className="mt-2">
+                    <Chip color="primary">{props.text[_key] || "-"}</Chip>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+        
       </CardBody>
       <CardFooter className="gap-3"></CardFooter>
     </Card>
