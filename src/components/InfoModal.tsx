@@ -61,6 +61,13 @@ const InfoModal = () => {
                 >
                   B站
                 </a>
+                、
+                <a
+                  target="_blank"
+                  href="https://www.skland.com/article?id=2406441"
+                >
+                  森空岛
+                </a>
               </p>
               <p>
                 没有官方、prts授权等，也没有打算用来做任何商业推广等，纯粹自己做的玩图一乐，官方相关工作的同学看到如果需要下架什么的私戳上述联系方式，看到第一时间处理🙏🏻
