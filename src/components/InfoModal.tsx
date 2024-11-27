@@ -41,6 +41,13 @@ const InfoModal = () => {
                 >
                   prts
                 </a>
+                、
+                <a
+                  target="_blank"
+                  href="https://wiki.biligame.com/arknights/%E9%A6%96%E9%A1%B5"
+                >
+                  B站明日方舟WIKI
+                </a>
               </p>
               <p>
                 网站开发均为本人，联系方式如下：
