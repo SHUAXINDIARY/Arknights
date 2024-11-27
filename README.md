@@ -12,7 +12,7 @@
 
 # 数据
 
-来自 [prts](https://prts.wiki/w/%E9%A6%96%E9%A1%B5)
+来自 [prts](https://prts.wiki/w/%E9%A6%96%E9%A1%B5)、[B站方舟WIKI](https://wiki.biligame.com/arknights/%E9%A6%96%E9%A1%B5)
 
 # 技术栈
 
