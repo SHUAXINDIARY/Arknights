@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import domtoimage from "dom-to-image";
-import { FieldNameMap, FormField } from "../components/FormRender";
+import { FieldNameMap, FormField } from "../utils/constant";
 import { saveAs } from "file-saver";
 import { UAParser } from "ua-parser-js";
 
@@ -99,7 +99,7 @@ export const savePngByCanvas = async (isDown = false) => {
     });
 };
 
-const imageUrlToBase64 = (url: string) => {
+export const imageUrlToBase64 = (url: string) => {
     return new Promise((resolve, reject) => {
         // 创建一个 XMLHttpRequest 对象
         const xhr = new XMLHttpRequest();

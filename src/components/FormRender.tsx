@@ -1,3 +1,4 @@
+import { AvatarList } from "../data/Avatar";
 import {
   getSortData,
   MEMBER_SORT_KEY,
@@ -6,7 +7,7 @@ import {
 import ActivitySelect from "./ActivitySelect";
 import CustomInput from "./CustomInput";
 import MemberSelect from "./MemberSelect";
-import SkinSelect from "./SkinSelect";
+import SkinSelect, { SkinSelectProps } from "./SkinSelect";
 import { SelectProps, InputProps } from "@nextui-org/react";
 
 type MemberInfo = (typeof memberNameAvatarMap)[0];
@@ -274,13 +275,33 @@ export const FormMap = [
     } as InputProps,
   },
   {
-    name: "您的名称",
+    name: "您的游戏名称",
     field: "name",
     components: CustomInput,
     params: {
-      placeholder: "请输入您的名称",
-      label: "请输入您的名称",
+      placeholder: "请输入您的游戏名称",
+      label: "请输入您的游戏名称",
     } as InputProps,
+  },
+  {
+    name: "自定义头像",
+    field: "customAvatar",
+    components: SkinSelect,
+    params: {
+      placeholder: "输入头像名或干员名称选择",
+      label: "选择自定义头像",
+      useAvatarShowImg: true,
+      useCardShow: false,
+      data: [...AvatarList, ...memberNameAvatarMap].map(
+        (item: (typeof AvatarList)[0] | (typeof memberNameAvatarMap)[0]) => {
+          return {
+            img: "img" in item ? item.img : item.avatar,
+            name: item.name,
+            skinName: item.name,
+          };
+        }
+      ),
+    } as SkinSelectProps,
   },
   // {
   //   name: "最喜欢的宣传图",
@@ -301,10 +322,3 @@ export const FormMap = [
   //   } as InputProps,
   // },
 ] as const;
-
-export type FormField = (typeof FormMap)[number]["field"];
-
-export const FieldNameMap = Object.values(FormMap).reduce((total, item) => {
-  total[item.field as FormField] = item.name;
-  return total;
-}, {} as Record<FormField, string>);

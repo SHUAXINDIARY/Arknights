@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import Footer from "./Footer";
-import { FieldNameMap, FormField } from "./FormRender";
+import { FieldNameMap, FormField } from "../utils/constant";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@nextui-org/react";
@@ -25,6 +25,7 @@ const ShowRes = (props: ShowRes) => {
   } as Partial<ShowRes["data"]>;
 
   const text = {
+    customAvatar: data.customAvatar,
     favoriteMode: data.favoriteMode,
     favoriteEP: data.favoriteEP,
     hopeMember: data.hopeMember,
@@ -119,7 +120,16 @@ const ShowRes = (props: ShowRes) => {
           );
         })}
       </div>
-      <RenderTextCard avatarUrl={data.main!} name={data.name!} text={text} />
+      <RenderTextCard
+        avatarUrl={text.customAvatar || data.main!}
+        name={data.name!}
+        text={Object.keys(text).reduce((total, item) => {
+          if (item !== "customAvatar") {
+            total[item] = (text as Record<string, string>)[item];
+          }
+          return total;
+        }, {} as Record<string, string>)}
+      />
       <div className="mt-5">
         {qrCodeUrl ? (
           <div className="flex justify-center">

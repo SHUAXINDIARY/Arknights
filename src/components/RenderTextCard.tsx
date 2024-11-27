@@ -5,9 +5,8 @@ import {
   CardFooter,
   Chip,
 } from "@nextui-org/react";
-import { FieldNameMap, FormField } from "./FormRender";
+import { FieldNameMap, FormField } from "../utils/constant";
 import LazyLoadAvatar from "./LazyLoadAvatar";
-
 
 interface RenderTextCardProps {
   avatarUrl: string;
@@ -16,7 +15,6 @@ interface RenderTextCardProps {
 }
 
 export default function RenderTextCard(props: RenderTextCardProps) {
- 
   return (
     <Card className="shadow-none border">
       <CardHeader className="justify-between">
@@ -48,7 +46,6 @@ export default function RenderTextCard(props: RenderTextCardProps) {
             );
           })}
         </div>
-        
       </CardBody>
       <CardFooter className="gap-3"></CardFooter>
     </Card>

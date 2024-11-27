@@ -1,4 +1,4 @@
-import { FieldNameMap } from "../components/FormRender";
+import { FieldNameMap } from "../utils/constant";
 
 export const testData = {
     firstSkin:
@@ -32,5 +32,5 @@ export const testData = {
     favoriteMode: "萨卡兹肉鸽",
     favoriteEP: "All",
     hopeMember: "克莱门莎",
-    name: "刷新",
+    name: "刷新#4086",
 } as typeof FieldNameMap;
