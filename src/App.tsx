@@ -7,7 +7,8 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@nextui-org/react";
-import { FieldNameMap, FormMap } from "./components/FormRender";
+import { FormMap } from "./components/FormRender";
+import { FieldNameMap } from "./utils/constant";
 import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import ShowRes from "./components/ShowResult";
@@ -48,6 +49,7 @@ function App() {
       {Object.values(FormMap).map((item) => {
         const Com = item.components;
         const { params } = item;
+        console.log(params);
         if (!Com) {
           return <div key={item.field + item.name}>占位</div>;
         }
