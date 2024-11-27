@@ -40,4 +40,8 @@ React + Vite + [@nextui-org/react](https://nextui.org/docs/frameworks/vite) + Cl
 - 支持选择蚀刻章套组（单个好像不好展示🤔）
 - ...
 
+# 说明
+
+网站所涉及的公司名称、商标、产品等均为其各自所有者的资产，仅供识别。
+网站内使用的游戏图片、动画、音频、文本原文，仅用于更好地表现游戏资料，其版权属于 Arknights/上海鹰角网络科技有限公司。
 
