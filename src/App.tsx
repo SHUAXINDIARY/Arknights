@@ -49,7 +49,6 @@ function App() {
       {Object.values(FormMap).map((item) => {
         const Com = item.components;
         const { params } = item;
-        console.log(params);
         if (!Com) {
           return <div key={item.field + item.name}>占位</div>;
         }
