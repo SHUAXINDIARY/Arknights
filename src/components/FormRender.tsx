@@ -1,6 +1,6 @@
 import { ActivityList } from "../data/ActivityImg";
 import { AvatarList } from "../data/Avatar";
-import { MedalGroupList } from "../data/Medal";
+import { MedalDataListMap, MedalGroupList } from "../data/Medal";
 import {
   getSortData,
   MEMBER_SORT_KEY,
@@ -312,8 +312,13 @@ export const FormMap = [
       label: "选择自定义头像",
       useAvatarShowImg: true,
       useCardShow: false,
-      data: [...AvatarList, ...memberNameAvatarMap].map(
-        (item: (typeof AvatarList)[0] | (typeof memberNameAvatarMap)[0]) => {
+      data: [...AvatarList, ...memberNameAvatarMap, ...MedalDataListMap].map(
+        (
+          item:
+            | (typeof AvatarList)[0]
+            | (typeof memberNameAvatarMap)[0]
+            | (typeof MedalDataListMap)[0]
+        ) => {
           return {
             img: "img" in item ? item.img : item.avatar,
             name: item.name,
