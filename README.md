@@ -37,7 +37,7 @@ React + Vite + [@nextui-org/react](https://nextui.org/docs/frameworks/vite) + Cl
 
 - 日/英切换
 - 头像支持自定义干员和游戏内可以设置的所有头像 - ✅
-- 支持选择蚀刻章套组（单个好像不好展示🤔）
+- 支持选择蚀刻章套组 - ✅ 
 - ...
 
 # 说明
