@@ -1,4 +1,6 @@
+import { ActivityList } from "../data/ActivityImg";
 import { AvatarList } from "../data/Avatar";
+import { MedalDataListMap, MedalGroupList } from "../data/Medal";
 import {
   getSortData,
   MEMBER_SORT_KEY,
@@ -236,7 +238,10 @@ export const FormMap = [
     params: {
       label: "入坑活动",
       name: "请选择活动",
-    } as SelectPropsExtra,
+      data: ActivityList,
+    } as SelectPropsExtra & {
+      data: (typeof ActivityList)[0][];
+    },
   },
   {
     name: "最喜欢的剧情",
@@ -245,7 +250,22 @@ export const FormMap = [
     params: {
       label: "最喜欢的剧情",
       name: "请选择活动",
-    } as SelectPropsExtra,
+      data: ActivityList,
+    } as SelectPropsExtra & {
+      data: (typeof ActivityList)[0][];
+    },
+  },
+  {
+    name: "最喜欢的蚀刻章套组",
+    field: "favoriteMedalGroup",
+    components: ActivitySelect,
+    params: {
+      label: "最喜欢的蚀刻章套组",
+      name: "请选择蚀刻章套组",
+      data: MedalGroupList,
+    } as SelectPropsExtra & {
+      data: (typeof MedalGroupList)[0][];
+    },
   },
   {
     name: "最喜欢的常驻模式",
@@ -292,8 +312,13 @@ export const FormMap = [
       label: "选择自定义头像",
       useAvatarShowImg: true,
       useCardShow: false,
-      data: [...AvatarList, ...memberNameAvatarMap].map(
-        (item: (typeof AvatarList)[0] | (typeof memberNameAvatarMap)[0]) => {
+      data: [...AvatarList, ...memberNameAvatarMap, ...MedalDataListMap].map(
+        (
+          item:
+            | (typeof AvatarList)[0]
+            | (typeof memberNameAvatarMap)[0]
+            | (typeof MedalDataListMap)[0]
+        ) => {
           return {
             img: "img" in item ? item.img : item.avatar,
             name: item.name,

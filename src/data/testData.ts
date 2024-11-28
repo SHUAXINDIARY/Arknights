@@ -29,6 +29,8 @@ export const testData = {
         "https://media.prts.wiki/thumb/1/16/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E8%90%BD%E5%8F%B6%E9%80%90%E7%81%AB_01.jpg/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E8%90%BD%E5%8F%B6%E9%80%90%E7%81%AB_01.jpg",
     favoriteDrama:
         "https://media.prts.wiki/thumb/d/dc/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%BA%94%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_02.JPG/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E4%BA%94%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_02.JPG",
+    favoriteMedalGroup: 'https://torappu.prts.wiki/assets/medal_diy/medalGroupActivity33side.png',
+    customAvatar: 'https://patchwiki.biligame.com/images/arknights/thumb/a/a2/jy6iblon8fsd9vlwvvurkrxvvn9rjpy.png/120px-%E5%A4%B4%E5%83%8F_%E2%80%9C2024%E4%BD%99%E9%9F%B5%E5%88%87%E7%89%87%E2%80%9D.png',
     favoriteMode: "萨卡兹肉鸽",
     favoriteEP: "All",
     hopeMember: "克莱门莎",

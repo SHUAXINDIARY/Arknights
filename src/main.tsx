@@ -6,7 +6,6 @@ import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import InfoModal from "./components/InfoModal.tsx";
 
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <NextUIProvider>
