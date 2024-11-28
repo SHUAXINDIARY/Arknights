@@ -71,9 +71,16 @@ const InfoModal = () => {
                 、
                 <a
                   target="_blank"
-                  href="https://www.skland.com/article?id=2406441"
+                  href="mailto:https://www.skland.com/article?id=2406441"
                 >
                   森空岛
+                </a>
+                、
+                <a
+                  target="_blank"
+                  href="shuaxinjs@qq.com"
+                >
+                  shuaxinjs@qq.com
                 </a>
               </p>
               <p>
