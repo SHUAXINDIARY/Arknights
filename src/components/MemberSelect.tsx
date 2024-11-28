@@ -7,6 +7,7 @@ import {
 } from "@nextui-org/react";
 import { memberNameAvatarMap } from "../data/NameAvatar";
 import LazyLoadAvatar from "./LazyLoadAvatar";
+import { useState } from "react";
 
 interface MemberSelectProps {
   name?: string;
@@ -25,6 +26,8 @@ export default function MemberSelect({
   onSave,
   formValue,
 }: MemberSelectProps) {
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
+
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Autocomplete
@@ -33,6 +36,17 @@ export default function MemberSelect({
         placeholder={name}
         className="w-52 "
         defaultItems={data || memberNameAvatarMap}
+        onBlur={() => {
+          setIsOpenSearch(false);
+        }}
+        onClick={(e) => {
+          // @ts-ignore
+          if (e.target.tagName === "INPUT") {
+            setIsOpenSearch(true);
+          }
+          e.stopPropagation();
+        }}
+        inputMode={isOpenSearch ? "search" : "none"}
         onSelectionChange={(val: any) => {
           onSave?.(val);
         }}

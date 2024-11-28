@@ -7,6 +7,7 @@ import {
 } from "@nextui-org/react";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { ActivityList } from "../data/ActivityImg";
+import { useState } from "react";
 
 interface ActivitySelectProps {
   name?: string;
@@ -23,6 +24,8 @@ const ActivitySelect = ({
   formValue,
   data,
 }: ActivitySelectProps) => {
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
+
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Autocomplete
@@ -31,6 +34,17 @@ const ActivitySelect = ({
         placeholder={name}
         className="w-52 "
         defaultItems={data!}
+        inputMode={isOpenSearch ? "search" : "none"}
+        onBlur={() => {
+          setIsOpenSearch(false);
+        }}
+        onClick={(e) => {
+          // @ts-ignore
+          if (e.target.tagName === "INPUT") {
+            setIsOpenSearch(true);
+          }
+          e.stopPropagation();
+        }}
         onSelectionChange={(val: any) => {
           onSave?.(val);
         }}
