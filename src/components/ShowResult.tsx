@@ -22,6 +22,7 @@ const ShowRes = (props: ShowRes) => {
   const activity = {
     firstActivity: data.firstActivity,
     favoriteDrama: data.favoriteDrama,
+    favoriteMedalGroup: data.favoriteMedalGroup,
   } as Partial<ShowRes["data"]>;
 
   const text = {
@@ -85,7 +86,7 @@ const ShowRes = (props: ShowRes) => {
             return "";
           }
           return (
-            <div key={_key + activity[_key]} className="mb-5">
+            <div key={_key + activity[_key]} className="mt-5">
               <div>
                 <LazyLoadAvatar
                   useLazyLoad={false}

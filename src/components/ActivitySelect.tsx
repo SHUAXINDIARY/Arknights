@@ -5,22 +5,24 @@ import {
   Autocomplete,
   AutocompleteItem,
 } from "@nextui-org/react";
-import { ActivityList } from "../data/ActivityImg";
 import LazyLoadAvatar from "./LazyLoadAvatar";
+import { ActivityList } from "../data/ActivityImg";
 
 interface ActivitySelectProps {
   name?: string;
   label?: string;
   onSave?: (val: string) => void;
   formValue?: string;
+  data?: (typeof ActivityList)[0][];
 }
 
-export default function ActivitySelect({
+const ActivitySelect = ({
   name,
   label,
   onSave,
   formValue,
-}: ActivitySelectProps) {
+  data,
+}: ActivitySelectProps) => {
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Autocomplete
@@ -28,7 +30,7 @@ export default function ActivitySelect({
         label={label}
         placeholder={name}
         className="w-52 "
-        defaultItems={ActivityList}
+        defaultItems={data!}
         onSelectionChange={(val: any) => {
           onSave?.(val);
         }}
@@ -47,4 +49,6 @@ export default function ActivitySelect({
       </Autocomplete>
     </div>
   );
-}
+};
+
+export default ActivitySelect;
