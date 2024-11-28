@@ -300,7 +300,7 @@ export const FormMap = [
     components: CustomInput,
     params: {
       placeholder: "请输入您的游戏名称",
-      label: "请输入您的游戏名称",
+      label: "您的游戏名称",
     } as InputProps,
   },
   {
