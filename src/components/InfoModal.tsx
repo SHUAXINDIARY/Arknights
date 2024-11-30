@@ -8,7 +8,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { useEffect } from "react";
-import XHS from "../assets/img_v3_02gq_7ed31f29-4562-44e3-b3e9-fc76fea30ecg.png";
+import XHS from "../assets/img_v3_02gq_7ed31f29-4562-44e3-b3e9-fc76fea30ecg.jpeg";
 
 const InfoModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -76,10 +76,7 @@ const InfoModal = () => {
                   森空岛
                 </a>
                 、
-                <a
-                  target="_blank"
-                  href="shuaxinjs@qq.com"
-                >
+                <a target="_blank" href="shuaxinjs@qq.com">
                   shuaxinjs@qq.com
                 </a>
               </p>
