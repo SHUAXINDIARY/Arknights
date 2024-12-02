@@ -2279,6 +2279,26 @@ export const MedalDataListMap = [
 
 export const MedalGroupList = [
     {
+        "name": "萨卡兹的无终奇语蚀刻章套组",
+        "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupRogue04.png"
+    },
+    {
+        "name": "沙洲遗闻蚀刻章套组",
+        "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupSandbox01.png"
+    },
+    {
+        "name": "探索者的银凇止境蚀刻章套组",
+        "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupRogue03.png"
+    },
+    {
+        "name": "深蓝之树蚀刻章套组",
+        "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupRogue02.png"
+    },
+    {
+        "name": "猩红孤钻蚀刻章套组",
+        "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupRogue01.png"
+    },
+    {
         "name": "揭幕者们蚀刻章套组",
         "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupActivity38side.png"
     },
