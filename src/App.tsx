@@ -13,8 +13,10 @@ import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import ShowRes from "./components/ShowResult";
 import { testData } from "./data/testData";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t } = useTranslation();
   const [formState, setFormState] = useState<typeof FieldNameMap | null>();
   const [showRes, setShowRes] = useState(false);
   const [isShowPopover, setIsShowPopover] = useState(false);
@@ -43,7 +45,8 @@ function App() {
       <Footer />
       <div className="mb-10">
         <Chip size="lg" color="primary">
-          明日方舟生涯生成器
+          {/* 明日方舟生涯生成器 */}
+          {t('ArknightsTitle')}
         </Chip>
       </div>
       {Object.values(FormMap).map((item) => {

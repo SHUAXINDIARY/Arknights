@@ -67,7 +67,6 @@ export const savePngByCanvas = async (isDown = false) => {
         // 创建图像对象
         const img = new Image();
         img.id = "result";
-        // img.crossOrigin = "anonymous"; // 设置跨域
         img.onload = async (e) => {
             try {
                 if (e.target) {
