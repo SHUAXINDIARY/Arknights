@@ -21,7 +21,7 @@ const InfoModal = () => {
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         {(onClose) => (
-          <>
+          <div className="max-h-[80vh] overflow-y-scroll">
             <ModalHeader className="flex flex-col gap-1">
               {/* 提前声明 */}
               {t("Advance Declaration")}
@@ -112,7 +112,7 @@ const InfoModal = () => {
                 {t("OK")}
               </Button>
             </ModalFooter>
-          </>
+          </div>
         )}
       </ModalContent>
     </Modal>

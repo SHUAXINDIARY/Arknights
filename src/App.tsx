@@ -46,7 +46,7 @@ function App() {
       <div className="mb-10">
         <Chip size="lg" color="primary">
           {/* 明日方舟生涯生成器 */}
-          {t('ArknightsTitle')}
+          {t("ArknightsTitle")}
         </Chip>
       </div>
       {Object.values(FormMap).map((item) => {
@@ -91,12 +91,23 @@ function App() {
           }}
         >
           <PopoverTrigger>
-            <Button color="primary">生成</Button>
+            <Button color="primary">
+              {/* 生成 */}
+              {t("Generate")}
+            </Button>
           </PopoverTrigger>
           <PopoverContent>
             <div className="px-1 py-2">
-              <div className="text-small font-bold">提示</div>
-              <div className="text-tiny">请至少选择或填写上述其中的一项</div>
+              <div className="text-small font-bold">
+                {/* 提示 */}
+                {t("Tip")}
+              </div>
+              <div className="text-tiny">
+                {/* 请至少选择或填写上述其中的一项 */}
+                {t(
+                  "Please select or fill in at least one of the above options."
+                )}
+              </div>
             </div>
           </PopoverContent>
         </Popover>
@@ -107,7 +118,8 @@ function App() {
             setShowRes(true);
           }}
         >
-          预览示例
+          {/* 预览示例 */}
+          {t("Preview Example")}
         </Button>
       </ButtonGroup>
     </div>
