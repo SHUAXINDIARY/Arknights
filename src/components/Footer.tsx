@@ -1,6 +1,8 @@
 import { Divider, Link } from "@nextui-org/react";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <div className="max-w-md mb-7">
       <div className="flex h-5 items-center space-x-4">
@@ -25,7 +27,8 @@ const Footer = () => {
             target="_blank"
             className="text-sm"
           >
-            站点作者
+            {/* 站点作者 */}
+            {t("Site Author")}
           </Link>
         </div>
         <Divider orientation="vertical" />
@@ -38,7 +41,8 @@ const Footer = () => {
             target="_blank"
             className="text-sm"
           >
-            表格作者
+            {/* 表格作者 */}
+            {t('Table Author')}
           </Link>
         </div>
       </div>
