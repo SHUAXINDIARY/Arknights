@@ -1,5 +1,18 @@
+
 // 全量干员
 export const memberNameAvatarMap = [
+  {
+    name: "引星棘刺",
+    avatar: "https://media.prts.wiki/3/3b/%E5%A4%B4%E5%83%8F_%E5%BC%95%E6%98%9F%E6%A3%98%E5%88%BA.png"
+  },
+  {
+    name: "瑰盐",
+    avatar: "https://media.prts.wiki/8/8a/%E5%A4%B4%E5%83%8F_%E7%91%B0%E7%9B%90.png"
+  },
+  {
+    name: "特克诺",
+    avatar: "https://media.prts.wiki/2/2e/%E5%A4%B4%E5%83%8F_%E7%89%B9%E5%85%8B%E8%AF%BA.png"
+  },
   {
     name: "荒芜拉普兰德",
     avatar: "https://media.prts.wiki/0/04/头像_荒芜拉普兰德.png",
