@@ -1,5 +1,15 @@
 export const skinList = [
   {
+    name: "莱伊",
+    img: "https://media.prts.wiki/c/c9/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E8%8E%B1%E4%BC%8A_skin1.png",
+    skinName: "梦幻高空"
+  },
+  {
+    name: "龙舌兰",
+    img: "https://media.prts.wiki/3/37/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E9%BE%99%E8%88%8C%E5%85%B0_skin2.png",
+    skinName: "巅峰现场"
+  },
+  {
     name: "泥岩",
     img: "https://media.prts.wiki/e/e1/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E6%B3%A5%E5%B2%A9_skin3.png",
     skinName: "砾瓦",
