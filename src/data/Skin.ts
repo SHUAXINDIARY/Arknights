@@ -1,13 +1,33 @@
 export const skinList = [
   {
+    name: "涤火杰西卡",
+    img: "https://media.prts.wiki/a/a9/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E6%B6%A4%E7%81%AB%E6%9D%B0%E8%A5%BF%E5%8D%A1_skin1.png",
+    skinName: "上任达维镇",
+  },
+  {
+    name: "年",
+    img: "https://media.prts.wiki/9/9f/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E5%B9%B4_skin2.png",
+    skinName: "霹雳导演",
+  },
+  {
+    name: "重岳",
+    img: "https://media.prts.wiki/8/8d/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E9%87%8D%E5%B2%B3_skin2.png",
+    skinName: "全能演员",
+  },
+  {
+    name: "哈洛德",
+    img: "https://media.prts.wiki/b/ba/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E5%93%88%E6%B4%9B%E5%BE%B7_skin1.png",
+    skinName: "邀雪",
+  },
+  {
     name: "莱伊",
     img: "https://media.prts.wiki/c/c9/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E8%8E%B1%E4%BC%8A_skin1.png",
-    skinName: "梦幻高空"
+    skinName: "梦幻高空",
   },
   {
     name: "龙舌兰",
     img: "https://media.prts.wiki/3/37/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E9%BE%99%E8%88%8C%E5%85%B0_skin2.png",
-    skinName: "巅峰现场"
+    skinName: "巅峰现场",
   },
   {
     name: "泥岩",
