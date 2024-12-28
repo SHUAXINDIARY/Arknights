@@ -1,5 +1,10 @@
 export const skinList = [
   {
+    name: "医疗阿米娅",
+    img: "https://media.prts.wiki/c/ca/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E9%98%BF%E7%B1%B3%E5%A8%85%28%E5%8C%BB%E7%96%97%29_skin1.png",
+    skinName: "寰宇独奏",
+  },
+  {
     name: "涤火杰西卡",
     img: "https://media.prts.wiki/a/a9/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E6%B6%A4%E7%81%AB%E6%9D%B0%E8%A5%BF%E5%8D%A1_skin1.png",
     skinName: "上任达维镇",
