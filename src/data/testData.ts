@@ -2,9 +2,9 @@ import { FieldNameMap } from "../utils/constant";
 
 export const testData = {
     firstSkin:
-        "https://media.prts.wiki/9/98/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E8%8A%AC_skin1.png",
-    favoriteSkin:
         "https://media.prts.wiki/9/91/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E5%B9%BD%E7%81%B5%E9%B2%A8_skin1.png",
+    favoriteSkin:
+        "https://media.prts.wiki/c/ca/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E9%98%BF%E7%B1%B3%E5%A8%85%28%E5%8C%BB%E7%96%97%29_skin1.png",
     main: "https://media.prts.wiki/f/f2/头像_黍.png",
     firstSix: "https://media.prts.wiki/a/ad/头像_能天使.png",
     firstMember: "https://media.prts.wiki/2/28/头像_幽灵鲨.png",
