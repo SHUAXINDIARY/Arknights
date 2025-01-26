@@ -2,6 +2,22 @@
 // 全量干员
 export const memberNameAvatarMap = [
   {
+    name: "余",
+    avatar: "https://media.prts.wiki/6/66/%E5%A4%B4%E5%83%8F_%E4%BD%99.png"
+  },
+  {
+    name: "烛煌",
+    avatar: "https://media.prts.wiki/c/c4/%E5%A4%B4%E5%83%8F_%E7%83%9B%E7%85%8C.png"
+  },
+  {
+    name: "行箸",
+    avatar: "https://media.prts.wiki/4/42/%E5%A4%B4%E5%83%8F_%E8%A1%8C%E7%AE%B8.png"
+  },
+  {
+    name: "寻澜",
+    avatar: "https://media.prts.wiki/6/65/%E5%A4%B4%E5%83%8F_%E5%AF%BB%E6%BE%9C.png"
+  },
+  {
     name: "引星棘刺",
     avatar: "https://media.prts.wiki/3/3b/%E5%A4%B4%E5%83%8F_%E5%BC%95%E6%98%9F%E6%A3%98%E5%88%BA.png"
   },
