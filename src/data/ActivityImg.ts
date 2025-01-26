@@ -1,5 +1,17 @@
 export const ActivityList = [
   {
+    name: "新春签到2025",
+    img: "https://media.prts.wiki/thumb/f/f7/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E7%9B%B8%E8%A7%81%E6%AC%A2_23.jpg/1300px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E7%9B%B8%E8%A7%81%E6%AC%A2_23.jpg",
+  },
+  {
+    name: "相见欢",
+    img: "https://media.prts.wiki/thumb/5/54/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E7%9B%B8%E8%A7%81%E6%AC%A2_01.jpg/1300px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E7%9B%B8%E8%A7%81%E6%AC%A2_01.jpg",
+  },
+  {
+    name: "集成战略限时任务(无终奇语拓展Ⅱ)",
+    img: "https://media.prts.wiki/thumb/0/00/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E8%A7%86%E7%9B%B8%E5%8D%9A%E7%89%A9%E9%A6%86_08.jpg/1300px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E8%A7%86%E7%9B%B8%E5%8D%9A%E7%89%A9%E9%A6%86_08.jpg",
+  },
+  {
     name: "跨年纪念2025",
     img: "https://media.prts.wiki/thumb/2/26/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E8%A7%86%E7%9B%B8%E5%8D%9A%E7%89%A9%E9%A6%86_02.jpg/650px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E8%A7%86%E7%9B%B8%E5%8D%9A%E7%89%A9%E9%A6%86_02.jpg",
   },

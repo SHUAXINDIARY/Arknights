@@ -1,5 +1,25 @@
 export const skinList = [
   {
+    name: "杏仁",
+    img: "https://media.prts.wiki/1/18/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E6%9D%8F%E4%BB%81_skin1.png",
+    skinName: "“杏仁”拼盘"
+  },
+  {
+    name: "贝娜",
+    img: "https://media.prts.wiki/5/5b/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E8%B4%9D%E5%A8%9C_skin1.png",
+    skinName: "草原小帮手"
+  },
+  {
+    name: "黍",
+    img: "https://media.prts.wiki/b/bd/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E9%BB%8D_skin1.png",
+    skinName: "春日宴"
+  },
+  {
+    name: "左乐",
+    img: "https://media.prts.wiki/c/c9/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E5%B7%A6%E4%B9%90_skin1.png",
+    skinName: "少年游"
+  },
+  {
     name: "刻刀",
     img: "https://media.prts.wiki/2/26/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E5%88%BB%E5%88%80_skin1.png",
     skinName: "拭刀"
