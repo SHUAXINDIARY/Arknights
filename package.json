@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "rsbuild dev",
-    "build": "tsc -b && rsbuild build",
+    "build": "rsbuild build",
     "lint": "eslint .",
     "preview": "rsbuild preview"
   },
