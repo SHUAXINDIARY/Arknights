@@ -2927,7 +2927,6 @@ const memberSort = {
   },
   get five() {
     return memberNameAvatarMap.filter(item => item.level === 5).map(item => item.name)
-
   },
   get six() {
     return memberNameAvatarMap.filter(item => item.level === 6).map(item => item.name)

@@ -1,5 +1,20 @@
 export const skinList = [
   {
+    name: "石英",
+    img: "https://media.prts.wiki/4/4a/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E7%9F%B3%E8%8B%B1_skin1.png",
+    skinName: "封面佣兵"
+  },
+  {
+    name: "夜魔",
+    img: "https://media.prts.wiki/9/9b/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E5%A4%9C%E9%AD%94_skin2.png",
+    skinName: "湖畔的少女"
+  },
+  {
+    name: "濯尘芙蓉",
+    img: "https://media.prts.wiki/8/8e/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E6%BF%AF%E5%B0%98%E8%8A%99%E8%93%89_skin1.png",
+    skinName: "浪漫满厢"
+  },
+  {
     name: "杏仁",
     img: "https://media.prts.wiki/1/18/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E6%9D%8F%E4%BB%81_skin1.png",
     skinName: "“杏仁”拼盘"
