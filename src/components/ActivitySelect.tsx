@@ -53,10 +53,14 @@ const ActivitySelect = ({
         }}
       >
         {(item) => (
-          <AutocompleteItem key={item.img} textValue={item.name}>
+          <AutocompleteItem
+            key={item.img}
+            textValue={item.name}
+            className="pt-2 flex justify-center flex-col items-center"
+          >
             <div className="text-center">
               <LazyLoadAvatar url={item.img!} useAvatar={false} />
-              <span className="mt-2">{item.name}</span>
+              <span>{item.name}</span>
             </div>
           </AutocompleteItem>
         )}
