@@ -1,4 +1,31 @@
 export const skinList = [
+  ...[
+    {
+      "skinName": "万顷阳光",
+      "name": "万顷",
+      "img": "https://media.prts.wiki/5/59/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E4%B8%87%E9%A1%B7_skin1.png"
+    },
+    {
+      "skinName": "寄自奥格尼斯科",
+      "name": "薇薇安娜",
+      "img": "https://media.prts.wiki/0/04/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E8%96%87%E8%96%87%E5%AE%89%E5%A8%9C_skin1.png"
+    },
+    {
+      "skinName": "风笛声声",
+      "name": "风笛",
+      "img": "https://media.prts.wiki/4/41/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E9%A3%8E%E7%AC%9B_skin3.png"
+    },
+    {
+      "skinName": "繁霜满阶",
+      "name": "缠丸",
+      "img": "https://media.prts.wiki/a/ab/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E7%BC%A0%E4%B8%B8_skin1.png"
+    },
+    {
+      "skinName": "玫瑰骑手",
+      "name": "维荻",
+      "img": "https://media.prts.wiki/5/5c/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E7%BB%B4%E8%8D%BB_skin1.png"
+    }
+  ],
   {
     name: "石英",
     img: "https://media.prts.wiki/4/4a/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E7%9F%B3%E8%8B%B1_skin1.png",

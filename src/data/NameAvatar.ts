@@ -1,6 +1,21 @@
-
 // 全量干员
 export const memberNameAvatarMap = [
+  {
+    "name": "隐德来希",
+    "sex": "女",
+    "level": 6,
+    "career": "近卫",
+    "avatar": "https://media.prts.wiki/4/4c/%E5%A4%B4%E5%83%8F_%E9%9A%90%E5%BE%B7%E6%9D%A5%E5%B8%8C.png",
+    "position": "近战位"
+  },
+  {
+    "name": "诺威尔",
+    "sex": "男",
+    "position": "远程位",
+    "level": 5,
+    "career": "医疗",
+    "avatar": "https://media.prts.wiki/6/69/%E5%A4%B4%E5%83%8F_%E8%AF%BA%E5%A8%81%E5%B0%94.png",
+  },
   ...[
     {
       "name": "余",
