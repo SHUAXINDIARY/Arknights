@@ -6,18 +6,40 @@ enum Career {
     SS = "术师",
     TZ = "特种",
     XF = "先锋",
+    YL = '医疗'
 }
 
-enum Gender {
+export enum JpCareer {
+    "先锋" = "先鋒",
+    "近卫" = "前衛",
+    "重装" = "重装",
+    "狙击" = "狙撃",
+    "术师" = "術師",
+    "辅助" = "補助",
+    "医疗" = "医療",
+    "特种" = "特殊"
+}
+
+export enum EnCareer {
+    "先锋" = "Vanguard",
+    "近卫" = "Guard",
+    "重装" = "Defender",
+    "狙击" = "Sniper",
+    "术师" = "Caster",
+    "辅助" = "Supporter",
+    "医疗" = "Medic",
+    "特种" = "Specialist"
+}
+
+export enum Gender {
     Male = "男",
     Female = "女",
 }
 
-enum Position {
+export enum Position {
     CM = "远程位",
     LM = "近战位",
 }
-
 // 全量干员
 export const memberNameAvatarMap = [
     {

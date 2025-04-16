@@ -1,4 +1,5 @@
 // 爬取prts干员信息
+// https://prts.wiki/w/%E5%B9%B2%E5%91%98%E4%B8%80%E8%A7%88
 const getPageSelectMemberList = () => {
   let arr = document.querySelector("#filter-result").children;
   const list = [];
@@ -26,6 +27,7 @@ const getPageSelectMemberList = () => {
 getPageSelectMemberList();
 
 // 获取皮肤列表数据
+// https://prts.wiki/w/%E6%97%B6%E8%A3%85%E5%9B%9E%E5%BB%8A
 const getSkinList = () => {
   const list = document.querySelectorAll(
     ".halfimgcontainer .charskinbtn-container"
