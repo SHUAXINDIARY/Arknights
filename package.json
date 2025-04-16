@@ -18,10 +18,12 @@
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.5",
     "framer-motion": "^11.11.17",
+    "i18next": "^25.0.0",
     "next-themes": "^0.4.3",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^15.4.1",
     "terser": "^5.36.0",
     "ua-parser-js": "^2.0.0"
   },
