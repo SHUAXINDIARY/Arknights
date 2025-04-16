@@ -1,5 +1,25 @@
 export const skinList = [
     {
+        "skinName": "糖果暴击",
+        "name": "奥达",
+        "img": "https://media.prts.wiki/6/65/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E5%A5%A5%E8%BE%BE_skin1.png"
+    },
+    {
+        "skinName": "蝶舞华章",
+        "name": "伊内丝",
+        "img": "https://media.prts.wiki/b/b0/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E4%BC%8A%E5%86%85%E4%B8%9D_skin2.png"
+    },
+    {
+        "skinName": "空心王冠",
+        "name": "白铁",
+        "img": "https://media.prts.wiki/6/6e/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E7%99%BD%E9%93%81_skin2.png"
+    },
+    {
+        "skinName": "玩伴",
+        "name": "红云",
+        "img": "https://media.prts.wiki/f/fd/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E7%BA%A2%E4%BA%91_skin1.png"
+    },
+    {
         skinName: "甜美配方",
         name: "妮芙",
         img: "https://media.prts.wiki/f/f9/%E5%8D%8A%E8%BA%AB%E5%83%8F_%E5%A6%AE%E8%8A%99_skin1.png",

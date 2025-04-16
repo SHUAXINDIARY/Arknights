@@ -53,3 +53,4 @@ const getSkinList = () => {
     });
     return skinList;
 };
+getSkinList()
