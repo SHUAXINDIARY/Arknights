@@ -12,7 +12,7 @@ const Footer = () => {
             color="foreground"
             target="_blank"
           >
-            Github
+            站点仓库
           </Link>
         </div>
         <Divider orientation="vertical" />
