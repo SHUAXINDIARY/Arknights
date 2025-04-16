@@ -1,5 +1,5 @@
 // 爬取prts干员信息
-const getPageSelectMemberList = (level = "", career = "") => {
+const getPageSelectMemberList = () => {
     let arr = document.querySelector("#filter-result").children;
     const list = [];
     for (let i = 0; i < arr.length; i++) {
