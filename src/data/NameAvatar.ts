@@ -24,7 +24,7 @@ export const memberNameAvatarMap = [
         "avatar": "https://media.prts.wiki/2/2a/头像_Mon3tr.png",
         "name": "Mon3tr",
         "sex": "女",
-        "level": 5,
+        "level": 6,
         "career": "医疗",
         "position": "远程位"
     },
@@ -32,7 +32,7 @@ export const memberNameAvatarMap = [
         "avatar": "https://media.prts.wiki/b/b6/头像_阿兰娜.png",
         "name": "阿兰娜",
         "sex": "女",
-        "level": 4,
+        "level": 5,
         "career": "辅助",
         "position": "近战位"
     },
@@ -40,7 +40,7 @@ export const memberNameAvatarMap = [
         "avatar": "https://media.prts.wiki/f/fe/头像_骋风.png",
         "name": "骋风",
         "sex": "男",
-        "level": 3,
+        "level": 4,
         "career": "近卫",
         "position": "近战位"
     },
