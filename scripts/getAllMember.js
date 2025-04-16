@@ -16,7 +16,7 @@ const getPageSelectMemberList = () => {
       avatar: avatar.getAttribute("data-src"),
       name,
       sex,
-      level: Number(levelArr[levelArr.length - 1]),
+      level: Number(levelArr[levelArr.length - 1]) + 1,
       career: careerArr[careerArr.length - 1] || "",
       position,
     });
