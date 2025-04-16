@@ -78,3 +78,27 @@ const getActivityList = () => {
   console.log(data);
 };
 getActivityList();
+
+// 获取蚀刻章列表
+// https://prts.wiki/w/%E5%85%89%E8%8D%A3%E4%B9%8B%E8%B7%AF
+const getMedalList = () => {
+  const data = [];
+  document.querySelectorAll("img").forEach((item) => {
+    const url = item.getAttribute("data-preview-src");
+    if (url && url.includes("/medalGroupActivity")) {
+      const name =
+        item.parentElement.parentElement.parentElement.textContent.split(
+          " "
+        )[0];
+      url &&
+        name &&
+        data.push({
+          img: url,
+          name,
+        });
+    }
+  });
+  console.log(data);
+};
+
+getMedalList();

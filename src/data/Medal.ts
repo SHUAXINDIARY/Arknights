@@ -1,8 +1,5 @@
 export const MedalDataListMap = [
-  {
-    img: "https://torappu.prts.wiki/assets/medal_diy/medalGroupActivity39side.png",
-    name: "出苍白海",
-  },
+
   {
     img: "https://torappu.prts.wiki/assets/medal_icon/medal_player_lv_01.png",
     name: "章节奖章 (47)",
@@ -2282,6 +2279,26 @@ export const MedalDataListMap = [
 ];
 
 export const MedalGroupList = [
+  {
+    "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupActivityAct1multi.png",
+    "name": "罗德岛促融共竞"
+  },
+  {
+    "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupActivity41side.png",
+    "name": "挽歌燃烧殆尽蚀刻章套组"
+  },
+  {
+    "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupActivityCrisisV203.png",
+    "name": "净罪作战蚀刻章套组"
+  },
+  {
+    "img": "https://torappu.prts.wiki/assets/medal_diy/medalGroupActivity40side.png",
+    "name": "相见欢蚀刻章套组"
+  },
+  {
+    img: "https://torappu.prts.wiki/assets/medal_diy/medalGroupActivity39side.png",
+    name: "出苍白海",
+  },
   {
     name: "萨卡兹的无终奇语蚀刻章套组",
     img: "https://torappu.prts.wiki/assets/medal_diy/medalGroupRogue04.png",
