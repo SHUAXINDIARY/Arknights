@@ -36,7 +36,7 @@ React + Rsbuild + [@nextui-org/react](https://nextui.org/docs/frameworks/vite) +
 
 > Possible future features
 
-- Switch between Japanese/English
+- Switch between Japanese/English - ✅
 - Support custom operator avatars and all avatars available in the game - ✅
 - Support selection of etching medals sets - ✅
 - ...
