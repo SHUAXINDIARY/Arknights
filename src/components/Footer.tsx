@@ -1,21 +1,24 @@
-import { Divider, Link } from "@heroui/react";
+import {
+  Button,
+  Divider,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  Link,
+  Select,
+  SelectItem,
+  useDisclosure,
+} from "@heroui/react";
+import i18n, { THook } from "../i18n";
 
 const Footer = () => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { t } = THook();
   return (
     <div className="max-w-md mb-7">
       <div className="flex h-5 items-center space-x-4">
-        <div>
-          <Link
-            isBlock
-            showAnchorIcon
-            href="https://github.com/SHUAXINDIARY/Arknights"
-            color="foreground"
-            target="_blank"
-          >
-            站点仓库
-          </Link>
-        </div>
-        <Divider orientation="vertical" />
         <div>
           <Link
             isBlock
@@ -25,7 +28,7 @@ const Footer = () => {
             target="_blank"
             className="text-sm"
           >
-            站点作者
+            {t("siteAuthor")}
           </Link>
         </div>
         <Divider orientation="vertical" />
@@ -38,8 +41,46 @@ const Footer = () => {
             target="_blank"
             className="text-sm"
           >
-            表格作者
+            {t("formAuthor")}
           </Link>
+        </div>
+        <div>
+          <Link isBlock color="foreground" className="text-sm" onPress={onOpen}>
+            {t("more")}
+          </Link>
+          <Drawer isOpen={isOpen} onOpenChange={onOpenChange} placement="left">
+            <DrawerContent>
+              {(onClose) => (
+                <>
+                  <DrawerHeader className="flex flex-col gap-1">
+                    {t("moreActions")}
+                  </DrawerHeader>
+                  <DrawerBody className="w-1/2">
+                    <Button>{t("siteRepo")}</Button>
+                    {/* <Button>{t("dataSource")}</Button> */}
+                    <Select
+                      className="max-w-xs"
+                      label={t("selectLanguage")}
+                      size="sm"
+                      onChange={(e) => {
+                        console.log(e.target.value);
+                        i18n.changeLanguage(e.target.value);
+                      }}
+                    >
+                      {["zh", "en", "jp"].map((lang) => (
+                        <SelectItem key={lang}>{lang}</SelectItem>
+                      ))}
+                    </Select>
+                  </DrawerBody>
+                  <DrawerFooter>
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      {t("close")}
+                    </Button>
+                  </DrawerFooter>
+                </>
+              )}
+            </DrawerContent>
+          </Drawer>
         </div>
       </div>
       <Divider className="my-4" />

@@ -13,14 +13,13 @@ import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import ShowRes from "./components/ShowResult";
 import { testData } from "./data/testData";
-import { useTranslation } from "react-i18next";
+import { THook } from "./i18n";
 
 function App() {
   const [formState, setFormState] = useState<typeof FieldNameMap | null>();
   const [showRes, setShowRes] = useState(false);
   const [isShowPopover, setIsShowPopover] = useState(false);
-  const { t } = useTranslation();
-
+  const { t } = THook();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [showRes]);
@@ -45,7 +44,6 @@ function App() {
       <Footer />
       <div className="mb-10">
         <Chip size="lg" color="primary">
-          {/* 明日方舟生涯生成器 */}
           {t("Arknights Career Generator")}
         </Chip>
       </div>
@@ -91,12 +89,12 @@ function App() {
           }}
         >
           <PopoverTrigger>
-            <Button color="primary">生成</Button>
+            <Button color="primary">{t("generate")}</Button>
           </PopoverTrigger>
           <PopoverContent>
             <div className="px-1 py-2">
-              <div className="text-small font-bold">提示</div>
-              <div className="text-tiny">请至少选择或填写上述其中的一项</div>
+              <div className="text-small font-bold">{t("prompt")}</div>
+              <div className="text-tiny">{t("selectOrFillOne")}</div>
             </div>
           </PopoverContent>
         </Popover>
@@ -107,7 +105,7 @@ function App() {
             setShowRes(true);
           }}
         >
-          预览示例
+          {t("previewExample")}
         </Button>
       </ButtonGroup>
     </div>

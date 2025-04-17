@@ -6,6 +6,7 @@ import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@heroui/react";
 import { isApple, savePngByCanvas } from "../utils";
 import QRcode from "qrcode";
+import { THook } from "../i18n";
 interface ShowRes {
   data: typeof FieldNameMap;
   onClose?: () => void;
@@ -14,6 +15,7 @@ interface ShowRes {
 
 const ShowRes = (props: ShowRes) => {
   const { data } = props;
+  const { t } = THook();
   const skin = {
     firstSkin: data.firstSkin,
     favoriteSkin: data.favoriteSkin,
@@ -53,7 +55,7 @@ const ShowRes = (props: ShowRes) => {
   return (
     <div ref={ref}>
       <Footer />
-      <h2 className="text-2xl mb-5">明日方舟生涯表</h2>
+      <h2 className="text-2xl mb-5">{t("Arknights Career Generator")}</h2>
       {/* 渲染干员 */}
       <div className="flex flex-wrap gap-2 justify-center mb-5 mt-5">
         {Object.keys(filterData).map((key) => {
@@ -136,7 +138,7 @@ const ShowRes = (props: ShowRes) => {
           <div className="flex justify-center">
             <div>
               <img src={qrCodeUrl} className="m-auto mb-2" />
-              扫码填写
+              {t("scan_to_fill")}
             </div>
           </div>
         ) : (
@@ -159,7 +161,7 @@ const ShowRes = (props: ShowRes) => {
             }
           }}
         >
-          导出结果
+          {t("export_result")}
         </Button>
         <Button
           color="warning"
@@ -167,7 +169,7 @@ const ShowRes = (props: ShowRes) => {
             props.onClose?.();
           }}
         >
-          编辑
+          {t("edit")}
         </Button>
         <Button
           color="danger"
@@ -176,7 +178,7 @@ const ShowRes = (props: ShowRes) => {
             props.onClear?.();
           }}
         >
-          返回
+          {t("go_back")}
         </Button>
       </ButtonGroup>
     </div>

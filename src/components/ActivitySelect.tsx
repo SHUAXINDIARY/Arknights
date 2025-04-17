@@ -29,6 +29,7 @@ const ActivitySelect = ({
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Autocomplete
+        itemHeight={52 * 2}
         defaultSelectedKey={formValue}
         label={label}
         placeholder={name}

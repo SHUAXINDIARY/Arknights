@@ -14,6 +14,7 @@ import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useEffect, useState } from "react";
 import { useThrottleFn } from "ahooks";
+import { THook } from "../i18n";
 
 export interface SkinSelectProps {
   label?: string;
@@ -40,6 +41,7 @@ export default function SkinSelect({
   const [pageData, setPageData] = useState(data);
   // 搜索数据
   const [search, setSearch] = useState("");
+  const { t } = THook();
   const { run: updateSearch } = useThrottleFn(
     (val) => {
       setSearch(val);
@@ -71,7 +73,7 @@ export default function SkinSelect({
     <div className="flex w-full justify-center">
       <div className="w-[208px] h-14">
         <Button className="w-full h-full" onPress={onOpen}>
-          {currentSelect?.name || label || "选择皮肤"}
+          {currentSelect?.name || label || t("selectSkin")}
           {"\n"}
           {currentSelect ? currentSelect.skinName : ""}
         </Button>
@@ -81,13 +83,13 @@ export default function SkinSelect({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                {currentSelect?.name || label || "选择皮肤"}
+                {currentSelect?.name || label || t("selectSkin")}
               </ModalHeader>
               <ModalBody className="overflow-y-scroll">
                 <div className="p-2 flex">
                   <Input
                     defaultValue={search}
-                    placeholder={placeholder || "输入皮肤或干员名搜索"}
+                    placeholder={placeholder || t("inputSkinOrOperator")}
                     className="mr-4"
                     onValueChange={(val) => {
                       updateSearch(val);
@@ -135,10 +137,10 @@ export default function SkinSelect({
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
-                  取消
+                  {t("cancel")}
                 </Button>
                 <Button color="primary" onPress={onClose}>
-                  确定
+                  {t("confirm")}
                 </Button>
               </ModalFooter>
             </>

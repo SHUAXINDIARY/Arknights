@@ -6,6 +6,7 @@ import {
   MEMBER_SORT_KEY,
   memberNameAvatarMap,
 } from "../data/NameAvatar";
+import { getT } from "../i18n";
 import ActivitySelect from "./ActivitySelect";
 import CustomInput from "./CustomInput";
 import MemberSelect from "./MemberSelect";
@@ -20,296 +21,471 @@ type SelectPropsExtra = SelectProps & {
 
 export const FormMap = [
   {
-    name: "第一个购入的皮肤",
+    get name() {
+      return getT("firstPurchasedSkin");
+    },
     field: "firstSkin",
     components: SkinSelect,
     params: {
-      label: "选择第一个购入的皮肤",
+      get label() {
+        return getT("selectFirstSkin");
+      },
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的皮肤",
+    get name() {
+      return getT("favoriteSkin");
+    },
     field: "favoriteSkin",
     components: SkinSelect,
     params: {
-      label: "选择最喜欢的皮肤",
+      get label() {
+        return getT("selectFavoriteSkin");
+      },
     } as SelectPropsExtra,
   },
   {
-    name: "主推",
+    get name() {
+      return getT("mainOperator");
+    },
     field: "main",
     components: MemberSelect,
     params: {
-      label: "主推",
-      name: "请选择干员",
+      get label() {
+        return getT("mainOperator");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
     } as SelectPropsExtra,
   },
   {
-    name: "第一个6星",
+    get name() {
+      return getT("firstSixStar");
+    },
     field: "firstSix",
     components: MemberSelect,
     params: {
-      label: "第一个6星",
-      name: "请选择干员",
+      get label() {
+        return getT("firstSixStar");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.six),
     } as SelectPropsExtra,
   },
   {
-    name: "新手之友干员",
+    get name() {
+      return getT("beginnerFriendOperator");
+    },
     field: "firstMember",
     components: MemberSelect,
     params: {
-      label: "新手之友干员",
-      name: "请选择干员",
+      get label() {
+        return getT("beginnerFriendOperator");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢用的干员",
+    get name() {
+      return getT("favoriteOperator");
+    },
     field: "favoriteMember",
     components: MemberSelect,
     params: {
-      label: "最喜欢用的干员",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteOperator");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的6星干员",
+    get name() {
+      return getT("favoriteSixStarOperator");
+    },
     field: "favoriteSixMember",
     components: MemberSelect,
     params: {
-      label: "最喜欢的6星干员",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteSixStarOperator");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.six),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的5星干员",
+    get name() {
+      return getT("favoriteFiveStarOperator");
+    },
     field: "favoriteFiveMember",
     components: MemberSelect,
     params: {
-      label: "最喜欢的5星干员",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteFiveStarOperator");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.five),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的4星干员",
+    get name() {
+      return getT("favoriteFourStarOperator");
+    },
     field: "favoriteFourMember",
     components: MemberSelect,
     params: {
-      label: "最喜欢的4星干员",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteFourStarOperator");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.four),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的3星干员",
+    get name() {
+      return getT("favoriteThreeStarOperator");
+    },
     field: "favoriteThreeMember",
     components: MemberSelect,
     params: {
-      label: "最喜欢的3星干员",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteThreeStarOperator");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.three),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的先锋",
+    get name() {
+      return getT("favoriteVanguard");
+    },
     field: "favoriteXF",
     components: MemberSelect,
     params: {
-      label: "最喜欢的先锋",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteVanguard");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.XF),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的近卫",
+    get name() {
+      return getT("favoriteGuard");
+    },
     field: "favoriteJW",
     components: MemberSelect,
     params: {
-      label: "最喜欢的近卫",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteGuard");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.JW),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的狙击",
+    get name() {
+      return getT("favoriteSniper");
+    },
     field: "favoriteJJ",
     components: MemberSelect,
     params: {
-      label: "最喜欢的狙击",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteSniper");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.JJ),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的医疗",
+    get name() {
+      return getT("favoriteMedic");
+    },
     field: "favoriteYL",
     components: MemberSelect,
     params: {
-      label: "最喜欢的医疗",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteMedic");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.YL),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的重装",
+    get name() {
+      return getT("favoriteDefender");
+    },
     field: "favoriteZZ",
     components: MemberSelect,
     params: {
-      label: "最喜欢的重装",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteDefender");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.ZZ),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的术师",
+    get name() {
+      return getT("favoriteCaster");
+    },
     field: "favoriteSS",
     components: MemberSelect,
     params: {
-      label: "最喜欢的术师",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteCaster");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.SS),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的辅助",
+    get name() {
+      return getT("favoriteSupporter");
+    },
     field: "favoriteFZ",
     components: MemberSelect,
     params: {
-      label: "最喜欢的辅助",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteSupporter");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.FZ),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的特种",
+    get name() {
+      return getT("favoriteSpecialist");
+    },
     field: "favoriteTZ",
     components: MemberSelect,
     params: {
-      label: "最喜欢的特种",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteSpecialist");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.TZ),
     } as SelectPropsExtra,
   },
-
   {
-    name: "最欧出卡",
+    get name() {
+      return getT("luckiestPull");
+    },
     field: "lucky",
     components: MemberSelect,
     params: {
-      label: "最欧出卡",
-      name: "请选择干员",
+      get label() {
+        return getT("luckiestPull");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
     } as SelectPropsExtra,
   },
   {
-    name: "最非出卡",
+    get name() {
+      return getT("unluckiestPull");
+    },
     field: "Unfortunate",
     components: MemberSelect,
     params: {
-      label: "最非出卡",
-      name: "请选择干员",
+      get label() {
+        return getT("unluckiestPull");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的男干员",
+    get name() {
+      return getT("favoriteMaleOperator");
+    },
     field: "favoriteBoy",
     components: MemberSelect,
     params: {
-      label: "最喜欢的男干员",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteMaleOperator");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.MAN),
     } as SelectPropsExtra,
   },
   {
-    name: "最喜欢的女干员",
+    get name() {
+      return getT("favoriteFemaleOperator");
+    },
     field: "favoriteGirl",
     components: MemberSelect,
     params: {
-      label: "最喜欢的女干员",
-      name: "请选择干员",
+      get label() {
+        return getT("favoriteFemaleOperator");
+      },
+      get name() {
+        return getT("selectOperator");
+      },
       data: getSortData(MEMBER_SORT_KEY.WOMAN),
     } as SelectPropsExtra,
   },
   {
-    name: "入坑活动",
+    get name() {
+      return getT("firstEvent");
+    },
     field: "firstActivity",
     components: ActivitySelect,
     params: {
-      label: "入坑活动",
-      name: "请选择活动",
+      get label() {
+        return getT("firstEvent");
+      },
+      get name() {
+        return getT("selectActivity");
+      },
       data: ActivityList,
     } as SelectPropsExtra & {
       data: (typeof ActivityList)[0][];
     },
   },
   {
-    name: "最喜欢的剧情",
+    get name() {
+      return getT("favoriteStory");
+    },
     field: "favoriteDrama",
     components: ActivitySelect,
     params: {
-      label: "最喜欢的剧情",
-      name: "请选择活动",
+      get label() {
+        return getT("favoriteStory");
+      },
+      get name() {
+        return getT("selectActivity");
+      },
       data: ActivityList,
     } as SelectPropsExtra & {
       data: (typeof ActivityList)[0][];
     },
   },
   {
-    name: "最喜欢的蚀刻章套组",
+    get name() {
+      return getT("favoriteMedalGroup");
+    },
     field: "favoriteMedalGroup",
     components: ActivitySelect,
     params: {
-      label: "最喜欢的蚀刻章套组",
-      name: "请选择蚀刻章套组",
+      get label() {
+        return getT("favoriteMedalGroup");
+      },
+      get name() {
+        return getT("selectMedalGroup");
+      },
       data: MedalGroupList,
     } as SelectPropsExtra & {
       data: (typeof MedalGroupList)[0][];
     },
   },
   {
-    name: "最喜欢的常驻模式",
+    get name() {
+      return getT("favoritePermanentMode");
+    },
     field: "favoriteMode",
     components: CustomInput,
     params: {
-      placeholder: "请输入最喜欢的常驻模式",
-      label: "最喜欢的常驻模式",
+      get placeholder() {
+        return getT("inputFavoriteMode");
+      },
+      get label() {
+        return getT("favoritePermanentMode");
+      },
     } as InputProps,
   },
   {
-    name: "最喜欢的EP",
+    get name() {
+      return getT("favoriteEP");
+    },
     field: "favoriteEP",
     components: CustomInput,
     params: {
-      placeholder: "请输入最喜欢的EP",
-      label: "最喜欢的EP",
+      get placeholder() {
+        return getT("inputFavoriteEP");
+      },
+      get label() {
+        return getT("favoriteEP");
+      },
     } as InputProps,
   },
   {
-    name: "最期待的卫星",
+    get name() {
+      return getT("mostAnticipatedSatellite");
+    },
     field: "hopeMember",
     components: CustomInput,
     params: {
-      placeholder: "请输入最期待的卫星",
-      label: "最期待的卫星",
+      get placeholder() {
+        return getT("inputHopeMember");
+      },
+      get label() {
+        return getT("mostAnticipatedSatellite");
+      },
     } as InputProps,
   },
   {
-    name: "您的游戏名称",
+    get name() {
+      return getT("inGameName");
+    },
     field: "name",
     components: CustomInput,
     params: {
-      placeholder: "请输入您的游戏名称",
-      label: "您的游戏名称",
+      get placeholder() {
+        return getT("inputGameName");
+      },
+      get label() {
+        return getT("inGameName");
+      },
     } as InputProps,
   },
   {
-    name: "自定义头像",
+    get name() {
+      return getT("customAvatar");
+    },
     field: "customAvatar",
     components: SkinSelect,
     params: {
-      placeholder: "输入头像名或干员名称选择",
-      label: "选择自定义头像",
+      get placeholder() {
+        return getT("inputOrSearchAvatar");
+      },
+      get label() {
+        return getT("selectCustomAvatar");
+      },
       useAvatarShowImg: true,
       useCardShow: false,
       data: [...AvatarList, ...memberNameAvatarMap, ...MedalDataListMap].map(
@@ -328,22 +504,4 @@ export const FormMap = [
       ),
     } as SkinSelectProps,
   },
-  // {
-  //   name: "最喜欢的宣传图",
-  //   field: "favoriteImg",
-  //   components: CustomInput,
-  //   params: {
-  //     placeholder: "请输入最喜欢的宣传图",
-  //     label: "请输入最喜欢的宣传图",
-  //   } as InputProps,
-  // },
-  // {
-  //   name: "最喜欢的CP",
-  //   field: "favoriteCP",
-  //   components: CustomInput,
-  //   params: {
-  //     placeholder: "请输入最喜欢的CP",
-  //     label: "请输入最喜欢的CP",
-  //   } as InputProps,
-  // },
-] as const;
+];
