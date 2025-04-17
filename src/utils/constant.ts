@@ -6,3 +6,9 @@ export const FieldNameMap = Object.values(FormMap).reduce((total, item) => {
     total[item.field as FormField] = item.name;
     return total;
 }, {} as Record<FormField, string>);
+
+
+export const FieldNameMapForI18n = () => (Object.values(FormMap).reduce((total, item) => {
+    total[item.field as FormField] = item.name;
+    return total;
+}, {} as Record<FormField, string>));

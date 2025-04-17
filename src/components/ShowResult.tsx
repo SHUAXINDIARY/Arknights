@@ -1,6 +1,10 @@
 import { useRef, useEffect, useState } from "react";
 import Footer from "./Footer";
-import { FieldNameMap, FormField } from "../utils/constant";
+import {
+  FieldNameMap,
+  FieldNameMapForI18n,
+  FormField,
+} from "../utils/constant";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@heroui/react";
@@ -52,6 +56,7 @@ const ShowRes = (props: ShowRes) => {
       setQrCodeUrl(data);
     })();
   }, []);
+  console.log("调试FieldNameMap", FieldNameMapForI18n());
   return (
     <div ref={ref}>
       <Footer />
@@ -74,7 +79,7 @@ const ShowRes = (props: ShowRes) => {
                     url={filterData[_key]!}
                   />
                 </div>
-                <div className="text-sm">{FieldNameMap[_key]}</div>
+                <div className="text-sm">{FieldNameMapForI18n()[_key]}</div>
               </div>
             </div>
           );
@@ -96,7 +101,7 @@ const ShowRes = (props: ShowRes) => {
                   url={activity[_key]!}
                 />
               </div>
-              <div className="mt-2">{FieldNameMap[_key]}</div>
+              <div className="mt-2">{FieldNameMapForI18n()[_key]}</div>
             </div>
           );
         })}
@@ -118,7 +123,7 @@ const ShowRes = (props: ShowRes) => {
                   url={skin[_key]!}
                 />
               </div>
-              <div className="mt-2">{FieldNameMap[_key]}</div>
+              <div className="mt-2">{FieldNameMapForI18n()[_key]}</div>
             </div>
           );
         })}
