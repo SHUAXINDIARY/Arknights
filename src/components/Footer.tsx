@@ -96,7 +96,7 @@ const Footer = () => {
                       href="https://prts.wiki/w/%E9%A6%96%E9%A1%B5"
                       target="_blank"
                     >
-                      {t("dataSource")}
+                      prts
                     </Link>
                     <Link
                       href="https://github.com/ArknightsAssets/ArknightsGamedata"

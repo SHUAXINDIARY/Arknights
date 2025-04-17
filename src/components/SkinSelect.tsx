@@ -14,7 +14,7 @@ import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useEffect, useState } from "react";
 import { useThrottleFn } from "ahooks";
-import { THook } from "../i18n";
+import i18n, { THook } from "../i18n";
 
 export interface SkinSelectProps {
   label?: string;
@@ -94,11 +94,24 @@ export default function SkinSelect({
                     onValueChange={(val) => {
                       updateSearch(val);
                       updatePageData(
-                        data.filter(
-                          (item) =>
-                            item.name.includes(val) ||
+                        data.filter((item) => {
+                          let operatorName = item.name;
+                          switch (i18n.language) {
+                            case "en":
+                              operatorName = item?.enName;
+                              break;
+                            case "jp":
+                              operatorName = item?.jpName;
+                              break;
+                            default:
+                              break;
+                          }
+                          console.log("operatorName", operatorName);
+                          return (
+                            (operatorName || item.name).includes(val) ||
                             item.skinName.includes(val)
-                        )
+                          );
+                        })
                       );
                     }}
                     onClear={() => {
