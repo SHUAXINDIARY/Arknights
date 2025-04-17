@@ -5,7 +5,6 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerFooter,
-  DrawerHeader,
   Link,
   Select,
   SelectItem,
@@ -46,19 +45,21 @@ const Footer = () => {
         </div>
         <div>
           <Link isBlock color="foreground" className="text-sm" onPress={onOpen}>
-            {t("more")}
+            {t("Language")}
           </Link>
-          <Drawer isOpen={isOpen} onOpenChange={onOpenChange} placement="left">
+          <Drawer
+            className="w-1/2"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement="left"
+          >
             <DrawerContent>
               {(onClose) => (
                 <>
-                  <DrawerHeader className="flex flex-col gap-1">
-                    {t("moreActions")}
-                  </DrawerHeader>
-                  <DrawerBody className="w-1/2">
-                    <Button>{t("siteRepo")}</Button>
-                    {/* <Button>{t("dataSource")}</Button> */}
+                  <DrawerBody className="h-auto">
+                    <h1 className="text-xl font-medium">{t("Language")}</h1>
                     <Select
+                      defaultSelectedKeys={[i18n.language]}
                       className="max-w-xs"
                       label={t("selectLanguage")}
                       size="sm"
@@ -67,7 +68,6 @@ const Footer = () => {
                         i18n.changeLanguage(e.target.value);
                       }}
                     >
-                      {/* "zh", "en", "jp" */}
                       {[
                         {
                           label: "中文",
@@ -85,6 +85,32 @@ const Footer = () => {
                         <SelectItem key={lang.value}>{lang.label}</SelectItem>
                       ))}
                     </Select>
+                    <h1 className="text-xl font-medium">{t("more")}</h1>
+                    <Link
+                      href="https://github.com/SHUAXINDIARY/Arknights"
+                      target="_blank"
+                    >
+                      {t("siteRepo")}
+                    </Link>
+                    <Link
+                      href="https://prts.wiki/w/%E9%A6%96%E9%A1%B5"
+                      target="_blank"
+                    >
+                      {t("dataSource")}
+                    </Link>
+                    <Link
+                      href="https://github.com/ArknightsAssets/ArknightsGamedata"
+                      target="_blank"
+                    >
+                      ArknightsGamedata
+                    </Link>
+
+                    <Link href="https://arknights.wikiru.jp/" target="_blank">
+                      arknights.wikiru
+                    </Link>
+                    <Link href="https://arknights.wiki.gg/" target="_blank">
+                      arknights.wiki.gg
+                    </Link>
                   </DrawerBody>
                   <DrawerFooter>
                     <Button color="danger" variant="light" onPress={onClose}>

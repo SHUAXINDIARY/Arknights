@@ -10,6 +10,7 @@ import { initReactI18next, useTranslation } from "react-i18next";
 export const resources = {
     en: {
         translation: {
+            "Language": "Language",
             "modalTitle": "Disclaimer",
             "inspirationText": "Inspired by",
             "careerImage": "Career Chart made by",
@@ -95,10 +96,11 @@ export const resources = {
     },
     jp: {
         translation: {
+            "Language": "言語",
             "modalTitle": "免責事項",
             "inspirationText": "インスピレーション提供者：",
             "careerImage": "が作成したキャリア図：",
-            "dataSource": "データ提供元：",
+            "dataSource": "データ提供元",
             "prts": "PRTS",
             "wiki": "BilibiliのアークナイツWiki",
             "devContact": "このサイトはすべて私自身が開発しました。連絡先は以下：",
@@ -180,10 +182,11 @@ export const resources = {
     },
     zh: {
         translation: {
+            "Language": "语言",
             "modalTitle": "提前声明",
             "inspirationText": "灵感来自",
             "careerImage": "制作的生涯图：",
-            "dataSource": "数据来自",
+            "dataSource": "数据来源",
             "prts": "prts",
             "wiki": "B站明日方舟WIKI",
             "devContact": "网站开发均为本人，联系方式如下：",
