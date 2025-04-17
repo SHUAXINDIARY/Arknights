@@ -67,8 +67,22 @@ const Footer = () => {
                         i18n.changeLanguage(e.target.value);
                       }}
                     >
-                      {["zh", "en", "jp"].map((lang) => (
-                        <SelectItem key={lang}>{lang}</SelectItem>
+                      {/* "zh", "en", "jp" */}
+                      {[
+                        {
+                          label: "中文",
+                          value: "zh",
+                        },
+                        {
+                          label: "日本语",
+                          value: "jp",
+                        },
+                        {
+                          label: "English",
+                          value: "en",
+                        },
+                      ].map((lang) => (
+                        <SelectItem key={lang.value}>{lang.label}</SelectItem>
                       ))}
                     </Select>
                   </DrawerBody>
