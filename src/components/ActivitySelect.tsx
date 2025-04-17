@@ -4,7 +4,7 @@ import {
   // SelectItem,
   Autocomplete,
   AutocompleteItem,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { ActivityList } from "../data/ActivityImg";
 import { useState } from "react";

@@ -10,7 +10,7 @@ import ActivitySelect from "./ActivitySelect";
 import CustomInput from "./CustomInput";
 import MemberSelect from "./MemberSelect";
 import SkinSelect, { SkinSelectProps } from "./SkinSelect";
-import { SelectProps, InputProps } from "@nextui-org/react";
+import { SelectProps, InputProps } from "@heroui/react";
 
 type MemberInfo = (typeof memberNameAvatarMap)[0];
 

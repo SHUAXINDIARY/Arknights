@@ -4,7 +4,7 @@ import {
   // SelectItem,
   Autocomplete,
   AutocompleteItem,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { memberNameAvatarMap } from "../data/NameAvatar";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useState } from "react";
@@ -34,7 +34,8 @@ export default function MemberSelect({
         defaultSelectedKey={formValue}
         label={label}
         placeholder={name}
-        className="w-52 "
+        className="w-52"
+        itemHeight={52}
         defaultItems={data || memberNameAvatarMap}
         onBlur={() => {
           setIsOpenSearch(false);
@@ -55,7 +56,11 @@ export default function MemberSelect({
         }}
       >
         {(item) => (
-          <AutocompleteItem key={item.avatar} textValue={item.name}>
+          <AutocompleteItem
+            key={item.avatar}
+            textValue={item.name}
+            className="h-auto"
+          >
             <div className="flex items-center">
               <LazyLoadAvatar url={item.avatar!} useAvatar />
               <span className="ml-3">{item.name}</span>

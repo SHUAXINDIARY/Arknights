@@ -6,7 +6,7 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { FormMap } from "./components/FormRender";
 import { FieldNameMap } from "./utils/constant";
 import { useEffect, useState } from "react";

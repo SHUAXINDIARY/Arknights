@@ -9,7 +9,7 @@ import {
   Card,
   CardBody,
   Input,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useEffect, useState } from "react";

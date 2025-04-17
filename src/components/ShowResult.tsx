@@ -3,7 +3,7 @@ import Footer from "./Footer";
 import { FieldNameMap, FormField } from "../utils/constant";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
-import { ButtonGroup, Button } from "@nextui-org/react";
+import { ButtonGroup, Button } from "@heroui/react";
 import { isApple, savePngByCanvas } from "../utils";
 import QRcode from "qrcode";
 interface ShowRes {
