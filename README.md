@@ -36,7 +36,7 @@ React + Rsbuild + [@nextui-org/react](https://nextui.org/docs/frameworks/vite) +
 
 > 可能会做的
 
-- 日/英切换
+- 日/英切换 - ✅
 - 头像支持自定义干员和游戏内可以设置的所有头像 - ✅
 - 支持选择蚀刻章套组 - ✅ 
 - ...

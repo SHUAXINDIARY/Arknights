@@ -4,10 +4,11 @@ import {
   // SelectItem,
   Autocomplete,
   AutocompleteItem,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { memberNameAvatarMap } from "../data/NameAvatar";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useState } from "react";
+import i18n, { getT } from "../i18n";
 
 interface MemberSelectProps {
   name?: string;
@@ -34,7 +35,8 @@ export default function MemberSelect({
         defaultSelectedKey={formValue}
         label={label}
         placeholder={name}
-        className="w-52 "
+        className="w-52"
+        itemHeight={52}
         defaultItems={data || memberNameAvatarMap}
         onBlur={() => {
           setIsOpenSearch(false);
@@ -51,17 +53,37 @@ export default function MemberSelect({
           onSave?.(val);
         }}
         listboxProps={{
-          emptyContent: "暂无搜索项",
+          // emptyContent: "暂无搜索项",
+          get emptyContent() {
+            return getT("Nothing found");
+          },
         }}
       >
-        {(item) => (
-          <AutocompleteItem key={item.avatar} textValue={item.name}>
-            <div className="flex items-center">
-              <LazyLoadAvatar url={item.avatar!} useAvatar />
-              <span className="ml-3">{item.name}</span>
-            </div>
-          </AutocompleteItem>
-        )}
+        {(item) => {
+          let operatorName = item.name;
+          switch (i18n.language) {
+            case "en":
+              operatorName = item.enName;
+              break;
+            case "jp":
+              operatorName = item.jpName;
+              break;
+            default:
+              break;
+          }
+          return (
+            <AutocompleteItem
+              key={item.avatar}
+              textValue={operatorName || item.name}
+              className="h-auto"
+            >
+              <div className="flex items-center">
+                <LazyLoadAvatar url={item.avatar!} useAvatar />
+                <span className="ml-3">{operatorName || item.name}</span>
+              </div>
+            </AutocompleteItem>
+          );
+        }}
       </Autocomplete>
     </div>
   );

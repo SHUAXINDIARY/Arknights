@@ -4,10 +4,11 @@ import {
   // SelectItem,
   Autocomplete,
   AutocompleteItem,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { ActivityList } from "../data/ActivityImg";
 import { useState } from "react";
+import i18n from "../i18n";
 
 interface ActivitySelectProps {
   name?: string;
@@ -29,10 +30,11 @@ const ActivitySelect = ({
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Autocomplete
+        itemHeight={120}
         defaultSelectedKey={formValue}
         label={label}
         placeholder={name}
-        className="w-52 "
+        className="w-52"
         defaultItems={data!}
         inputMode={isOpenSearch ? "search" : "none"}
         onBlur={() => {
@@ -49,7 +51,10 @@ const ActivitySelect = ({
           onSave?.(val);
         }}
         listboxProps={{
-          emptyContent: "暂无搜索项",
+          // emptyContent: "暂无搜索项",
+          get emptyContent() {
+            return i18n.t("Nothing found");
+          },
         }}
       >
         {(item) => (
@@ -60,7 +65,7 @@ const ActivitySelect = ({
           >
             <div className="text-center">
               <LazyLoadAvatar url={item.img!} useAvatar={false} />
-              <span>{item.name}</span>
+              <span>{i18n.language !== "zh" ? "" : item.name}</span>
             </div>
           </AutocompleteItem>
         )}

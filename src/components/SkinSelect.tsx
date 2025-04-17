@@ -9,11 +9,12 @@ import {
   Card,
   CardBody,
   Input,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useEffect, useState } from "react";
 import { useThrottleFn } from "ahooks";
+import i18n, { THook } from "../i18n";
 
 export interface SkinSelectProps {
   label?: string;
@@ -40,6 +41,7 @@ export default function SkinSelect({
   const [pageData, setPageData] = useState(data);
   // 搜索数据
   const [search, setSearch] = useState("");
+  const { t } = THook();
   const { run: updateSearch } = useThrottleFn(
     (val) => {
       setSearch(val);
@@ -71,7 +73,7 @@ export default function SkinSelect({
     <div className="flex w-full justify-center">
       <div className="w-[208px] h-14">
         <Button className="w-full h-full" onPress={onOpen}>
-          {currentSelect?.name || label || "选择皮肤"}
+          {currentSelect?.name || label || t("selectSkin")}
           {"\n"}
           {currentSelect ? currentSelect.skinName : ""}
         </Button>
@@ -81,22 +83,35 @@ export default function SkinSelect({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                {currentSelect?.name || label || "选择皮肤"}
+                {currentSelect?.name || label || t("selectSkin")}
               </ModalHeader>
               <ModalBody className="overflow-y-scroll">
                 <div className="p-2 flex">
                   <Input
                     defaultValue={search}
-                    placeholder={placeholder || "输入皮肤或干员名搜索"}
+                    placeholder={placeholder || t("inputSkinOrOperator")}
                     className="mr-4"
                     onValueChange={(val) => {
                       updateSearch(val);
                       updatePageData(
-                        data.filter(
-                          (item) =>
-                            item.name.includes(val) ||
+                        data.filter((item) => {
+                          let operatorName = item.name;
+                          switch (i18n.language) {
+                            case "en":
+                              operatorName = item?.enName;
+                              break;
+                            case "jp":
+                              operatorName = item?.jpName;
+                              break;
+                            default:
+                              break;
+                          }
+                          console.log("operatorName", operatorName);
+                          return (
+                            (operatorName || item.name).includes(val) ||
                             item.skinName.includes(val)
-                        )
+                          );
+                        })
                       );
                     }}
                     onClear={() => {
@@ -135,10 +150,10 @@ export default function SkinSelect({
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
-                  取消
+                  {t("cancel")}
                 </Button>
                 <Button color="primary" onPress={onClose}>
-                  确定
+                  {t("confirm")}
                 </Button>
               </ModalFooter>
             </>

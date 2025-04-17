@@ -1,4 +1,6 @@
-export const skinList = [
+import { memberNameAvatarMap } from "./NameAvatar";
+
+export const _skinList = [
     {
         "skinName": "糖果暴击",
         "name": "奥达",
@@ -1945,3 +1947,15 @@ export const skinList = [
         skinName: "新航线",
     },
 ];
+
+
+export const skinList = _skinList.map(item => {
+    const res = memberNameAvatarMap.find(_item => {
+        return _item.name === item.name
+    })
+    return {
+        ...item,
+        enName: res?.enName,
+        jpName: res?.jpName,
+    }
+})

@@ -1,4 +1,4 @@
-import { Avatar, Image } from "@nextui-org/react";
+import { Avatar, Image } from "@heroui/react";
 import { useEffect, useRef, useState } from "react";
 import { useInViewport } from "ahooks";
 
