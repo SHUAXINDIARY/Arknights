@@ -57,7 +57,7 @@ const getSkinList = () => {
 };
 getSkinList();
 
-// 获取活动列表
+// 获取活动列表 https://prts.wiki/w/%E6%B4%BB%E5%8A%A8%E4%B8%80%E8%A7%88
 const getActivityList = () => {
   const data = [];
   const rowArr = document.querySelector(".wikitable").children[0].children;
@@ -81,9 +81,9 @@ const getActivityList = () => {
 };
 getActivityList();
 
-// 获取蚀刻章列表
+// 获取蚀刻章列表 - 套组
 // https://prts.wiki/w/%E5%85%89%E8%8D%A3%E4%B9%8B%E8%B7%AF
-const getMedalList = () => {
+const getMedalGroupList = () => {
   const data = [];
   document.querySelectorAll("img").forEach((item) => {
     const url = item.getAttribute("data-preview-src");
@@ -104,3 +104,58 @@ const getMedalList = () => {
 };
 
 getMedalList();
+
+// 获取蚀刻章列表 - 单个
+const getMedalList = () => {
+  document.querySelectorAll(".n-collapse-item__header-main").forEach((item) => {
+    item?.click?.();
+  });
+  const data = [];
+  document.querySelectorAll(".n-card__content").forEach((item) => {
+    const nameDom = item?.querySelector?.("span");
+    const imgDom = item?.querySelector?.("img");
+    nameDom.textContent &&
+      imgDom?.getAttribute?.("data-preview-src") &&
+      data.push({
+        name: nameDom.textContent,
+        img: imgDom.getAttribute("data-preview-src"),
+      });
+  });
+  console.log(data);
+};
+
+// 获取头像 https://prts.wiki/w/%E4%B8%AA%E4%BA%BA%E5%90%8D%E7%89%87%E5%A4%B4%E5%83%8F%E4%B8%80%E8%A7%88
+const getAatar = () => {
+  const [defaultA, ...other] = document.querySelectorAll(".wikitable");
+  const data = [];
+  // 初始化默认头像
+  const name = [],
+    img = [];
+  defaultA.querySelectorAll("td").forEach((item) => {
+    item.textContent && name.push(item.textContent.replaceAll("\n", ""));
+  });
+  defaultA.querySelectorAll("th img").forEach((item) => {
+    const url = item.getAttribute("data-srcset").split(" ")[0];
+    url && img.push(url);
+  });
+  data.push(
+    ...name.map((item, i) => {
+      return {
+        name: item,
+        img: img[i],
+      };
+    })
+  );
+  // 初始化其他
+  other.forEach((table) => {
+    const name = table
+      ?.querySelectorAll?.("th")?.[1]
+      ?.textContent?.replaceAll("\n", "");
+    const img = table
+      ?.querySelectorAll("th img")?.[0]
+      ?.getAttribute("data-srcset")
+      ?.split(" ")[0];
+    name && img && data.push({ name, img });
+  });
+  console.log(data);
+};
