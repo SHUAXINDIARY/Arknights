@@ -96,12 +96,15 @@ export default function SkinSelect({
                       updatePageData(
                         data.filter((item) => {
                           let operatorName = item.name;
+                          let skinName = item.skinName;
                           switch (i18n.language) {
                             case "en":
                               operatorName = item?.enName;
+                              skinName = item.enSkinName;
                               break;
                             case "jp":
                               operatorName = item?.jpName;
+                              skinName = item?.jpSkinName;
                               break;
                             default:
                               break;
@@ -109,7 +112,7 @@ export default function SkinSelect({
                           console.log("operatorName", operatorName);
                           return (
                             (operatorName || item.name).includes(val) ||
-                            item.skinName.includes(val)
+                            (skinName || item.skinName).includes(val)
                           );
                         })
                       );
