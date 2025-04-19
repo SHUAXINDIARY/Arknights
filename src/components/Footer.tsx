@@ -43,6 +43,7 @@ const Footer = () => {
             {t("formAuthor")}
           </Link>
         </div>
+        <Divider orientation="vertical" />
         <div>
           <Link isBlock color="foreground" className="text-sm" onPress={onOpen}>
             {t("Language")}
