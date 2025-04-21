@@ -7,7 +7,8 @@
     "dev": "rsbuild dev",
     "build": "rsbuild build",
     "lint": "eslint .",
-    "preview": "rsbuild preview"
+    "preview": "rsbuild preview",
+    "update:data": "tsx scripts/getDataFromPrts.ts"
   },
   "dependencies": {
     "@heroui/react": "2.7.6",
@@ -20,6 +21,7 @@
     "framer-motion": "^11.11.17",
     "i18next": "^25.0.0",
     "next-themes": "^0.4.3",
+    "puppeteer": "^24.6.1",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
