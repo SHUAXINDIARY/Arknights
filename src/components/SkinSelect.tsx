@@ -126,7 +126,7 @@ export default function SkinSelect({
                   {pageData.map((item) => {
                     return (
                       <div
-                        key={item.img}
+                        key={item.skinName + item.img}
                         onClick={() => {
                           setCurrentSelect?.(item);
                         }}

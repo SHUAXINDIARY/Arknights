@@ -5,19 +5,19 @@
  * 1. 当前目录 git clone https://github.com/ArknightsAssets/ArknightsGamedata 
  * 2. 执行该文件
  */
-import { EnCareer, Gender, JpCareer, memberNameAvatarMap } from '../src/data/NameAvatar'
+import { EnCareer, Gender, JpCareer } from '../src/data/NameAvatar'
 import * as ZH from './gameData/cn/gamedata/excel/character_table.json'
 import * as EN from './gameData/en/gamedata/excel/character_table.json'
 import * as JP from './gameData/jp/gamedata/excel/character_table.json'
-// @ts-ignore
-import fs from 'fs'
 
 import * as ZH_SKIN from './gameData/cn/gamedata/excel/skin_table.json'
 import * as EN_SKIN from './gameData/en/gamedata/excel/skin_table.json'
 import * as JP_SKIN from './gameData/jp/gamedata/excel/skin_table.json'
-import { skinList as _skinList } from '../src/data/Skin'
+// import { skinList as _skinList } from '../src/data/Skin'
 
-const saveOperator = () => {
+// const { memberNameAvatarMap: _memberNameAvatarMap, _skinList } = dataMap
+
+export const saveOperator = (memberNameAvatarMap) => {
     const data = [] as any[];
     for (const key in ZH) {
         const item = ZH[key]
@@ -62,12 +62,12 @@ const saveOperator = () => {
             data.push(member)
         }
     })
+    return data
 
-
-    fs.writeFileSync('./memberRes.js', `const memberNameAvatarMap = ${JSON.stringify(data)}`)
+    // fs.writeFileSync('./memberRes.js', `const memberNameAvatarMap = ${JSON.stringify(data)}`)
 }
 
-const saveSkin = () => {
+export const saveSkin = (_skinList) => {
     const getKey = (skinNameParams: string) => {
         for (const key in ZH_SKIN.charSkins) {
             const item = ZH_SKIN.charSkins[key]
@@ -87,7 +87,7 @@ const saveSkin = () => {
             jpSkinName
         }
     })
-    fs.writeFileSync('./skinData.js', `const _skinList = ${JSON.stringify(result)}`)
 
+    return result
+    // fs.writeFileSync('./skinData.js', `const _skinList = ${JSON.stringify(result)}`)
 }
-saveSkin()
