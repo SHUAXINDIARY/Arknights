@@ -20,7 +20,7 @@ const getSkinList = async () => {
 
     const url = src && decodeURIComponent(src);
     const obj = {
-      skinName: skinNameDom?.textContent?.trim(),
+      skinName: skinNameDom?.textContent?.trim().replaceAll(' ', '_'),
     } as Partial<{
       name: string
       img: string
