@@ -457,6 +457,10 @@ export const dataMap = {
             img: "https://torappu.prts.wiki/assets/medal_icon/medal_camp_rotate_27.png",
         },
         {
+            name: "大巴扎行动奖章",
+            img: "https://torappu.prts.wiki/assets/medal_icon/medal_camp_rotate_28.png",
+        },
+        {
             name: "钢铁萝卜安全认证章",
             img: "https://torappu.prts.wiki/assets/medal_icon/medal_tower_complete_01.png",
         },
@@ -2143,6 +2147,14 @@ export const dataMap = {
         {
             name: "精炼加工奖章·Ⅳ",
             img: "https://torappu.prts.wiki/assets/medal_icon/medal_build_workevolve_04.png",
+        },
+        {
+            name: "慷慨争锋奖章",
+            img: "https://torappu.prts.wiki/assets/medal_icon/medal_activity_act1enemyduel_01.png",
+        },
+        {
+            name: "慧眼争锋奖章",
+            img: "https://torappu.prts.wiki/assets/medal_icon/medal_activity_act1enemyduel_02.png",
         },
         {
             name: "游艺视界奖章",
@@ -5961,6 +5973,10 @@ export const dataMap = {
         {
             name: "“王冠”",
             img: "https://media.prts.wiki/thumb/f/ff/Avatar_activity_RL4_3.png/120px-Avatar_activity_RL4_3.png",
+        },
+        {
+            name: "“还我！”",
+            img: "https://media.prts.wiki/thumb/2/22/Avatar_activity_ED_1.png/120px-Avatar_activity_ED_1.png",
         },
     ],
     memberNameAvatarMap: [
@@ -11601,6 +11617,18 @@ export const dataMap = {
         {
             name: "ARKnoNIGHTS",
             img: "https://media.prts.wiki/thumb/0/07/%E6%A0%87%E9%A2%98%E5%9B%BE_%E5%9B%9B%E6%9C%88%E8%BE%91%E5%BD%952025.png/975px-%E6%A0%87%E9%A2%98%E5%9B%BE_%E5%9B%9B%E6%9C%88%E8%BE%91%E5%BD%952025.png",
+        },
+        {
+            name: "矢量突破#1 未开始",
+            img: "https://media.prts.wiki/thumb/9/92/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%85%AD%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_31.jpg/975px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%85%AD%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_31.jpg",
+        },
+        {
+            name: "众生行记 未开始",
+            img: "https://media.prts.wiki/thumb/2/2e/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%85%AD%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_02.jpg/975px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%85%AD%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_02.jpg",
+        },
+        {
+            name: "争锋频道：青草城  进行中",
+            img: "https://media.prts.wiki/thumb/5/5c/%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%85%AD%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_12.jpg/975px-%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A_%E5%85%AD%E5%91%A8%E5%B9%B4%E5%BA%86%E5%85%B8_12.jpg",
         },
         {
             name: "巴别塔·复刻  进行中",
