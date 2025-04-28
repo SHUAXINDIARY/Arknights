@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import Footer from "./Footer";
 import {
   FieldNameMap,
@@ -48,12 +48,12 @@ const ShowRes = (props: ShowRes) => {
   }, {} as Partial<ShowRes["data"]>);
 
   const ref = useRef(null);
-  const [qrCodeUrl, setQrCodeUrl] = useState("");
+  // const [qrCodeUrl, setQrCodeUrl] = useState("");
   useEffect(() => {
     (async () => {
       const data = await QRcode.toDataURL(window.location.href);
       console.log(data);
-      setQrCodeUrl(data);
+      // setQrCodeUrl(data);
     })();
   }, []);
   console.log("调试FieldNameMap", FieldNameMapForI18n());
@@ -138,7 +138,7 @@ const ShowRes = (props: ShowRes) => {
           return total;
         }, {} as Record<string, string>)}
       />
-      <div className="mt-5">
+      {/* <div className="mt-5">
         {qrCodeUrl ? (
           <div className="flex justify-center">
             <div>
@@ -149,7 +149,7 @@ const ShowRes = (props: ShowRes) => {
         ) : (
           ""
         )}
-      </div>
+      </div> */}
       <ButtonGroup className="mt-5">
         <Button
           onPress={async () => {
