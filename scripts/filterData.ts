@@ -13,33 +13,30 @@ import * as JP from './gameData/jp/gamedata/excel/character_table.json'
 import * as ZH_SKIN from './gameData/cn/gamedata/excel/skin_table.json'
 import * as EN_SKIN from './gameData/en/gamedata/excel/skin_table.json'
 import * as JP_SKIN from './gameData/jp/gamedata/excel/skin_table.json'
-// import { skinList as _skinList } from '../src/data/Skin'
-
-// const { memberNameAvatarMap: _memberNameAvatarMap, _skinList } = dataMap
 
 export const saveOperator = (memberNameAvatarMap) => {
     const data = [] as any[];
-    for (const key in ZH) {
-        const item = ZH[key]
-        const [baseData] = memberNameAvatarMap.filter(_item => _item.name === item.name)
+    const ZH_KEYS = Object.keys(ZH);
+    memberNameAvatarMap.forEach(item => {
+        const [key] = ZH_KEYS.filter(key => ZH[key].name === item.name)
+        const baseData = ZH[key];
         if (baseData) {
             data.push({
                 keyName: key,
                 enName: EN?.[key]?.name || '',
                 jpName: JP?.[key]?.name || '',
                 // @ts-ignore
-                enCareer: EnCareer[baseData.career],
+                enCareer: EnCareer[item.career],
                 // @ts-ignore
-                jpCareer: JpCareer[baseData.career],
+                jpCareer: JpCareer[item.career],
                 // @ts-ignore
-                enSex: baseData.sex === Gender.Female ? 'Female' : 'Male',
+                enSex: item.sex === Gender.Female ? 'Female' : 'Male',
                 // @ts-ignore
-                jpSex: baseData.sex,
-                ...baseData
+                jpSex: item.sex,
+                ...item
             })
         }
-
-    };
+    })
 
     memberNameAvatarMap.forEach(item => {
         const res = data.find(_item => _item.name === item.name)
@@ -63,8 +60,6 @@ export const saveOperator = (memberNameAvatarMap) => {
         }
     })
     return data
-
-    // fs.writeFileSync('./memberRes.js', `const memberNameAvatarMap = ${JSON.stringify(data)}`)
 }
 
 export const saveSkin = (_skinList) => {
@@ -89,5 +84,4 @@ export const saveSkin = (_skinList) => {
     })
 
     return result
-    // fs.writeFileSync('./skinData.js', `const _skinList = ${JSON.stringify(result)}`)
 }

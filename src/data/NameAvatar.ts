@@ -43,7 +43,7 @@ export enum Position {
     LM = "近战位",
 }
 // 全量干员
-export const memberNameAvatarMap = mergeUnique([
+export const memberNameAvatarMap = mergeUnique(dataMap.memberNameAvatarMap, [
     {
         keyName: "char_285_medic2",
         enName: "Lancet-2",
@@ -5687,7 +5687,7 @@ export const memberNameAvatarMap = mergeUnique([
         enName: "Amiya(Guard)",
         jpName: "アーミヤ(前衛)",
     },
-], dataMap.memberNameAvatarMap, 'name');
+], 'name');
 
 const memberSort = {
     OTHER: ["泰拉大陆调查团", "断罪者"],

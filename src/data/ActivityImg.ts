@@ -856,5 +856,4 @@ const _ActivityList = [
   },
 ];
 
-
-export const ActivityList = mergeUnique(_ActivityList, dataMap.ActivityList, 'name')
+export const ActivityList = mergeUnique(dataMap.ActivityList, _ActivityList, 'name')
