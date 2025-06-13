@@ -6,13 +6,13 @@
  * 2. 执行该文件
  */
 import { EnCareer, Gender, JpCareer } from '../src/data/NameAvatar'
-import * as ZH from './gameData/cn/gamedata/excel/character_table.json'
-import * as EN from './gameData/en/gamedata/excel/character_table.json'
-import * as JP from './gameData/jp/gamedata/excel/character_table.json'
+import * as ZH from './ArknightsGamedata/cn/gamedata/excel/character_table.json'
+import * as EN from './ArknightsGamedata/en/gamedata/excel/character_table.json'
+import * as JP from './ArknightsGamedata/jp/gamedata/excel/character_table.json'
 
-import * as ZH_SKIN from './gameData/cn/gamedata/excel/skin_table.json'
-import * as EN_SKIN from './gameData/en/gamedata/excel/skin_table.json'
-import * as JP_SKIN from './gameData/jp/gamedata/excel/skin_table.json'
+import * as ZH_SKIN from './ArknightsGamedata/cn/gamedata/excel/skin_table.json'
+import * as EN_SKIN from './ArknightsGamedata/en/gamedata/excel/skin_table.json'
+import * as JP_SKIN from './ArknightsGamedata/jp/gamedata/excel/skin_table.json'
 
 export const saveOperator = (memberNameAvatarMap) => {
     const data = [] as any[];
