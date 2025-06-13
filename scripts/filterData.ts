@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * 获取角色、皮肤国际化文案
  * 1. git submodule update
@@ -23,7 +21,7 @@ import * as EN_SKIN from "./ArknightsGamedata/en/gamedata/excel/skin_table.json"
 import * as JP_SKIN from "./ArknightsGamedata/jp/gamedata/excel/skin_table.json";
 
 export const saveOperator = (memberNameAvatarMap) => {
-    const data = [] as any[];
+    const data = [] as typeof memberNameAvatarMap[0];
     const ZH_KEYS = Object.keys(ZH);
     memberNameAvatarMap.forEach((item) => {
         const [key] = ZH_KEYS.filter((key) => ZH[key].name === item.name);
@@ -34,13 +32,9 @@ export const saveOperator = (memberNameAvatarMap) => {
                 keyName: key,
                 enName: EN?.[key]?.name || "",
                 jpName: JP?.[key]?.name || "",
-                // @ts-ignore
                 enCareer: EnCareer[item.career],
-                // @ts-ignore
                 jpCareer: JpCareer[item.career],
-                // @ts-ignore
                 enSex: item.sex === Gender.Female ? "Female" : "Male",
-                // @ts-ignore
                 jpSex: item.sex,
             });
         }
@@ -55,7 +49,7 @@ export const saveOperator = (memberNameAvatarMap) => {
                 jpCareer: JpCareer[item.career],
                 enSex: item.sex === Gender.Female ? "Female" : "Male",
                 jpSex: item.sex,
-            } as Record<string, any>;
+            } as Record<string, string>;
             if (item.name.includes("阿米娅")) {
                 const amiya = data.find((_item) => _item.name === "阿米娅");
                 member = {
