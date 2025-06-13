@@ -8,7 +8,8 @@
     "build": "rsbuild build",
     "lint": "eslint .",
     "preview": "rsbuild preview",
-    "update:data": "tsx scripts/getDataFromPrts.ts"
+    "update:prts": "tsx scripts/getDataFromPrts.ts",
+    "update:international": "tsx scripts/filterData.ts"
   },
   "dependencies": {
     "@heroui/react": "2.7.6",
