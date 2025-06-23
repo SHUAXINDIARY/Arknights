@@ -5763,8 +5763,6 @@ const memberSort = {
     },
 } as const;
 
-console.log(memberNameAvatarMap)
-
 
 export type Keys = keyof typeof memberSort;
 
