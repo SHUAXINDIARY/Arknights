@@ -204,6 +204,7 @@ const task = [
       const { url, fun } = params;
       const page = await browser.newPage();
       await page.goto(url);
+      await new Promise(resolve => setTimeout(resolve, 2000)); // 延迟2秒
       const arr = await page.$$(".n-collapse-item__header-main")
       await arr[arr.length - 2]?.click()
       const data = await page.evaluate(fun)
