@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">arknightsinfo</string>
+    <string name="title_activity_main">arknightsinfo</string>
+    <string name="package_name">arknights.shuaxinjs.cn</string>
+    <string name="custom_url_scheme">arknights.shuaxinjs.cn</string>
+</resources>

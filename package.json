@@ -13,6 +13,9 @@
     "update:submodule": "git submodule update --remote"
   },
   "dependencies": {
+    "@capacitor/android": "^7.4.1",
+    "@capacitor/core": "^7.4.1",
+    "@capacitor/ios": "^7.4.1",
     "@heroui/react": "2.7.6",
     "@rsbuild/plugin-react": "^1.0.7",
     "@types/qrcode": "^1.5.5",
@@ -32,6 +35,7 @@
     "ua-parser-js": "^2.0.0"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.4.1",
     "@eslint/js": "^9.13.0",
     "@rsbuild/core": "^1.1.6",
     "@types/dom-to-image": "^2.6.7",
