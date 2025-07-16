@@ -30,7 +30,7 @@ const ActivitySelect = ({
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
       <Autocomplete
-        itemHeight={120}
+        itemHeight={100}
         defaultSelectedKey={formValue}
         label={label}
         placeholder={name}
@@ -51,7 +51,6 @@ const ActivitySelect = ({
           onSave?.(val);
         }}
         listboxProps={{
-          // emptyContent: "暂无搜索项",
           get emptyContent() {
             return i18n.t("Nothing found");
           },
@@ -61,11 +60,13 @@ const ActivitySelect = ({
           <AutocompleteItem
             key={item.img}
             textValue={item.name}
-            className="pt-2 flex justify-center flex-col items-center"
+            className="flex-col"
           >
             <div className="text-center">
               <LazyLoadAvatar url={item.img!} useAvatar={false} />
-              <span>{i18n.language !== "zh" ? "" : item.name}</span>
+              <span>
+                {i18n.language !== "zh" ? "" : item.name.split(" ")[0]}
+              </span>
             </div>
           </AutocompleteItem>
         )}
