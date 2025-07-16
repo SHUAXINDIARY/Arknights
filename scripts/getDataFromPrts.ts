@@ -168,6 +168,8 @@ const getActivityList = async () => {
   const data = [] as Partial<{
     name: string,
     img: string,
+    // 区分活动是否带有剧情
+    type: string
   }>[];
   document?.querySelectorAll(".wikitable").forEach(item => {
     const Table = item.children[0];
@@ -176,10 +178,12 @@ const getActivityList = async () => {
       if (i) {
         const dataItem = trArr[i];
         const name = dataItem.children[1].textContent?.split('\n')?.[0]
+        const type = dataItem.children[2].textContent?.split('\n')?.[0]
         const img = dataItem.querySelector('img')?.getAttribute('data-srcset')?.split(' ')?.[0]
         name && img && data.push({
           name,
-          img
+          img,
+          type
         })
       }
 
