@@ -4,6 +4,7 @@ import { pluginReact } from '@rsbuild/plugin-react'
 export default defineConfig({
     plugins: [pluginReact()],
     html: {
+        title: `Arknights生涯生成器 - ${new Date().getFullYear()}`,
         template: './index.html',
     },
     source: {
