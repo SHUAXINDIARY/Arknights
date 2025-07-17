@@ -271,6 +271,7 @@ const task = [
 (async () => {
   const dataMap = {} as any;
   const browser = await puppeteer.launch({
+    args: ['--no-sandbox'],
     defaultViewport: {
       width: 1920,
       height: 1080

@@ -21,6 +21,7 @@ jobs:
           npm i pnpm -g
           pnpm -v
           pnpm i
+          npx puppeteer browsers install chrome
           npm run auto
 
       - name: Commit submodule updates
