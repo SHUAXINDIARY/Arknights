@@ -21,3 +21,8 @@ declare module "*.css" {
     const content: { [className: string]: string };
     export default content;
 }
+
+declare module '*.glsl?raw' {
+	const glsl: string;
+	export = glsl;
+}

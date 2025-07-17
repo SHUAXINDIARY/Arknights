@@ -12,6 +12,19 @@ export default defineConfig({
             index: './src/main.tsx',
         },
     },
+    tools: {
+        rspack: {
+            module: {
+                rules: [
+                    {
+                        resourceQuery: /raw/, // 只有在使用 `?raw` 查询时，才会应用这个规则
+                        test: /\.(glsl|svg)$/i,
+                        type: 'asset/source',
+                    },
+                ]
+            }
+        }
+    },
     output: {
         minify: {
             js: true,
