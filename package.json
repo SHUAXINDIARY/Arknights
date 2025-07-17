@@ -9,8 +9,8 @@
     "lint": "eslint .",
     "preview": "rsbuild preview",
     "auto": "npm run update:prts && npm run update:submodule && pnpm update:international && npm run build",
-    "update:prts": "tsx scripts/getDataFromPrts.ts",
-    "update:international": "tsx scripts/filterData.ts",
+    "update:prts": "npx tsx scripts/getDataFromPrts.ts",
+    "update:international": "npx tsx scripts/filterData.ts",
     "update:submodule": "git submodule update --remote"
   },
   "dependencies": {

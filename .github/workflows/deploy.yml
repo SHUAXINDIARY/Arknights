@@ -1,16 +1,35 @@
-name: Daily Cloudflare Deploy Hook
+name: Update Git Submodule
 
 on:
   schedule:
-    - cron: '0 1 * * *'
-  workflow_dispatch:
+    - cron: '0 2 * * *'  # 每天 UTC 时间 2 点执行
+  workflow_dispatch:      # 手动触发
 
 jobs:
-  trigger-cloudflare-deploy:
+  update-submodule:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Send request to Cloudflare deploy hook
-        env:
-          DEPLOY_HOOK_URL: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}
+      - name: Checkout repository (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update date
         run: |
-          curl -X POST "$DEPLOY_HOOK_URL"
+          npm i pnpm -g
+          pnpm -v
+          pnpm i
+          npm run auto
+
+      - name: Commit submodule updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: update submodules to latest" || echo "No changes to commit"
+
+      - name: Push changes
+        run: |
+          git push
