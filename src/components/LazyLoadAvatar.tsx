@@ -22,16 +22,38 @@ const LazyLoadAvatar = (props: {
 
   if (!useLazyLoad) {
     if (props.useAvatar) {
-      return <Avatar className={props.className || ""} ref={ref} src={url} />;
+      return (
+        <div className="media-container">
+          <figure className="media">
+            <Avatar className={props.className || ""} ref={ref} src={url} />
+          </figure>
+        </div>
+      );
     }
-    return <Image ref={ref} src={url} />;
+    return (
+      <div className="media-container">
+        <figure className="media">
+          <Image ref={ref} src={url} />
+        </figure>
+      </div>
+    );
   } else {
     if (props.useAvatar) {
       return (
-        <Avatar className={props.className || ""} ref={ref} src={source} />
+        <div className="media-container">
+          <figure className="media">
+            <Avatar className={props.className || ""} ref={ref} src={source} />
+          </figure>
+        </div>
       );
     }
-    return <Image ref={ref} src={source} />;
+    return (
+      <div className="media-container">
+        <figure className="media">
+          <Image ref={ref} src={source} />
+        </figure>
+      </div>
+    );
   }
 };
 

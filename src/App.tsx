@@ -47,35 +47,37 @@ function App() {
           {t("Arknights Career Generator")}
         </Chip>
       </div>
-      {Object.values(FormMap).map((item) => {
-        const Com = item.components;
-        const { params } = item;
-        if (!Com) {
-          return <div key={item.field + item.name}>占位</div>;
-        }
-        const onSave = (val: string) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          setFormState((old: any) => {
-            return {
-              ...old,
-              [item.field]: val,
-            };
-          });
-        };
-        return (
-          <div key={item.field + item.name}>
-            <Com
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              {...((params || {}) as any)}
-              formValue={formState ? formState[item.field] : ""}
-              onSave={(val: string) => {
-                onSave(val);
-              }}
-            />
-            <br />
-          </div>
-        );
-      })}
+      <div id="formMap">
+        {Object.values(FormMap).map((item) => {
+          const Com = item.components;
+          const { params } = item;
+          if (!Com) {
+            return <div key={item.field + item.name}>占位</div>;
+          }
+          const onSave = (val: string) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            setFormState((old: any) => {
+              return {
+                ...old,
+                [item.field]: val,
+              };
+            });
+          };
+          return (
+            <div key={item.field + item.name}>
+              <Com
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                {...((params || {}) as any)}
+                formValue={formState ? formState[item.field] : ""}
+                onSave={(val: string) => {
+                  onSave(val);
+                }}
+              />
+              <br />
+            </div>
+          );
+        })}
+      </div>
       <ButtonGroup>
         <Popover
           placement="top"

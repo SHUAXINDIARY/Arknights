@@ -11,6 +11,7 @@ import { ButtonGroup, Button } from "@heroui/react";
 import { isApple, savePngByCanvas } from "../utils";
 import QRcode from "qrcode";
 import { THook } from "../i18n";
+import Index from "../utils/webgl";
 interface ShowRes {
   data: typeof FieldNameMap;
   onClose?: () => void;
@@ -51,6 +52,7 @@ const ShowRes = (props: ShowRes) => {
   // const [qrCodeUrl, setQrCodeUrl] = useState("");
   useEffect(() => {
     (async () => {
+      new Index();
       const data = await QRcode.toDataURL(window.location.href);
       console.log(data);
       // setQrCodeUrl(data);
