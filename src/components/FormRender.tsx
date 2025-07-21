@@ -19,8 +19,9 @@ type SelectPropsExtra = SelectProps & {
   data?: MemberInfo[];
 };
 
-const ActivityTypes = ['主线', '支线', '故事', '集成战略'];
+const ActivityTypes = ["主线", "支线", "故事", "集成战略"];
 
+console.log(ActivityList);
 
 export const FormMap = [
   {
@@ -398,7 +399,7 @@ export const FormMap = [
         const isExist = ActivityTypes.filter((typeItem) =>
           item?.type?.includes?.(typeItem)
         );
-        return isExist.length > 1;
+        return isExist.length;
       }),
     } as SelectPropsExtra & {
       data: (typeof ActivityList)[0][];
