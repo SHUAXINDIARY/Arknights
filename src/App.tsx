@@ -54,8 +54,7 @@ function App() {
           return <div key={item.field + item.name}>占位</div>;
         }
         const onSave = (val: string) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          setFormState((old: any) => {
+          setFormState((old: typeof formState) => {
             return {
               ...old,
               [item.field]: val,
@@ -65,8 +64,7 @@ function App() {
         return (
           <div key={item.field + item.name}>
             <Com
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              {...((params || {}) as any)}
+              {...((params || {}) as typeof Com)}
               formValue={formState ? formState[item.field] : ""}
               onSave={(val: string) => {
                 onSave(val);

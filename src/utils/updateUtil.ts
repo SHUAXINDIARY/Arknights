@@ -1,22 +1,42 @@
-export const mergeUnique = (arr1, arr2, key = 'id') => {
-    const map = new Map();
+// ✅ 基础类型重载（string / number / boolean）
+export function mergeUnique<T extends string | number | boolean>(
+    arr1: T[],
+    arr2: T[]
+): T[];
 
-    [...arr1, ...arr2].forEach(item => {
-        if (typeof item === 'object' && item !== null) {
-            if (map.get(item[key])) {
-                const one = Object.values(map.get(item[key]));
-                const two = Object.values(item);
-                if (two.length > one.length) {
-                    map.set(item[key], two)
+// ✅ 对象类型重载（需要 key）
+export function mergeUnique<T extends object, K extends keyof T>(
+    arr1: T[],
+    arr2: T[],
+    key: K
+): T[];
+
+// ✅ 实现体（不含 any）
+export function mergeUnique<T>(
+    arr1: T[],
+    arr2: T[],
+    key?: keyof T
+): T[] {
+    const map = new Map<unknown, T>();
+
+    for (const item of [...arr1, ...arr2]) {
+        if (typeof item === 'object' && item !== null && key) {
+            const obj = item as Record<string, unknown>;
+            const k = obj[key as string];
+            if (map.has(k)) {
+                const existing = map.get(k)!;
+                const existingLen = Object.keys(existing as object).length;
+                const currentLen = Object.keys(item as object).length;
+                if (currentLen > existingLen) {
+                    map.set(k, item);
                 }
             } else {
-                map.set(item[key], item);
+                map.set(k, item);
             }
         } else {
-            // 对非对象的情况，用值本身做 key
             map.set(item, item);
         }
-    });
+    }
 
     return Array.from(map.values());
 }
