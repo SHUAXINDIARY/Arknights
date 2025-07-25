@@ -11,15 +11,18 @@ import { ButtonGroup, Button } from "@heroui/react";
 import { isApple, savePngByCanvas } from "../utils";
 import QRcode from "qrcode";
 import { THook } from "../i18n";
+import { RESULT_DATA_CACHE, useDataCache } from "../utils/dataCache";
+import { useNavigate } from "react-router";
+
 interface ShowRes {
-  data: typeof FieldNameMap;
-  onClose?: () => void;
-  onClear?: () => void;
+  data?: typeof FieldNameMap;
 }
 
-const ShowRes = (props: ShowRes) => {
-  const { data } = props;
+const ShowRes = () => {
+  const { localData: data, setLocalData } =
+    useDataCache<ShowRes["data"]>(RESULT_DATA_CACHE);
   const { t } = THook();
+  const n = useNavigate();
   const skin = {
     firstSkin: data.firstSkin,
     favoriteSkin: data.favoriteSkin,
@@ -46,16 +49,15 @@ const ShowRes = (props: ShowRes) => {
     }
     return total;
   }, {} as Partial<ShowRes["data"]>);
-
   const ref = useRef(null);
-  // const [qrCodeUrl, setQrCodeUrl] = useState("");
+
   useEffect(() => {
     (async () => {
       const data = await QRcode.toDataURL(window.location.href);
       console.log(data);
-      // setQrCodeUrl(data);
     })();
   }, []);
+
   console.log("调试FieldNameMap", FieldNameMapForI18n());
   return (
     <div ref={ref}>
@@ -138,18 +140,6 @@ const ShowRes = (props: ShowRes) => {
           return total;
         }, {} as Record<string, string>)}
       />
-      {/* <div className="mt-5">
-        {qrCodeUrl ? (
-          <div className="flex justify-center">
-            <div>
-              <img src={qrCodeUrl} className="m-auto mb-2" />
-              {t("scan_to_fill")}
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
-      </div> */}
       <ButtonGroup className="mt-5">
         <Button
           onPress={async () => {
@@ -171,7 +161,8 @@ const ShowRes = (props: ShowRes) => {
         <Button
           color="warning"
           onPress={() => {
-            props.onClose?.();
+            setLocalData(null);
+            n("/");
           }}
         >
           {t("edit")}
@@ -179,8 +170,7 @@ const ShowRes = (props: ShowRes) => {
         <Button
           color="danger"
           onPress={() => {
-            props.onClose?.();
-            props.onClear?.();
+            n("/");
           }}
         >
           {t("go_back")}

@@ -8,37 +8,21 @@ import {
   PopoverContent,
 } from "@heroui/react";
 import { FormMap } from "./components/FormRender";
-import { FieldNameMap } from "./utils/constant";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Footer from "./components/Footer";
-import ShowRes from "./components/ShowResult";
 import { testData } from "./data/testData";
 import { THook } from "./i18n";
+import { RESULT_DATA_CACHE, useDataCache } from "./utils/dataCache";
+import { FieldNameMap } from "./utils/constant";
+import { useNavigate } from "react-router";
 
 function App() {
-  const [formState, setFormState] = useState<typeof FieldNameMap | null>();
-  const [showRes, setShowRes] = useState(false);
   const [isShowPopover, setIsShowPopover] = useState(false);
+  const n = useNavigate();
+  const { localData, setLocalData } =
+    useDataCache<typeof FieldNameMap>(RESULT_DATA_CACHE);
   const { t } = THook();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [showRes]);
 
-  if (showRes) {
-    return (
-      <div className="max-w-96 text-center">
-        <ShowRes
-          data={formState!}
-          onClear={() => {
-            setFormState(null);
-          }}
-          onClose={() => {
-            setShowRes(false);
-          }}
-        />
-      </div>
-    );
-  }
   return (
     <div>
       <Footer />
@@ -54,18 +38,16 @@ function App() {
           return <div key={item.field + item.name}>占位</div>;
         }
         const onSave = (val: string) => {
-          setFormState((old: typeof formState) => {
-            return {
-              ...old,
-              [item.field]: val,
-            };
+          setLocalData({
+            ...localData,
+            [item.field]: val,
           });
         };
         return (
           <div key={item.field + item.name}>
             <Com
               {...((params || {}) as typeof Com)}
-              formValue={formState ? formState[item.field] : ""}
+              formValue={localData ? localData[item.field] : ""}
               onSave={(val: string) => {
                 onSave(val);
               }}
@@ -79,10 +61,10 @@ function App() {
           placement="top"
           isOpen={isShowPopover}
           onOpenChange={() => {
-            if (!formState || Object.values(formState).length === 0) {
+            if (!localData || Object.values(localData).length === 0) {
               setIsShowPopover((old) => !old);
             } else {
-              setShowRes(true);
+              // setShowRes(true);
             }
           }}
         >
@@ -99,8 +81,10 @@ function App() {
         <Button
           color="secondary"
           onPress={async () => {
-            setFormState(testData);
-            setShowRes(true);
+            setLocalData(testData);
+            n("/result");
+            // setFormState(testData);
+            // setShowRes(true);
           }}
         >
           {t("previewExample")}
