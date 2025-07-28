@@ -11,17 +11,28 @@ import { useEffect } from "react";
 import XHS from "../assets/img_v3_02gq_7ed31f29-4562-44e3-b3e9-fc76fea30ecg.jpeg";
 import { THook } from "../i18n";
 import { useLocalData } from "../hooks";
-import { INIT_MODAL } from "../utils/constant";
+import { INIT_MODAL, ONE_HOUR } from "../utils/constant";
 
 const InfoModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { t } = THook();
-  const { localData, setLocalData } = useLocalData(INIT_MODAL, true);
+  // 持久化modal开启状态
+  const { localData: needOpen, setLocalData } = useLocalData(INIT_MODAL, {
+    openState: true,
+    time: Date.now(),
+  });
+  // 控制modal
+  const handleIsOpenModal = () => {
+    const _Now = Date.now();
+    if (needOpen.openState || _Now - needOpen.time > ONE_HOUR) {
+      onOpen();
+    }
+  };
   useEffect(() => {
-    onOpen();
+    handleIsOpenModal();
   }, []);
   return (
-    <Modal isOpen={isOpen && localData} onOpenChange={onOpenChange}>
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         {(onClose) => (
           <>
@@ -96,7 +107,10 @@ const InfoModal = () => {
                 variant="light"
                 onPress={() => {
                   onClose?.();
-                  setLocalData(false);
+                  setLocalData({
+                    openState: false,
+                    time: Date.now(),
+                  });
                 }}
               >
                 {t("confirm")}
