@@ -16,7 +16,6 @@
   "dependencies": {
     "@heroui/react": "2.7.6",
     "@rsbuild/plugin-react": "^1.0.7",
-    "@types/qrcode": "^1.5.5",
     "ahooks": "^3.8.1",
     "bowser": "^2.11.0",
     "dom-to-image": "^2.6.0",
@@ -25,15 +24,16 @@
     "i18next": "^25.0.0",
     "next-themes": "^0.4.3",
     "puppeteer": "^24.6.1",
-    "qrcode": "^1.5.4",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-i18next": "^15.4.1",
+    "react-router": "^7.7.1",
     "terser": "^5.36.0",
     "tsx": "^4.20.3",
     "ua-parser-js": "^2.0.0"
   },
   "devDependencies": {
+    "@types/react-router": "^5.1.20",
     "@eslint/js": "^9.13.0",
     "@rsbuild/core": "^1.1.6",
     "@types/dom-to-image": "^2.6.7",
@@ -47,7 +47,7 @@
     "globals": "^15.11.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
-    "typescript": "~5.6.2",
+    "typescript": "5.8.2",
     "typescript-eslint": "^8.11.0"
   }
 }

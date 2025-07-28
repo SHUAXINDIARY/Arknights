@@ -10,15 +10,18 @@ import {
 import { useEffect } from "react";
 import XHS from "../assets/img_v3_02gq_7ed31f29-4562-44e3-b3e9-fc76fea30ecg.jpeg";
 import { THook } from "../i18n";
+import { useLocalData } from "../hooks";
+import { INIT_MODAL } from "../utils/constant";
 
 const InfoModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { t } = THook();
+  const { localData, setLocalData } = useLocalData(INIT_MODAL, true);
   useEffect(() => {
     onOpen();
   }, []);
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal isOpen={isOpen && localData} onOpenChange={onOpenChange}>
       <ModalContent>
         {(onClose) => (
           <>
@@ -88,12 +91,16 @@ const InfoModal = () => {
               <p>{t("haveFun")}</p>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => {
+                  onClose?.();
+                  setLocalData(false);
+                }}
+              >
                 {t("confirm")}
               </Button>
-              {/* <Button color="primary" onPress={onClose}>
-                
-              </Button> */}
             </ModalFooter>
           </>
         )}

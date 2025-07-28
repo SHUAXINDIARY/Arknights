@@ -1,5 +1,6 @@
 {
   "files": [],
   "exclude": ["scripts/*/**"],
+  "incremental": true,
   "references": [{ "path": "./tsconfig.app.json" }]
 }

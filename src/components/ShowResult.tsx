@@ -1,24 +1,30 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import Footer from "./Footer";
 import {
   FieldNameMap,
   FieldNameMapForI18n,
   FormField,
+  RESULT_DATA_KEY,
 } from "../utils/constant";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@heroui/react";
 import { isApple, savePngByCanvas } from "../utils";
-import QRcode from "qrcode";
 import { THook } from "../i18n";
+import { useLocalData, useToTop } from "../hooks";
+import { useNavigate } from "react-router";
 interface ShowRes {
-  data: typeof FieldNameMap;
+  data?: typeof FieldNameMap;
   onClose?: () => void;
   onClear?: () => void;
 }
-
-const ShowRes = (props: ShowRes) => {
-  const { data } = props;
+const ShowRes = () => {
+  useToTop();
+  const { localData: data } = useLocalData<ShowRes["data"]>(
+    RESULT_DATA_KEY,
+    {}
+  );
+  const goto = useNavigate();
   const { t } = THook();
   const skin = {
     firstSkin: data.firstSkin,
@@ -30,7 +36,6 @@ const ShowRes = (props: ShowRes) => {
     favoriteDrama: data.favoriteDrama,
     favoriteMedalGroup: data.favoriteMedalGroup,
   } as Partial<ShowRes["data"]>;
-
   const text = {
     customAvatar: data.customAvatar,
     favoriteMode: data.favoriteMode,
@@ -48,17 +53,8 @@ const ShowRes = (props: ShowRes) => {
   }, {} as Partial<ShowRes["data"]>);
 
   const ref = useRef(null);
-  // const [qrCodeUrl, setQrCodeUrl] = useState("");
-  useEffect(() => {
-    (async () => {
-      const data = await QRcode.toDataURL(window.location.href);
-      console.log(data);
-      // setQrCodeUrl(data);
-    })();
-  }, []);
-  console.log("调试FieldNameMap", FieldNameMapForI18n());
   return (
-    <div ref={ref}>
+    <div ref={ref} className="max-w-96 text-center">
       <Footer />
       <h2 className="text-2xl mb-5">{t("Arknights Career Generator")}</h2>
       {/* 渲染干员 */}
@@ -138,18 +134,6 @@ const ShowRes = (props: ShowRes) => {
           return total;
         }, {} as Record<string, string>)}
       />
-      {/* <div className="mt-5">
-        {qrCodeUrl ? (
-          <div className="flex justify-center">
-            <div>
-              <img src={qrCodeUrl} className="m-auto mb-2" />
-              {t("scan_to_fill")}
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
-      </div> */}
       <ButtonGroup className="mt-5">
         <Button
           onPress={async () => {
@@ -171,20 +155,19 @@ const ShowRes = (props: ShowRes) => {
         <Button
           color="warning"
           onPress={() => {
-            props.onClose?.();
+            goto("/");
           }}
         >
           {t("edit")}
         </Button>
-        <Button
+        {/* <Button
           color="danger"
           onPress={() => {
-            props.onClose?.();
-            props.onClear?.();
+            goto("/");
           }}
         >
           {t("go_back")}
-        </Button>
+        </Button> */}
       </ButtonGroup>
     </div>
   );
