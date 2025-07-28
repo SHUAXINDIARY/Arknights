@@ -8,37 +8,44 @@ import {
   PopoverContent,
 } from "@heroui/react";
 import { FormMap } from "./components/FormRender";
-import { FieldNameMap } from "./utils/constant";
-import { useEffect, useState } from "react";
+import { FieldNameMap, RESULT_DATA_KEY } from "./utils/constant";
+import { useState } from "react";
 import Footer from "./components/Footer";
-import ShowRes from "./components/ShowResult";
 import { testData } from "./data/testData";
 import { THook } from "./i18n";
+import { useNavigate } from "react-router";
+import { useLocalData } from "./hooks";
+import InfoModal from "./components/InfoModal";
 
 function App() {
-  const [formState, setFormState] = useState<typeof FieldNameMap | null>();
-  const [showRes, setShowRes] = useState(false);
+  // const [formState, setFormState] = useState<typeof FieldNameMap | null>();
+  // const [showRes, setShowRes] = useState(false);
   const [isShowPopover, setIsShowPopover] = useState(false);
   const { t } = THook();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [showRes]);
+  const goto = useNavigate();
+  const { localData, setLocalData } = useLocalData<typeof FieldNameMap>(
+    RESULT_DATA_KEY,
+    {}
+  );
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [showRes]);
 
-  if (showRes) {
-    return (
-      <div className="max-w-96 text-center">
-        <ShowRes
-          data={formState!}
-          onClear={() => {
-            setFormState(null);
-          }}
-          onClose={() => {
-            setShowRes(false);
-          }}
-        />
-      </div>
-    );
-  }
+  // if (showRes) {
+  //   return (
+  //     <div className="max-w-96 text-center">
+  //       <ShowRes
+  //         data={formState!}
+  //         onClear={() => {
+  //           setFormState(null);
+  //         }}
+  //         onClose={() => {
+  //           setShowRes(false);
+  //         }}
+  //       />
+  //     </div>
+  //   );
+  // }
   return (
     <div>
       <Footer />
@@ -54,18 +61,22 @@ function App() {
           return <div key={item.field + item.name}>占位</div>;
         }
         const onSave = (val: string) => {
-          setFormState((old: typeof formState) => {
-            return {
-              ...old,
-              [item.field]: val,
-            };
+          // setFormState((old: typeof formState) => {
+          //   return {
+          //     ...old,
+          //     [item.field]: val,
+          //   };
+          // });
+          setLocalData({
+            ...localData,
+            [item.field]: val,
           });
         };
         return (
           <div key={item.field + item.name}>
             <Com
               {...((params || {}) as typeof Com)}
-              formValue={formState ? formState[item.field] : ""}
+              formValue={localData ? localData[item.field] : ""}
               onSave={(val: string) => {
                 onSave(val);
               }}
@@ -79,10 +90,11 @@ function App() {
           placement="top"
           isOpen={isShowPopover}
           onOpenChange={() => {
-            if (!formState || Object.values(formState).length === 0) {
+            if (!localData || Object.values(localData).length === 0) {
               setIsShowPopover((old) => !old);
             } else {
-              setShowRes(true);
+              // setShowRes(true);
+              goto("/result");
             }
           }}
         >
@@ -99,13 +111,16 @@ function App() {
         <Button
           color="secondary"
           onPress={async () => {
-            setFormState(testData);
-            setShowRes(true);
+            // setFormState(testData);
+            setLocalData(testData);
+            // setShowRes(true);
+            goto("/result");
           }}
         >
           {t("previewExample")}
         </Button>
       </ButtonGroup>
+      <InfoModal />
     </div>
   );
 }

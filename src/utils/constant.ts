@@ -14,3 +14,8 @@ export const FieldNameMapForI18n = () => (Object.values(FormMap).reduce((total, 
     return total;
 }, {} as Record<FormField, string>));
 
+// 结果key
+export const RESULT_DATA_KEY = 'RESULT_DATA_KEY';
+
+// 弹窗key
+export const INIT_MODAL = 'INIT_MODAL'

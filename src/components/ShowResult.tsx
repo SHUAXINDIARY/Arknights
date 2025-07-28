@@ -4,19 +4,27 @@ import {
   FieldNameMap,
   FieldNameMapForI18n,
   FormField,
+  RESULT_DATA_KEY,
 } from "../utils/constant";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@heroui/react";
 import { isApple, savePngByCanvas } from "../utils";
 import { THook } from "../i18n";
+import { useLocalData } from "../hooks";
+import { useNavigate } from "react-router";
 interface ShowRes {
-  data: typeof FieldNameMap;
+  data?: typeof FieldNameMap;
   onClose?: () => void;
   onClear?: () => void;
 }
-const ShowRes = (props: ShowRes) => {
-  const { data } = props;
+const ShowRes = () => {
+  // const { data } = props;
+  const { localData: data } = useLocalData<ShowRes["data"]>(
+    RESULT_DATA_KEY,
+    {}
+  );
+  const goto = useNavigate();
   const { t } = THook();
   const skin = {
     firstSkin: data.firstSkin,
@@ -33,7 +41,7 @@ const ShowRes = (props: ShowRes) => {
     favoriteMode: data.favoriteMode,
     favoriteEP: data.favoriteEP,
     hopeMember: data.hopeMember,
-    name: data.name, 
+    name: data.name,
   } as Partial<ShowRes["data"]>;
 
   const filterData = Object.keys(data).reduce((total, key) => {
@@ -46,7 +54,7 @@ const ShowRes = (props: ShowRes) => {
 
   const ref = useRef(null);
   return (
-    <div ref={ref}>
+    <div ref={ref} className="max-w-96 text-center">
       <Footer />
       <h2 className="text-2xl mb-5">{t("Arknights Career Generator")}</h2>
       {/* 渲染干员 */}
@@ -147,7 +155,7 @@ const ShowRes = (props: ShowRes) => {
         <Button
           color="warning"
           onPress={() => {
-            props.onClose?.();
+            goto("/");
           }}
         >
           {t("edit")}
@@ -155,8 +163,7 @@ const ShowRes = (props: ShowRes) => {
         <Button
           color="danger"
           onPress={() => {
-            props.onClose?.();
-            props.onClear?.();
+            goto("/");
           }}
         >
           {t("go_back")}
