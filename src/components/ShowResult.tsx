@@ -15,7 +15,6 @@ interface ShowRes {
   onClose?: () => void;
   onClear?: () => void;
 }
-
 const ShowRes = (props: ShowRes) => {
   const { data } = props;
   const { t } = THook();
@@ -29,13 +28,12 @@ const ShowRes = (props: ShowRes) => {
     favoriteDrama: data.favoriteDrama,
     favoriteMedalGroup: data.favoriteMedalGroup,
   } as Partial<ShowRes["data"]>;
-
   const text = {
     customAvatar: data.customAvatar,
     favoriteMode: data.favoriteMode,
     favoriteEP: data.favoriteEP,
     hopeMember: data.hopeMember,
-    name: data.name,
+    name: data.name, 
   } as Partial<ShowRes["data"]>;
 
   const filterData = Object.keys(data).reduce((total, key) => {
@@ -47,7 +45,6 @@ const ShowRes = (props: ShowRes) => {
   }, {} as Partial<ShowRes["data"]>);
 
   const ref = useRef(null);
-  console.log("调试FieldNameMap", FieldNameMapForI18n());
   return (
     <div ref={ref}>
       <Footer />
@@ -129,18 +126,6 @@ const ShowRes = (props: ShowRes) => {
           return total;
         }, {} as Record<string, string>)}
       />
-      {/* <div className="mt-5">
-        {qrCodeUrl ? (
-          <div className="flex justify-center">
-            <div>
-              <img src={qrCodeUrl} className="m-auto mb-2" />
-              {t("scan_to_fill")}
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
-      </div> */}
       <ButtonGroup className="mt-5">
         <Button
           onPress={async () => {
