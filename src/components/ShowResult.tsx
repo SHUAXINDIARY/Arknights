@@ -11,7 +11,7 @@ import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@heroui/react";
 import { isApple, savePngByCanvas } from "../utils";
 import { THook } from "../i18n";
-import { useLocalData } from "../hooks";
+import { useLocalData, useToTop } from "../hooks";
 import { useNavigate } from "react-router";
 interface ShowRes {
   data?: typeof FieldNameMap;
@@ -19,7 +19,7 @@ interface ShowRes {
   onClear?: () => void;
 }
 const ShowRes = () => {
-  // const { data } = props;
+  useToTop();
   const { localData: data } = useLocalData<ShowRes["data"]>(
     RESULT_DATA_KEY,
     {}
@@ -160,14 +160,14 @@ const ShowRes = () => {
         >
           {t("edit")}
         </Button>
-        <Button
+        {/* <Button
           color="danger"
           onPress={() => {
             goto("/");
           }}
         >
           {t("go_back")}
-        </Button>
+        </Button> */}
       </ButtonGroup>
     </div>
   );

@@ -14,12 +14,11 @@ import Footer from "./components/Footer";
 import { testData } from "./data/testData";
 import { THook } from "./i18n";
 import { useNavigate } from "react-router";
-import { useLocalData } from "./hooks";
+import { useLocalData, useToTop } from "./hooks";
 import InfoModal from "./components/InfoModal";
 
 function App() {
-  // const [formState, setFormState] = useState<typeof FieldNameMap | null>();
-  // const [showRes, setShowRes] = useState(false);
+  useToTop();
   const [isShowPopover, setIsShowPopover] = useState(false);
   const { t } = THook();
   const goto = useNavigate();
@@ -27,25 +26,6 @@ function App() {
     RESULT_DATA_KEY,
     {}
   );
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, [showRes]);
-
-  // if (showRes) {
-  //   return (
-  //     <div className="max-w-96 text-center">
-  //       <ShowRes
-  //         data={formState!}
-  //         onClear={() => {
-  //           setFormState(null);
-  //         }}
-  //         onClose={() => {
-  //           setShowRes(false);
-  //         }}
-  //       />
-  //     </div>
-  //   );
-  // }
   return (
     <div>
       <Footer />
@@ -61,12 +41,6 @@ function App() {
           return <div key={item.field + item.name}>占位</div>;
         }
         const onSave = (val: string) => {
-          // setFormState((old: typeof formState) => {
-          //   return {
-          //     ...old,
-          //     [item.field]: val,
-          //   };
-          // });
           setLocalData({
             ...localData,
             [item.field]: val,
@@ -93,7 +67,6 @@ function App() {
             if (!localData || Object.values(localData).length === 0) {
               setIsShowPopover((old) => !old);
             } else {
-              // setShowRes(true);
               goto("/result");
             }
           }}
@@ -111,9 +84,7 @@ function App() {
         <Button
           color="secondary"
           onPress={async () => {
-            // setFormState(testData);
             setLocalData(testData);
-            // setShowRes(true);
             goto("/result");
           }}
         >

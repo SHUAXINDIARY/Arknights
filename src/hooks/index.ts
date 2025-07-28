@@ -1,4 +1,5 @@
 import { useLocalStorageState } from "ahooks"
+import { useEffect } from "react"
 
 export const useLocalData = <T>(
     key: string,
@@ -11,4 +12,11 @@ export const useLocalData = <T>(
         localData,
         setLocalData
     }
+}
+
+
+export const useToTop = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 }
