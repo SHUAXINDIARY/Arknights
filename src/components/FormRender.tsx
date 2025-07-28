@@ -6,7 +6,7 @@ import {
   MEMBER_SORT_KEY,
   memberNameAvatarMap,
 } from "../data/NameAvatar";
-import { getT } from "../i18n";
+import { getT } from "../utils/I18n/i18n";
 import ActivitySelect from "./ActivitySelect";
 import CustomInput from "./CustomInput";
 import MemberSelect from "./MemberSelect";

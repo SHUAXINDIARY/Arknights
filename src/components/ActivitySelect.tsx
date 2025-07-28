@@ -8,7 +8,7 @@ import {
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { ActivityList } from "../data/ActivityImg";
 import { useState } from "react";
-import i18n from "../i18n";
+import i18n from "../utils/I18n/i18n";
 
 interface ActivitySelectProps {
   name?: string;

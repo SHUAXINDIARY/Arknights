@@ -9,7 +9,7 @@ import {
 } from "@heroui/react";
 import { useEffect } from "react";
 import XHS from "../assets/img_v3_02gq_7ed31f29-4562-44e3-b3e9-fc76fea30ecg.jpeg";
-import { THook } from "../i18n";
+import { THook } from "../utils/I18n/i18n";
 import { useLocalData } from "../hooks";
 import { INIT_MODAL, ONE_HOUR } from "../utils/constant";
 

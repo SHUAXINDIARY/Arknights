@@ -14,7 +14,7 @@ import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useEffect, useState } from "react";
 import { useThrottleFn } from "ahooks";
-import i18n, { THook } from "../i18n";
+import i18n, { THook } from "../utils/I18n/i18n";
 
 export interface SkinSelectProps {
   label?: string;

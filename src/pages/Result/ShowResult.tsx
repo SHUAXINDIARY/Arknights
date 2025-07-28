@@ -1,17 +1,17 @@
 import { useRef } from "react";
-import Footer from "./Footer";
+import Footer from "../../components/Footer";
 import {
   FieldNameMap,
   FieldNameMapForI18n,
   FormField,
   RESULT_DATA_KEY,
-} from "../utils/constant";
-import LazyLoadAvatar from "./LazyLoadAvatar";
-import RenderTextCard from "./RenderTextCard";
+} from "../../utils/constant";
+import LazyLoadAvatar from "../../components/LazyLoadAvatar";
+import RenderTextCard from "../../components/RenderTextCard";
 import { ButtonGroup, Button } from "@heroui/react";
-import { isApple, savePngByCanvas } from "../utils";
-import { THook } from "../i18n";
-import { useLocalData, useToTop } from "../hooks";
+import { isApple, savePngByCanvas } from "../../utils";
+import { THook } from "../../utils/I18n/i18n";
+import { useLocalData, useToTop } from "../../hooks";
 import { useNavigate } from "react-router";
 interface ShowRes {
   data?: typeof FieldNameMap;
