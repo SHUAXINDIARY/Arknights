@@ -8,7 +8,7 @@ export const FieldNameMap = Object.values(FormMap).reduce((total, item) => {
 }, {} as Record<FormField, string>);
 
 
-// 国际化冬天切文案 所以动态执行下
+// 国际化动态切文案 所以动态执行下
 export const FieldNameMapForI18n = () => (Object.values(FormMap).reduce((total, item) => {
     total[item.field as FormField] = item.name;
     return total;
@@ -18,4 +18,6 @@ export const FieldNameMapForI18n = () => (Object.values(FormMap).reduce((total, 
 export const RESULT_DATA_KEY = 'RESULT_DATA_KEY';
 
 // 弹窗key
-export const INIT_MODAL = 'INIT_MODAL'
+export const INIT_MODAL = 'INIT_MODAL';
+
+export const ONE_HOUR = 3600000;

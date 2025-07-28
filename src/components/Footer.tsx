@@ -10,7 +10,7 @@ import {
   SelectItem,
   useDisclosure,
 } from "@heroui/react";
-import i18n, { THook } from "../i18n";
+import i18n, { THook } from "../utils/I18n/i18n";
 
 const Footer = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

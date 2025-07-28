@@ -1,11 +1,11 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
+import App from "./pages/Home/App.tsx";
 import { HeroUIProvider } from "@heroui/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import "./i18n.ts";
+import "./utils/I18n/i18n.ts";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import ShowRes from "./components/ShowResult.tsx";
+import ShowRes from "./pages/Result/ShowResult.tsx";
 
 const ROUTES = createBrowserRouter([
   {

@@ -7,15 +7,15 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@heroui/react";
-import { FormMap } from "./components/FormRender";
-import { FieldNameMap, RESULT_DATA_KEY } from "./utils/constant";
+import { FormMap } from "../../components/FormRender";
+import { FieldNameMap, RESULT_DATA_KEY } from "../../utils/constant";
 import { useState } from "react";
-import Footer from "./components/Footer";
-import { testData } from "./data/testData";
-import { THook } from "./i18n";
+import Footer from "../../components/Footer";
+import { testData } from "../../data/testData";
+import { THook } from "../../utils/I18n/i18n";
 import { useNavigate } from "react-router";
-import { useLocalData, useToTop } from "./hooks";
-import InfoModal from "./components/InfoModal";
+import { useLocalData, useToTop } from "../../hooks";
+import InfoModal from "../../components/InfoModal";
 
 function App() {
   useToTop();

@@ -8,7 +8,7 @@ import {
 import { memberNameAvatarMap } from "../data/NameAvatar";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useState } from "react";
-import i18n, { getT } from "../i18n";
+import i18n, { getT } from "../utils/I18n/i18n";
 
 interface MemberSelectProps {
   name?: string;
