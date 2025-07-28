@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import Footer from "./Footer";
 import {
   FieldNameMap,
@@ -9,7 +9,6 @@ import LazyLoadAvatar from "./LazyLoadAvatar";
 import RenderTextCard from "./RenderTextCard";
 import { ButtonGroup, Button } from "@heroui/react";
 import { isApple, savePngByCanvas } from "../utils";
-import QRcode from "qrcode";
 import { THook } from "../i18n";
 interface ShowRes {
   data: typeof FieldNameMap;
@@ -48,14 +47,6 @@ const ShowRes = (props: ShowRes) => {
   }, {} as Partial<ShowRes["data"]>);
 
   const ref = useRef(null);
-  // const [qrCodeUrl, setQrCodeUrl] = useState("");
-  useEffect(() => {
-    (async () => {
-      const data = await QRcode.toDataURL(window.location.href);
-      console.log(data);
-      // setQrCodeUrl(data);
-    })();
-  }, []);
   console.log("调试FieldNameMap", FieldNameMapForI18n());
   return (
     <div ref={ref}>
