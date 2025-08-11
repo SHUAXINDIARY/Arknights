@@ -9,7 +9,7 @@ import {
 import LazyLoadAvatar from "../../components/LazyLoadAvatar";
 import RenderTextCard from "../../components/RenderTextCard";
 import { ButtonGroup, Button } from "@heroui/react";
-import { savePngByCanvas } from "../../utils";
+import { isApple, savePngByCanvas } from "../../utils";
 import { THook } from "../../utils/I18n/i18n";
 import { useLocalData, useToTop } from "../../hooks";
 import { useNavigate } from "react-router";
@@ -138,13 +138,13 @@ const ShowRes = () => {
         <Button
           onPress={async () => {
             try {
-              // if (isApple()) {
-              //   await savePngByCanvas();
-              //   await savePngByCanvas();
-              //   await savePngByCanvas(true);
-              // } else {
-              await savePngByCanvas(true);
-              // }
+              if (isApple()) {
+                await savePngByCanvas();
+                await savePngByCanvas();
+                await savePngByCanvas(true);
+              } else {
+                await savePngByCanvas(true);
+              }
             } catch (error) {
               alert(error);
             }
