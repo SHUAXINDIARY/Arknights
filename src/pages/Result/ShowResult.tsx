@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import Footer from "../../components/Footer";
 import {
   FieldNameMap,
@@ -26,6 +26,27 @@ const ShowRes = () => {
   );
   const goto = useNavigate();
   const { t } = THook();
+  const [isSaving, setIsSaving] = useState(false);
+  
+  const handleSave = useCallback(async () => {
+    if (isSaving) return; // 如果正在保存，直接返回
+    
+    setIsSaving(true);
+    try {
+      if (isApple()) {
+        await savePngByCanvas();
+        await savePngByCanvas();
+        await savePngByCanvas(true);
+      } else {
+        await savePngByCanvas(true);
+      }
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsSaving(false);
+    }
+  }, [isSaving]);
+  
   const skin = {
     firstSkin: data.firstSkin,
     favoriteSkin: data.favoriteSkin,
@@ -136,21 +157,10 @@ const ShowRes = () => {
       />
       <ButtonGroup className="mt-5">
         <Button
-          onPress={async () => {
-            try {
-              if (isApple()) {
-                await savePngByCanvas();
-                await savePngByCanvas();
-                await savePngByCanvas(true);
-              } else {
-                await savePngByCanvas(true);
-              }
-            } catch (error) {
-              alert(error);
-            }
-          }}
+          onPress={handleSave}
+          isDisabled={isSaving}
         >
-          {t("export_result")}
+          {isSaving ? t("saving...") : t("export_result")}
         </Button>
         <Button
           color="warning"

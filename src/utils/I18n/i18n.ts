@@ -91,7 +91,8 @@ export const resources = {
             "scan_to_fill": "Scan to Fill",
             "export_result": "Export Result",
             "edit": "Edit",
-            "go_back": "Go Back"
+            "go_back": "Go Back",
+            "saving...": "Saving..."
         }
     },
     jp: {
@@ -177,7 +178,8 @@ export const resources = {
             "scan_to_fill": "スキャンして記入",
             "export_result": "結果をエクスポート",
             "edit": "編集",
-            "go_back": "戻る"
+            "go_back": "戻る",
+            "saving...": "保存中..."
         }
     },
     zh: {
@@ -263,7 +265,8 @@ export const resources = {
             "scan_to_fill": "扫码填写",
             "export_result": "导出结果",
             "edit": "编辑",
-            "go_back": "返回"
+            "go_back": "返回",
+            "saving...": "保存中..."
         }
     }
 } as const;
