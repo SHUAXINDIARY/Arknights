@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Button, Card, CardBody, CardHeader, Chip, Divider, Progress, Radio, RadioGroup, Spacer } from "@heroui/react";
 import { useNavigate } from "react-router";
 import { data as questionnaireData } from "./data";
+import { THook } from "../../utils/I18n/i18n";
 
 interface QuestionOption {
   id: string;
@@ -19,6 +20,7 @@ type ResultType = "rational" | "edgy" | "casual" | "chaotic";
 
 const Questionnaire = () => {
   const navigate = useNavigate();
+  const { t } = THook();
   const questions: QuestionItem[] = questionnaireData.questions as unknown as QuestionItem[];
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedOptionIdByQuestionId, setSelectedOptionIdByQuestionId] = useState<Record<number, string>>({});
@@ -114,6 +116,7 @@ const Questionnaire = () => {
                   上一题
                 </Button>
                 <div className="flex items-center gap-3">
+                  <Button variant="light" onPress={() => navigate("/")}>{t("go_back")}</Button>
                   <Button variant="light" onPress={resetAll}>重置</Button>
                   <Button color="primary" onPress={goNext} isDisabled={!selectedOptionIdByQuestionId[currentQuestion.id]}>
                     下一题
@@ -129,7 +132,7 @@ const Questionnaire = () => {
               <div className="flex items-center justify-between">
                 <Button variant="flat" onPress={resetAll}>再测一次</Button>
                 <div className="flex items-center gap-3">
-                  <Button variant="light" onPress={() => navigate("/")}>返回首页</Button>
+                  <Button variant="light" onPress={() => navigate("/")}>{t("go_back")}</Button>
                 </div>
               </div>
             </div>

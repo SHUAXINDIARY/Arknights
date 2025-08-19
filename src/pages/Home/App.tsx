@@ -90,6 +90,12 @@ function App() {
         >
           {t("previewExample")}
         </Button>
+        <Button
+          variant="flat"
+          onPress={() => goto("/questionnaire")}
+        >
+          {t("questionnaire")}  
+        </Button>
       </ButtonGroup>
       <InfoModal />
     </div>
