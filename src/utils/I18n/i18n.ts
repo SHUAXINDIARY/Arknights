@@ -92,6 +92,7 @@ export const resources = {
             "export_result": "Export Result",
             "edit": "Edit",
             "go_back": "Go Back",
+            "questionnaire": "Questionnaire",
             "saving...": "Saving..."
         }
     },
@@ -179,6 +180,7 @@ export const resources = {
             "export_result": "結果をエクスポート",
             "edit": "編集",
             "go_back": "戻る",
+            "questionnaire": "診断テスト",
             "saving...": "保存中..."
         }
     },
@@ -266,6 +268,7 @@ export const resources = {
             "export_result": "导出结果",
             "edit": "编辑",
             "go_back": "返回",
+            "questionnaire": "趣味测试",
             "saving...": "保存中..."
         }
     }
