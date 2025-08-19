@@ -6,6 +6,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import "./utils/I18n/i18n.ts";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import ShowRes from "./pages/Result/ShowResult.tsx";
+import Questionnaire from "./pages/Questionnaire/index.tsx";
 
 const ROUTES = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const ROUTES = createBrowserRouter([
   {
     path: "/result",
     Component: ShowRes,
+  },
+  {
+    path: "/questionnaire",
+    Component: Questionnaire,
   },
 ]);
 
