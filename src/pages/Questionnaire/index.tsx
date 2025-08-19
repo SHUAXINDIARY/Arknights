@@ -7,7 +7,7 @@ import { THook } from "../../utils/I18n/i18n";
 interface QuestionOption {
   id: string;
   text: string;
-  type: "rational" | "edgy" | "casual" | "chaotic";
+  type: ResultType;
 }
 
 interface QuestionItem {
