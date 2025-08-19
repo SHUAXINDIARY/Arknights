@@ -81,12 +81,12 @@ const Questionnaire = () => {
   }, [hasFinishedAllQuestions, questions, selectedOptionIdByQuestionId]);
 
   return (
-    <div className="mx-auto max-w-xl p-4">
-      <Card>
-        <CardHeader className="flex flex-col items-start gap-2">
-          <div className="w-full flex items-center justify-between">
-            <h2 className="text-xl font-semibold">{questionnaireData.title}</h2>
-            <Chip color="primary" variant="flat">
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <Card className="w-full max-w-xl">
+        <CardHeader className="flex flex-col items-start gap-2 p-4 sm:p-6">
+          <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold">{questionnaireData.title}</h2>
+            <Chip color="primary" variant="flat" size="sm">
               {hasFinishedAllQuestions ? "完成" : `第 ${currentIndex + 1} / ${questions.length} 题`}
             </Chip>
           </div>
@@ -95,30 +95,42 @@ const Questionnaire = () => {
           </div>
         </CardHeader>
         <Divider />
-        <CardBody>
+        <CardBody className="p-4 sm:p-6">
           {!hasFinishedAllQuestions ? (
             <div>
-              <div className="text-base font-medium leading-7">{currentQuestion.text}</div>
-              <Spacer y={3} />
+              <div className="text-sm sm:text-base font-medium leading-6 sm:leading-7">{currentQuestion.text}</div>
+              <Spacer y={4} />
               <RadioGroup
                 value={selectedOptionIdByQuestionId[currentQuestion.id] || ""}
                 onValueChange={(val) => handleSelect(currentQuestion.id, String(val))}
+                className="gap-3"
               >
                 {currentQuestion.options.map((opt) => (
-                  <Radio key={opt.id} value={opt.id} description={opt.type}>
+                  <Radio key={opt.id} value={opt.id} description={opt.type} className="text-sm">
                     {opt.text}
                   </Radio>
                 ))}
               </RadioGroup>
-              <Spacer y={4} />
-              <div className="flex items-center justify-between gap-3">
-                <Button variant="flat" onPress={goPrev} isDisabled={currentIndex === 0}>
+              <Spacer y={5} />
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <Button 
+                  variant="flat" 
+                  onPress={goPrev} 
+                  isDisabled={currentIndex === 0}
+                  size="sm"
+                  className="order-2 sm:order-1"
+                >
                   上一题
                 </Button>
-                <div className="flex items-center gap-3">
-                  <Button variant="light" onPress={() => navigate("/")}>{t("go_back")}</Button>
-                  <Button variant="light" onPress={resetAll}>重置</Button>
-                  <Button color="primary" onPress={goNext} isDisabled={!selectedOptionIdByQuestionId[currentQuestion.id]}>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 order-1 sm:order-2">
+                  <Button variant="light" onPress={() => navigate("/")} size="sm">{t("go_back")}</Button>
+                  <Button variant="light" onPress={resetAll} size="sm">重置</Button>
+                  <Button 
+                    color="primary" 
+                    onPress={goNext} 
+                    isDisabled={!selectedOptionIdByQuestionId[currentQuestion.id]}
+                    size="sm"
+                  >
                     下一题
                   </Button>
                 </div>
@@ -126,13 +138,13 @@ const Questionnaire = () => {
             </div>
           ) : (
             <div>
-              <div className="text-lg font-semibold mb-2">测试结果：{result?.title}</div>
-              <div className="text-default-600 leading-7">{result?.description}</div>
-              <Spacer y={4} />
-              <div className="flex items-center justify-between">
-                <Button variant="flat" onPress={resetAll}>再测一次</Button>
-                <div className="flex items-center gap-3">
-                  <Button variant="light" onPress={() => navigate("/")}>{t("go_back")}</Button>
+              <div className="text-base sm:text-lg font-semibold mb-3">测试结果：{result?.title}</div>
+              <div className="text-default-600 leading-6 sm:leading-7 text-sm sm:text-base">{result?.description}</div>
+              <Spacer y={5} />
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <Button variant="flat" onPress={resetAll} size="sm" className="order-2 sm:order-1">再测一次</Button>
+                <div className="flex items-center gap-3 order-1 sm:order-2">
+                  <Button variant="light" onPress={() => navigate("/")} size="sm">{t("go_back")}</Button>
                 </div>
               </div>
             </div>

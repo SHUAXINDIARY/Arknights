@@ -27,7 +27,7 @@ function App() {
     {}
   );
   return (
-    <div>
+    <div className="p-8">
       <Footer />
       <div className="mb-10">
         <Chip size="lg" color="primary">

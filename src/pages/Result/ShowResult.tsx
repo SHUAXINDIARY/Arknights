@@ -75,7 +75,7 @@ const ShowRes = () => {
 
   const ref = useRef(null);
   return (
-    <div ref={ref} className="max-w-96 text-center">
+    <div ref={ref} className="max-w-96 text-center p-8">
       <Footer />
       <h2 className="text-2xl mb-5">{t("Arknights Career Generator")}</h2>
       {/* 渲染干员 */}
