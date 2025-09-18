@@ -37,7 +37,7 @@ export default function RenderTextCard(props: RenderTextCardProps) {
             return (
               <div key={_key + props.text[_key]} className="mb-3">
                 <div>
-                  <span>{FieldNameMap[_key]}</span>
+                  <span>{FieldNameMap()[_key]}</span>
                   <div className="mt-2">
                     <Chip color="primary">{props.text[_key] || "-"}</Chip>
                   </div>
