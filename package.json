@@ -33,13 +33,13 @@
     "ua-parser-js": "^2.0.0"
   },
   "devDependencies": {
-    "@types/react-router": "^5.1.20",
     "@eslint/js": "^9.13.0",
-    "@rsbuild/core": "^1.1.6",
+    "@rsbuild/core": "^1.5.9",
     "@types/dom-to-image": "^2.6.7",
     "@types/file-saver": "^2.0.7",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/react-router": "^5.1.20",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.13.0",
     "eslint-plugin-react-hooks": "^5.0.0",
