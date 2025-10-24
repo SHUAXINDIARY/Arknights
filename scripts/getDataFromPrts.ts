@@ -151,7 +151,7 @@ const getPageSelectMemberList = async () => {
       const [careerText, _2] = career.src.split(".png");
       const careerArr = decodeURIComponent(careerText).split("_");
       list.push({
-        avatar: avatar.getAttribute("data-src"),
+        avatar: avatar.getAttribute("data-src") || avatar?.getAttribute?.("src"),
         name,
         sex,
         level: Number(levelArr[levelArr.length - 1]) + 1,
