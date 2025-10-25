@@ -16,7 +16,7 @@ const getSkinList = async () => {
     const imgDom = item.querySelector("img");
     console.log(imgDom)
     const skinNameDom = item.querySelector(".charnameEn");
-    const src = imgDom?.getAttribute?.('data-src');
+    const src = imgDom?.getAttribute?.('data-src') || imgDom?.getAttribute?.('src');
 
     const url = src && decodeURIComponent(src);
     const obj = {
