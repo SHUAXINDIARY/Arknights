@@ -11,6 +11,7 @@
     "auto": "npm run update:prts && npm run update:submodule && pnpm update:international",
     "update:prts": "npx tsx scripts/getDataFromPrts.ts",
     "update:international": "npx tsx scripts/filterData.ts",
+    "init:submodule": "git submodule update --init --recursive",
     "update:submodule": "git submodule update --remote"
   },
   "dependencies": {
