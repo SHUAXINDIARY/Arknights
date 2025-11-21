@@ -165,31 +165,80 @@ const getPageSelectMemberList = async () => {
 
 // 获取活动列表 https://prts.wiki/w/%E6%B4%BB%E5%8A%A8%E4%B8%80%E8%A7%88
 const getActivityList = async () => {
-  const data = [] as Partial<{
-    name: string,
-    img: string,
-    // 区分活动是否带有剧情
-    type: string
-  }>[];
-  document?.querySelectorAll(".wikitable").forEach(item => {
-    const Table = item.children[0];
-    const trArr = Table.children
-    for (let i = 0; i < trArr.length; i++) {
-      if (i) {
-        const dataItem = trArr[i];
-        const name = dataItem.children[1].textContent?.split('\n')?.[0]
-        const type = dataItem.children[2].textContent?.split('\n')?.[0]
-        const img = dataItem.querySelector('img')?.getAttribute('data-srcset')?.split(' ')?.[0]
-        name && img && data.push({
-          name,
-          img,
-          type
-        })
-      }
+  // 查找表格
+  const table = document.querySelector('table.wikitable');
+  if (!table) {
+    console.error('未找到表格');
+    return [];
+  }
 
+  const tbody = table.querySelector('tbody');
+  if (!tbody) {
+    console.error('未找到 tbody');
+    return [];
+  }
+
+  const rows = tbody.querySelectorAll('tr');
+  const results = [] as {
+    name: string;
+    type: string;
+    img: string;
+  }[];
+
+  // 跳过表头，从第二行开始
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const cells = row.querySelectorAll('td');
+
+    // 确保至少有4列
+    if (cells.length < 4) {
+      continue;
     }
-  })
-  return data
+
+    // 第2列：活动页面（提取链接文本）
+    const secondCell = cells[1];
+    const link = secondCell.querySelector('a');
+    const name = link ? (link.textContent?.trim() || '') : (secondCell.textContent?.trim() || '');
+
+    // 第3列：活动分类（提取链接文本，可能有多个链接）
+    const thirdCell = cells[2];
+    const typeLinks = thirdCell.querySelectorAll('a');
+    let type = '';
+    if (typeLinks.length > 0) {
+      type = Array.from(typeLinks)
+        .map(link => link.textContent?.trim() || '')
+        .filter(text => text)
+        .join('、'); // 多个分类用顿号连接
+    } else {
+      type = thirdCell.textContent?.trim() || '';
+    }
+
+    // 第4列：官网公告（提取图片URL）
+    const fourthCell = cells[3];
+    const img = fourthCell.querySelector('img');
+    const imgUrl = img ? (img.getAttribute('src') || '') : '';
+
+    // 添加到结果数组
+    results.push({
+      name: name,
+      type: type,
+      img: imgUrl
+    });
+  }
+
+  // 输出结果
+  console.log('解析完成，共', results.length, '条数据');
+  console.log('结果数组:', results);
+  console.log('JSON格式:', JSON.stringify(results, null, 2));
+
+  // 复制到剪贴板（如果支持）
+  if (typeof navigator !== 'undefined' && navigator.clipboard) {
+    navigator.clipboard.writeText(JSON.stringify(results, null, 2))
+      .then(() => console.log('✓ JSON已复制到剪贴板'))
+      .catch(err => console.log('复制失败:', err));
+  }
+
+  return results;
 };
 
 const task = [
