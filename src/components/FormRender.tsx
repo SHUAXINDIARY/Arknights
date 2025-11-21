@@ -506,7 +506,7 @@ export const FormMap = [
             | (typeof MedalDataListMap)[0]
         ) => {
           return {
-            img: "img" in item ? item.img : item.avatar,
+            img: "img" in item ? item.img : "avatar" in item ? item.avatar : "",
             name: item.name,
             skinName: item.name,
           };
