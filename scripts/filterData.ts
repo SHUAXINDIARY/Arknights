@@ -54,8 +54,8 @@ export const saveOperator = (memberNameAvatarMap) => {
                 const amiya = data.find((_item) => _item.name === "阿米娅");
                 member = {
                     ...member,
-                    enName: `${amiya.enName}(${member.enCareer})`,
-                    jpName: `${amiya.jpName}(${member.jpCareer})`,
+                    enName: `${amiya?.enName || ""}(${member.enCareer})`,
+                    jpName: `${amiya?.jpName || ""}(${member.jpCareer})`,
                 };
             }
             data.push(member);
