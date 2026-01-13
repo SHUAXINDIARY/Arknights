@@ -165,78 +165,77 @@ const getPageSelectMemberList = async () => {
 
 // 获取活动列表 https://prts.wiki/w/%E6%B4%BB%E5%8A%A8%E4%B8%80%E8%A7%88
 const getActivityList = async () => {
-  // 查找表格
-  const table = document.querySelector('table.wikitable');
-  if (!table) {
+  // 查找所有表格（页面有多个折叠区域，每个区域一个表格）
+  const tables = document.querySelectorAll('table.wikitable');
+  if (!tables || tables.length === 0) {
     console.error('未找到表格');
     return [];
   }
 
-  const tbody = table.querySelector('tbody');
-  if (!tbody) {
-    console.error('未找到 tbody');
-    return [];
-  }
+  console.log(`找到 ${tables.length} 个表格`);
 
-  const rows = tbody.querySelectorAll('tr');
   const results = [] as {
     name: string;
     type: string;
     img: string;
   }[];
 
-  // 跳过表头，从第二行开始
-  for (let i = 1; i < rows.length; i++) {
-    const row = rows[i];
-    const cells = row.querySelectorAll('td');
-
-    // 确保至少有4列
-    if (cells.length < 4) {
-      continue;
+  // 遍历所有表格
+  tables.forEach((table, tableIndex) => {
+    const tbody = table.querySelector('tbody');
+    if (!tbody) {
+      console.log(`表格 ${tableIndex} 未找到 tbody`);
+      return;
     }
 
-    // 第2列：活动页面（提取链接文本）
-    const secondCell = cells[1];
-    const link = secondCell.querySelector('a');
-    const name = link ? (link.textContent?.trim() || '') : (secondCell.textContent?.trim() || '');
+    const rows = tbody.querySelectorAll('tr');
 
-    // 第3列：活动分类（提取链接文本，可能有多个链接）
-    const thirdCell = cells[2];
-    const typeLinks = thirdCell.querySelectorAll('a');
-    let type = '';
-    if (typeLinks.length > 0) {
-      type = Array.from(typeLinks)
-        .map(link => link.textContent?.trim() || '')
-        .filter(text => text)
-        .join('、'); // 多个分类用顿号连接
-    } else {
-      type = thirdCell.textContent?.trim() || '';
+    // 跳过表头，从第二行开始
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      const cells = row.querySelectorAll('td');
+
+      // 确保至少有4列
+      if (cells.length < 4) {
+        continue;
+      }
+
+      // 第2列：活动页面（提取链接文本）
+      const secondCell = cells[1];
+      const link = secondCell.querySelector('a');
+      const name = link ? (link.textContent?.trim() || '') : (secondCell.textContent?.trim() || '');
+
+      // 第3列：活动分类（提取链接文本，可能有多个链接）
+      const thirdCell = cells[2];
+      const typeLinks = thirdCell.querySelectorAll('a');
+      let type = '';
+      if (typeLinks.length > 0) {
+        type = Array.from(typeLinks)
+          .map(link => link.textContent?.trim() || '')
+          .filter(text => text)
+          .join('、'); // 多个分类用顿号连接
+      } else {
+        type = thirdCell.textContent?.trim() || '';
+      }
+
+      // 第4列：官网公告（提取图片URL）
+      const fourthCell = cells[3];
+      const img = fourthCell.querySelector('img');
+      const imgUrl = img ? (img.getAttribute('src') || '') : '';
+
+      // 只有当 name 不为空时才添加
+      if (name) {
+        results.push({
+          name: name,
+          type: type,
+          img: imgUrl
+        });
+      }
     }
-
-    // 第4列：官网公告（提取图片URL）
-    const fourthCell = cells[3];
-    const img = fourthCell.querySelector('img');
-    const imgUrl = img ? (img.getAttribute('src') || '') : '';
-
-    // 添加到结果数组
-    results.push({
-      name: name,
-      type: type,
-      img: imgUrl
-    });
-  }
+  });
 
   // 输出结果
   console.log('解析完成，共', results.length, '条数据');
-  console.log('结果数组:', results);
-  console.log('JSON格式:', JSON.stringify(results, null, 2));
-
-  // 复制到剪贴板（如果支持）
-  if (typeof navigator !== 'undefined' && navigator.clipboard) {
-    navigator.clipboard.writeText(JSON.stringify(results, null, 2))
-      .then(() => console.log('✓ JSON已复制到剪贴板'))
-      .catch(err => console.log('复制失败:', err));
-  }
 
   return results;
 };
@@ -313,7 +312,30 @@ const task = [
     dataKey: 'ActivityList',
     name: '活动',
     url: 'https://prts.wiki/w/%E6%B4%BB%E5%8A%A8%E4%B8%80%E8%A7%88',
-    fun: getActivityList,
+    // fun: getActivityList,
+    customFun: async (browser: Browser) => {
+      const page = await browser.newPage();
+      await page.goto('https://prts.wiki/w/%E6%B4%BB%E5%8A%A8%E4%B8%80%E8%A7%88');
+      
+      // 等待页面加载完成
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // 点击所有折叠按钮展开内容
+      const collapseButtons = await page.$$('button.mw-collapsible-toggle');
+      console.log(`找到 ${collapseButtons.length} 个折叠按钮`);
+      for (const button of collapseButtons) {
+        await button.click();
+        // 每次点击后稍微等待一下，确保展开动画完成
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      
+      // 等待所有内容展开完成
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const data = await page.evaluate(getActivityList)
+      await page.close();
+      return data
+    }
   },
 ] as const;
 
