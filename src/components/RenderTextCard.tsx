@@ -16,7 +16,7 @@ interface RenderTextCardProps {
 
 export default function RenderTextCard(props: RenderTextCardProps) {
   return (
-    <Card className="shadow-none border">
+    <Card className="shadow-none">
       <CardHeader className="justify-between">
         <div className="flex gap-5">
           <LazyLoadAvatar useAvatar useLazyLoad={false} url={props.avatarUrl} />

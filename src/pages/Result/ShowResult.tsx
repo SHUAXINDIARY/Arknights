@@ -122,7 +122,7 @@ const ShowRes = () => {
                       key={filterData[_key] + _key}
                       className="flex flex-col items-center group"
                     >
-                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden ring-2 ring-default-200 group-hover:ring-primary transition-all duration-200">
+                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 overflow-hidden transition-all duration-200">
                         <LazyLoadAvatar
                           useLazyLoad={false}
                           className="w-full h-full object-cover"

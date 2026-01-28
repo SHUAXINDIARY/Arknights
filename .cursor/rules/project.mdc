@@ -24,6 +24,66 @@ skills:
 
 ## 代码规范
 
+### 异步代码
+
+所有异步操作必须使用 `async/await` 语法：
+
+```typescript
+// ❌ BAD
+function fetchData() {
+  return fetch('/api/data')
+    .then(res => res.json())
+    .then(data => processData(data));
+}
+
+// ✅ GOOD
+async function fetchData() {
+  const res = await fetch('/api/data');
+  const data = await res.json();
+  return processData(data);
+}
+```
+
+### 常量管理
+
+常量逻辑抽离为独立变量，维护在当前文件最顶部（import 语句之后）：
+
+```typescript
+import { useState } from 'react';
+
+// 常量定义区域
+const DEFAULT_PAGE_SIZE = 10;
+const API_TIMEOUT_MS = 5000;
+const SUPPORTED_FORMATS = ['jpg', 'png', 'webp'];
+
+// 组件/函数实现
+export function MyComponent() {
+  // ...
+}
+```
+
+### 注释规范
+
+所有逻辑变量和 TypeScript 类型都需要有注释：
+
+```typescript
+/** 用户信息类型 */
+interface UserInfo {
+  /** 用户唯一标识 */
+  id: string;
+  /** 用户显示名称 */
+  name: string;
+  /** 用户头像 URL */
+  avatar?: string;
+}
+
+/** 当前页码，从 1 开始 */
+const [page, setPage] = useState(1);
+
+/** 是否正在加载数据 */
+const [loading, setLoading] = useState(false);
+```
+
 ### React 组件
 
 - 使用函数式组件和 Hooks
