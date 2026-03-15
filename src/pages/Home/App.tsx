@@ -9,20 +9,32 @@ import {
 } from "@heroui/react";
 import { FormMap } from "../../components/FormRender";
 import { RESULT_DATA_KEY } from "../../utils/constant";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Footer from "../../components/Footer";
 import { testData } from "../../data/testData";
 import { THook } from "../../utils/I18n/i18n";
 import { useNavigate } from "react-router";
 import { useLocalData, useToTop } from "../../hooks";
 import InfoModal from "../../components/InfoModal";
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  AnimatePresence,
+} from "framer-motion";
 
 /** 页面各区域的入场编排延迟基数（秒） */
 const STAGGER_BASE = 0.12;
 
 /** ease-out-quart 缓动曲线 */
 const EASE_OUT_QUART: [number, number, number, number] = [0.25, 1, 0.5, 1];
+
+/** 进度百分比阈值 */
+const PROGRESS_THRESHOLDS = {
+  QUARTER: 25,
+  HALF: 50,
+  ALMOST: 80,
+  COMPLETE: 100,
+} as const;
 
 /** 区域入场动画 variants */
 const sectionVariants = {
@@ -58,10 +70,32 @@ const buttonMotionProps = {
   transition: { duration: 0.15, ease: EASE_OUT_QUART },
 };
 
+/** 进度条完成时的庆祝脉冲动画 */
+const celebrateVariants = {
+  idle: { scale: 1 },
+  celebrate: {
+    scale: [1, 1.04, 1],
+    transition: {
+      duration: 0.5,
+      ease: EASE_OUT_QUART,
+    },
+  },
+};
+
+/** 鼓励文案淡入淡出 */
+const encourageVariants = {
+  initial: { opacity: 0, y: 6 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: EASE_OUT_QUART } },
+  exit: { opacity: 0, y: -6, transition: { duration: 0.2 } },
+};
+
 function App() {
   useToTop();
   const shouldReduceMotion = useReducedMotion();
   const [isShowPopover, setIsShowPopover] = useState(false);
+  /** 生成按钮点击后的短暂成功反馈 */
+  const [isGenerating, setIsGenerating] = useState(false);
+  const generateTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const { t } = THook();
   const goto = useNavigate();
   const { localData, setLocalData } = useLocalData<Record<string, string>>(
@@ -75,11 +109,38 @@ function App() {
     : 0;
   /** 表单项总数 */
   const totalCount = FormMap.length;
+  /** 进度百分比 */
+  const progressPercent = (filledCount / totalCount) * 100;
+  /** 是否全部完成 */
+  const isComplete = filledCount === totalCount;
+
+  /** 根据进度返回对应的鼓励文案 key */
+  const encourageKey = useMemo(() => {
+    if (progressPercent >= PROGRESS_THRESHOLDS.COMPLETE) return "progress_complete";
+    if (progressPercent >= PROGRESS_THRESHOLDS.ALMOST) return "progress_almost";
+    if (progressPercent >= PROGRESS_THRESHOLDS.HALF) return "progress_half";
+    if (progressPercent >= PROGRESS_THRESHOLDS.QUARTER) return "progress_quarter";
+    return "progress_start";
+  }, [progressPercent]);
 
   /** 关闭动画时的降级配置 */
   const noMotion = shouldReduceMotion
     ? { initial: undefined, animate: undefined, variants: undefined }
     : {};
+
+  /** 处理生成按钮点击：有数据时播放短暂反馈后跳转 */
+  const handleGenerate = () => {
+    if (!localData || Object.values(localData).length === 0) {
+      setIsShowPopover((old) => !old);
+      return;
+    }
+    if (isGenerating) return;
+    setIsGenerating(true);
+    clearTimeout(generateTimerRef.current);
+    generateTimerRef.current = setTimeout(() => {
+      goto("/result");
+    }, 400);
+  };
 
   return (
     <div className="min-h-screen p-4 sm:p-8">
@@ -101,21 +162,41 @@ function App() {
         </motion.div>
 
         {/* 进度 */}
-        <motion.div className="mb-6" variants={sectionVariants} custom={2}>
-          <Progress
-            size="sm"
-            value={(filledCount / totalCount) * 100}
-            color="primary"
-            showValueLabel
-            label={`${filledCount}/${totalCount}`}
-            classNames={{
-              label: "text-xs text-default-500",
-              value: "text-xs text-default-500",
-            }}
-          />
+        <motion.div
+          className="mb-6"
+          variants={sectionVariants}
+          custom={2}
+        >
+          <motion.div
+            variants={shouldReduceMotion ? undefined : celebrateVariants}
+            animate={isComplete && !shouldReduceMotion ? "celebrate" : "idle"}
+          >
+            <Progress
+              size="sm"
+              value={progressPercent}
+              color={isComplete ? "success" : "primary"}
+              showValueLabel
+              label={`${filledCount}/${totalCount}`}
+              classNames={{
+                label: "text-xs text-default-500",
+                value: "text-xs text-default-500",
+              }}
+            />
+          </motion.div>
+          <div className="h-5 mt-1.5 overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={encourageKey}
+                className={`text-xs text-center ${isComplete ? "text-success-500 font-medium" : "text-default-400"}`}
+                {...(shouldReduceMotion ? {} : encourageVariants)}
+              >
+                {t(encourageKey)}
+              </motion.p>
+            </AnimatePresence>
+          </div>
         </motion.div>
 
-        {/* 表单区域 — 每项在视口内时淡入 */}
+        {/* 表单区域 — 每项在视口内时淡入，hover 时边框微发光 */}
         <div className="space-y-4 mb-8">
           {Object.values(FormMap).map((item) => {
             const Com = item.components;
@@ -133,6 +214,7 @@ function App() {
             return (
               <motion.div
                 key={item.field + item.name}
+                className="w-fit mx-auto rounded-xl transition-shadow duration-200 hover:shadow-[0_0_0_1.5px_hsl(var(--heroui-primary)/0.25)]"
                 variants={formItemVariants}
                 initial={shouldReduceMotion ? undefined : "hidden"}
                 whileInView={shouldReduceMotion ? undefined : "visible"}
@@ -172,16 +254,15 @@ function App() {
             <Popover
               placement="top"
               isOpen={isShowPopover}
-              onOpenChange={() => {
-                if (!localData || Object.values(localData).length === 0) {
-                  setIsShowPopover((old) => !old);
-                } else {
-                  goto("/result");
-                }
-              }}
+              onOpenChange={handleGenerate}
             >
               <PopoverTrigger>
-                <Button color="primary">{t("generate")}</Button>
+                <Button
+                  color={isGenerating ? "success" : "primary"}
+                  isLoading={isGenerating}
+                >
+                  {isGenerating ? "✓" : t("generate")}
+                </Button>
               </PopoverTrigger>
               <PopoverContent>
                 <div className="px-2 py-1">

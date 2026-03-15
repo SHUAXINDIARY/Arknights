@@ -19,6 +19,7 @@
     "@rsbuild/plugin-react": "^1.0.7",
     "ahooks": "^3.8.1",
     "bowser": "^2.11.0",
+    "canvas-confetti": "^1.9.4",
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.5",
     "framer-motion": "^11.11.17",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "@rsbuild/core": "^1.5.9",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/dom-to-image": "^2.6.7",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^25.0.7",

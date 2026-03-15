@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useMemo } from "react";
+import { useRef, useState, useCallback, useMemo, useEffect } from "react";
 import Footer from "../../components/Footer";
 import {
   FieldNameMapForI18n,
@@ -7,15 +7,21 @@ import {
 } from "../../utils/constant";
 import LazyLoadAvatar from "../../components/LazyLoadAvatar";
 import RenderTextCard from "../../components/RenderTextCard";
-import { Button, Chip, Divider } from "@heroui/react";
+import { Button, Chip } from "@heroui/react";
 import { isApple, savePngByCanvas } from "../../utils";
 import { THook } from "../../utils/I18n/i18n";
 import { useLocalData, useToTop } from "../../hooks";
 import { useNavigate } from "react-router";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 
-/** 页面各区域的入场编排延迟基数（ms） */
+/** 页面各区域的入场编排延迟基数（秒） */
 const STAGGER_BASE = 0.12;
+
+/** ease-out-quart 缓动曲线 */
+const EASE_OUT_QUART: [number, number, number, number] = [0.25, 1, 0.5, 1];
+
+/** 导出成功提示自动消失时间（毫秒） */
+const TOAST_DURATION_MS = 2200;
 
 /** 区域入场动画 variants */
 const sectionVariants = {
@@ -26,7 +32,7 @@ const sectionVariants = {
     transition: {
       delay: i * STAGGER_BASE,
       duration: 0.5,
-      ease: [0.25, 1, 0.5, 1],
+      ease: EASE_OUT_QUART,
     },
   }),
 };
@@ -49,7 +55,7 @@ const avatarItemVariants = {
     scale: 1,
     transition: {
       duration: 0.35,
-      ease: [0.25, 1, 0.5, 1],
+      ease: EASE_OUT_QUART,
     },
   },
 };
@@ -62,10 +68,30 @@ const imageItemVariants = {
     y: 0,
     transition: {
       duration: 0.45,
-      ease: [0.25, 1, 0.5, 1],
+      ease: EASE_OUT_QUART,
     },
   },
 };
+
+/** 成功 Toast 动画 */
+const toastVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.35, ease: EASE_OUT_QUART },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    scale: 0.95,
+    transition: { duration: 0.25, ease: EASE_OUT_QUART },
+  },
+};
+
+/** 对勾绘制动画的 SVG 路径 */
+const checkmarkPath = "M6 13l4 4L18 7";
 
 const ShowRes = () => {
   useToTop();
@@ -77,6 +103,14 @@ const ShowRes = () => {
   const goto = useNavigate();
   const { t } = THook();
   const [isSaving, setIsSaving] = useState(false);
+  /** 是否显示导出成功的 toast */
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    if (!showSuccess) return;
+    const timer = setTimeout(() => setShowSuccess(false), TOAST_DURATION_MS);
+    return () => clearTimeout(timer);
+  }, [showSuccess]);
 
   const handleSave = useCallback(async () => {
     if (isSaving) return;
@@ -90,6 +124,7 @@ const ShowRes = () => {
       } else {
         await savePngByCanvas(true);
       }
+      setShowSuccess(true);
     } catch (error) {
       alert(error);
     } finally {
@@ -122,7 +157,13 @@ const ShowRes = () => {
       hopeMember: data.hopeMember,
       name: data.name,
     }),
-    [data.customAvatar, data.favoriteMode, data.favoriteEP, data.hopeMember, data.name]
+    [
+      data.customAvatar,
+      data.favoriteMode,
+      data.favoriteEP,
+      data.hopeMember,
+      data.name,
+    ]
   );
 
   const filterData = useMemo(
@@ -145,7 +186,7 @@ const ShowRes = () => {
   const ref = useRef(null);
 
   return (
-    <div className="min-h-screen p-4 sm:p-8">
+    <div className="min-h-screen p-4 sm:p-8 relative">
       <motion.div
         ref={ref}
         className="max-w-md mx-auto"
@@ -164,7 +205,7 @@ const ShowRes = () => {
           </Chip>
         </motion.div>
 
-        {/* 干员区域 — 头像交错弹出 */}
+        {/* 干员区域 — 头像交错弹出 + hover 上浮 */}
         <motion.div
           className="flex flex-wrap justify-center mb-6"
           variants={avatarContainerVariants}
@@ -175,15 +216,22 @@ const ShowRes = () => {
             return (
               <motion.div
                 key={filterData[_key] + _key}
-                className="w-20 flex flex-col items-center"
+                className="w-20 flex flex-col items-center cursor-default"
                 variants={avatarItemVariants}
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : { y: -4, transition: { duration: 0.2, ease: EASE_OUT_QUART } }
+                }
               >
-                <LazyLoadAvatar
-                  useLazyLoad={false}
-                  useAvatar
-                  url={filterData[_key]!}
-                  className="w-16 h-16"
-                />
+                <div className="relative">
+                  <LazyLoadAvatar
+                    useLazyLoad={false}
+                    useAvatar
+                    url={filterData[_key]!}
+                    className="w-16 h-16"
+                  />
+                </div>
                 <p className="text-xs text-default-500 mt-2 text-center">
                   {FieldNameMapForI18n()[_key]}
                 </p>
@@ -192,7 +240,7 @@ const ShowRes = () => {
           })}
         </motion.div>
 
-        {/* 活动区域 — 依次滑入 */}
+        {/* 活动区域 — 依次滑入 + hover 缩放 */}
         <motion.div
           className="space-y-4 mb-6"
           variants={{
@@ -209,7 +257,19 @@ const ShowRes = () => {
             const _key = key as FormField;
             if (!activity[_key]) return null;
             return (
-              <motion.div key={_key + activity[_key]} variants={imageItemVariants}>
+              <motion.div
+                key={_key + activity[_key]}
+                variants={imageItemVariants}
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        scale: 1.02,
+                        transition: { duration: 0.25, ease: EASE_OUT_QUART },
+                      }
+                }
+                className="overflow-hidden rounded-xl"
+              >
                 <LazyLoadAvatar
                   useLazyLoad={false}
                   useAvatar={false}
@@ -223,7 +283,7 @@ const ShowRes = () => {
           })}
         </motion.div>
 
-        {/* 皮肤区域 — 左右交替滑入 */}
+        {/* 皮肤区域 — 左右交替滑入 + hover 缩放 */}
         <motion.div
           className="grid grid-cols-2 gap-4 mb-6"
           variants={{
@@ -242,6 +302,7 @@ const ShowRes = () => {
             return (
               <motion.div
                 key={_key + skin[_key]}
+                className="overflow-hidden rounded-xl"
                 variants={{
                   hidden: { opacity: 0, x: index % 2 === 0 ? -20 : 20 },
                   visible: {
@@ -249,10 +310,18 @@ const ShowRes = () => {
                     x: 0,
                     transition: {
                       duration: 0.45,
-                      ease: [0.25, 1, 0.5, 1],
+                      ease: EASE_OUT_QUART,
                     },
                   },
                 }}
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        scale: 1.03,
+                        transition: { duration: 0.25, ease: EASE_OUT_QUART },
+                      }
+                }
               >
                 <LazyLoadAvatar
                   useLazyLoad={false}
@@ -281,8 +350,15 @@ const ShowRes = () => {
           />
         </motion.div>
 
-        <motion.div variants={sectionVariants} custom={6}>
-          <Divider className="my-6" />
+        {/* 装饰性渐变分割线 */}
+        <motion.div
+          variants={sectionVariants}
+          custom={6}
+          className="my-6 flex items-center gap-3"
+        >
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-default-300 to-transparent" />
+          <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-default-300 to-transparent" />
         </motion.div>
 
         {/* 操作按钮 */}
@@ -292,9 +368,9 @@ const ShowRes = () => {
           custom={7}
         >
           <motion.div
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.15, ease: [0.25, 1, 0.5, 1] }}
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+            transition={{ duration: 0.15, ease: EASE_OUT_QUART }}
           >
             <Button
               color="primary"
@@ -306,9 +382,9 @@ const ShowRes = () => {
             </Button>
           </motion.div>
           <motion.div
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.15, ease: [0.25, 1, 0.5, 1] }}
+            whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+            transition={{ duration: 0.15, ease: EASE_OUT_QUART }}
           >
             <Button color="warning" variant="flat" onPress={() => goto("/")}>
               {t("edit")}
@@ -316,6 +392,40 @@ const ShowRes = () => {
           </motion.div>
         </motion.div>
       </motion.div>
+
+      {/* 导出成功 Toast */}
+      <AnimatePresence>
+        {showSuccess && (
+          <motion.div
+            className="fixed bottom-8 left-1/2 z-50 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-success-50 dark:bg-success-100/10 shadow-lg border border-success-200 dark:border-success-500/20"
+            style={{ x: "-50%" }}
+            variants={toastVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <svg
+              className="w-5 h-5 text-success-600"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <motion.path
+                d={checkmarkPath}
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.4, delay: 0.15, ease: EASE_OUT_QUART }}
+              />
+            </svg>
+            <span className="text-sm font-medium text-success-700 dark:text-success-400">
+              {t("save_success")}
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
