@@ -36,6 +36,15 @@ const PROGRESS_THRESHOLDS = {
   COMPLETE: 100,
 } as const;
 
+/** 进度阶段对应的色彩配置：进度条颜色 + 鼓励文案颜色 */
+const PROGRESS_STAGE_COLORS = {
+  start: { bar: "primary", text: "text-primary-400/70" },
+  quarter: { bar: "primary", text: "text-primary-300" },
+  half: { bar: "warning", text: "text-warning-400" },
+  almost: { bar: "secondary", text: "text-secondary-400" },
+  complete: { bar: "success", text: "text-success-400 font-medium" },
+} as const;
+
 /** 区域入场动画 variants */
 const sectionVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -114,14 +123,19 @@ function App() {
   /** 是否全部完成 */
   const isComplete = filledCount === totalCount;
 
-  /** 根据进度返回对应的鼓励文案 key */
-  const encourageKey = useMemo(() => {
-    if (progressPercent >= PROGRESS_THRESHOLDS.COMPLETE) return "progress_complete";
-    if (progressPercent >= PROGRESS_THRESHOLDS.ALMOST) return "progress_almost";
-    if (progressPercent >= PROGRESS_THRESHOLDS.HALF) return "progress_half";
-    if (progressPercent >= PROGRESS_THRESHOLDS.QUARTER) return "progress_quarter";
-    return "progress_start";
+  /** 根据进度返回阶段 key（同时决定鼓励文案和色彩） */
+  const progressStage = useMemo(() => {
+    if (progressPercent >= PROGRESS_THRESHOLDS.COMPLETE) return "complete";
+    if (progressPercent >= PROGRESS_THRESHOLDS.ALMOST) return "almost";
+    if (progressPercent >= PROGRESS_THRESHOLDS.HALF) return "half";
+    if (progressPercent >= PROGRESS_THRESHOLDS.QUARTER) return "quarter";
+    return "start";
   }, [progressPercent]);
+
+  /** 当前阶段的 i18n key */
+  const encourageKey = `progress_${progressStage}` as const;
+  /** 当前阶段的色彩配置 */
+  const stageColors = PROGRESS_STAGE_COLORS[progressStage];
 
   /** 关闭动画时的降级配置 */
   const noMotion = shouldReduceMotion
@@ -143,7 +157,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen p-4 sm:p-8">
+    <div className="min-h-screen p-4 sm:p-8 bg-gradient-to-b from-background via-background to-primary-950/[0.06]">
       <motion.div
         className="max-w-md mx-auto"
         initial="hidden"
@@ -156,7 +170,14 @@ function App() {
         </motion.div>
 
         <motion.div className="mb-8" variants={sectionVariants} custom={1}>
-          <Chip size="lg" color="primary" variant="flat">
+          <Chip
+            size="lg"
+            variant="flat"
+            classNames={{
+              base: "bg-gradient-to-r from-primary-500/20 to-secondary-500/20 border border-primary-500/10",
+              content: "text-primary-300 font-medium",
+            }}
+          >
             {t("Arknights Career Generator")}
           </Chip>
         </motion.div>
@@ -174,7 +195,7 @@ function App() {
             <Progress
               size="sm"
               value={progressPercent}
-              color={isComplete ? "success" : "primary"}
+              color={stageColors.bar}
               showValueLabel
               label={`${filledCount}/${totalCount}`}
               classNames={{
@@ -187,7 +208,7 @@ function App() {
             <AnimatePresence mode="wait">
               <motion.p
                 key={encourageKey}
-                className={`text-xs text-center ${isComplete ? "text-success-500 font-medium" : "text-default-400"}`}
+                className={`text-xs text-center ${stageColors.text}`}
                 {...(shouldReduceMotion ? {} : encourageVariants)}
               >
                 {t(encourageKey)}
@@ -214,7 +235,7 @@ function App() {
             return (
               <motion.div
                 key={item.field + item.name}
-                className="w-fit mx-auto rounded-xl transition-shadow duration-200 hover:shadow-[0_0_0_1.5px_hsl(var(--heroui-primary)/0.25)]"
+                className="w-fit mx-auto rounded-xl transition-shadow duration-200 hover:shadow-[0_0_12px_-3px_hsl(var(--heroui-primary)/0.3)]"
                 variants={formItemVariants}
                 initial={shouldReduceMotion ? undefined : "hidden"}
                 whileInView={shouldReduceMotion ? undefined : "visible"}
@@ -234,7 +255,7 @@ function App() {
 
         {/* 操作按钮 */}
         <motion.div
-          className="flex flex-wrap gap-2 justify-center"
+          className="flex flex-wrap gap-3 justify-center"
           initial={shouldReduceMotion ? undefined : "hidden"}
           whileInView={shouldReduceMotion ? undefined : "visible"}
           viewport={{ once: true, margin: "-20px" }}
@@ -260,6 +281,7 @@ function App() {
                 <Button
                   color={isGenerating ? "success" : "primary"}
                   isLoading={isGenerating}
+                  className={isGenerating ? "" : "shadow-md shadow-primary/20"}
                 >
                   {isGenerating ? "✓" : t("generate")}
                 </Button>
@@ -295,7 +317,11 @@ function App() {
             variants={formItemVariants}
             {...(shouldReduceMotion ? {} : buttonMotionProps)}
           >
-            <Button variant="bordered" onPress={() => goto("/questionnaire")}>
+            <Button
+              variant="bordered"
+              className="border-default-300 text-default-500 hover:border-primary-400 hover:text-primary-300"
+              onPress={() => goto("/questionnaire")}
+            >
               {t("questionnaire")}
             </Button>
           </motion.div>
