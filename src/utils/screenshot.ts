@@ -253,13 +253,24 @@ export const savePngByHtmlInCanvas = async (
 
     /** 待绘制的 DOM 克隆节点 */
     const clone = targetElement.cloneNode(true) as HTMLElement;
+    /** 源节点计算样式（用于补齐继承样式） */
+    const targetComputedStyle = window.getComputedStyle(targetElement);
     clone.style.margin = "0";
     clone.style.width = `${targetWidth}px`;
     clone.style.height = `${targetHeight}px`;
+    clone.style.textAlign = targetComputedStyle.textAlign;
+    clone.style.color = targetComputedStyle.color;
+    clone.style.fontFamily = targetComputedStyle.fontFamily;
+    clone.style.fontSize = targetComputedStyle.fontSize;
+    clone.style.fontWeight = targetComputedStyle.fontWeight;
+    clone.style.lineHeight = targetComputedStyle.lineHeight;
+    clone.style.letterSpacing = targetComputedStyle.letterSpacing;
 
     canvas.appendChild(clone);
     host.appendChild(canvas);
-    document.body.appendChild(host);
+    /** 与原节点保持同一继承上下文，避免文本/对齐样式偏差 */
+    const mountContainer = targetElement.parentElement ?? document.body;
+    mountContainer.appendChild(host);
 
     try {
         const context = canvas.getContext(
