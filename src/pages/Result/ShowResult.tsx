@@ -126,15 +126,15 @@ const ShowRes = () => {
             const savedByHtmlInCanvas = await savePngByHtmlInCanvas(
                 ref.current ?? document.body,
             );
-            // if (!savedByHtmlInCanvas) {
-            //     if (isApple()) {
-            //         await savePngByCanvas();
-            //         await savePngByCanvas();
-            //         await savePngByCanvas(true);
-            //     } else {
-            //         await savePngByCanvas(true);
-            //     }
-            // }
+            if (!savedByHtmlInCanvas) {
+                if (isApple()) {
+                    await savePngByCanvas();
+                    await savePngByCanvas();
+                    await savePngByCanvas(true);
+                } else {
+                    await savePngByCanvas(true);
+                }
+            }
             setShowSuccess(true);
         } catch (error) {
             alert(error);
