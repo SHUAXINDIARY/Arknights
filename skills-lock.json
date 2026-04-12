@@ -16,6 +16,11 @@
       "sourceType": "github",
       "computedHash": "49cbdf9ca35de3c03d060363207d70fd40b6ec7390e67710887ca43976244b2c"
     },
+    "blueprinter": {
+      "source": "yofine/skills",
+      "sourceType": "github",
+      "computedHash": "0d7910b64c27a8dbd69a01f84d186f67587527f6609595ebfe169edcd1c4045d"
+    },
     "bolder": {
       "source": "pbakaus/impeccable",
       "sourceType": "github",
