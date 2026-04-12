@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>截图导出蓝图</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-bg: #f8fafc;
+      --c-canvas: #ffffff;
+      --c-border: #cbd5e1;
+      --c-text-main: #0f172a;
+      --c-text-sub: #64748b;
+      --font-ui: "Inter", sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background: var(--c-bg);
+      padding: 24px;
+      min-height: 100vh;
+      color: var(--c-text-main);
+    }
+
+    .diagram-container {
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    .diagram-canvas {
+      background: var(--c-canvas);
+      border: 1px solid var(--c-border);
+      padding: 24px;
+      position: relative;
+    }
+
+    .diagram-header {
+      border-bottom: 1px solid var(--c-border);
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+
+    .diagram-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--c-text-main);
+      margin-bottom: 4px;
+    }
+
+    .diagram-subtitle {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--c-text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .meta-cell {
+      border: 1px solid var(--c-border);
+      padding: 8px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--c-text-sub);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr 220px;
+      gap: 14px;
+      align-items: start;
+      position: relative;
+      min-height: 590px;
+    }
+
+    .lane {
+      border: 1px solid var(--c-border);
+      background: var(--c-canvas);
+      padding: 12px;
+    }
+
+    .lane-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--c-text-sub);
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .block {
+      border: 1px solid var(--c-border);
+      padding: 10px;
+      margin-bottom: 10px;
+      background: var(--c-canvas);
+    }
+
+    .block-name {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--c-text-main);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .block-desc {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--c-text-sub);
+    }
+
+    .phase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      border: 1px solid var(--c-border);
+      color: var(--c-text-sub);
+      padding: 2px 6px;
+      margin-bottom: 6px;
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      color: var(--c-text-main);
+      font-size: 11px;
+    }
+
+    .decision {
+      border: 1px solid var(--c-border);
+      padding: 10px;
+      margin-top: 8px;
+    }
+
+    .decision-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--c-text-main);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .decision-rule {
+      font-size: 12px;
+      color: var(--c-text-sub);
+      line-height: 1.4;
+    }
+
+    .io-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .flow-svg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .connector {
+      stroke: var(--c-border);
+      stroke-width: 1.4;
+      fill: none;
+    }
+
+    .connector-dashed {
+      stroke: var(--c-border);
+      stroke-width: 1.2;
+      stroke-dasharray: 5 5;
+      fill: none;
+    }
+
+    .caption {
+      margin-top: 14px;
+      border-top: 1px solid var(--c-border);
+      padding-top: 10px;
+      font-size: 12px;
+      color: var(--c-text-sub);
+      line-height: 1.5;
+    }
+
+    .compare-section {
+      margin-top: 14px;
+      border: 1px solid var(--c-border);
+      padding: 12px;
+      background: var(--c-canvas);
+    }
+
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--c-text-sub);
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr 1fr;
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .compare-head {
+      border: 1px solid var(--c-border);
+      padding: 8px 10px;
+      background: var(--c-canvas);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--c-text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .compare-label {
+      border: 1px solid var(--c-border);
+      padding: 9px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--c-text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--c-canvas);
+    }
+
+    .compare-cell {
+      border: 1px solid var(--c-border);
+      padding: 9px 10px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--c-text-sub);
+      background: var(--c-canvas);
+    }
+  </style>
+</head>
+<body>
+  <div class="diagram-container">
+    <div class="diagram-canvas">
+      <div class="diagram-header">
+        <div class="diagram-title">截图导出架构</div>
+        <div class="diagram-subtitle">工程蓝图 / SRC/UTILS/SCREENSHOT.TS</div>
+      </div>
+
+      <div class="meta-row">
+        <div class="meta-cell">入口：ShowResult.handleSave()</div>
+        <div class="meta-cell">主链路：savePngByHtmlInCanvas(targetElement)</div>
+        <div class="meta-cell">回退链路：savePngByCanvas(isDown)</div>
+      </div>
+
+      <div class="main-grid">
+        <svg class="flow-svg" viewBox="0 0 1380 590" preserveAspectRatio="none" aria-hidden="true">
+          <!-- left -> center -->
+          <path class="connector" d="M210,78 L350,78" />
+          <path class="connector" d="M210,168 L350,168" />
+          <!-- center stages -->
+          <path class="connector" d="M500,122 L500,158" />
+          <path class="connector" d="M500,214 L500,250" />
+          <path class="connector" d="M500,306 L500,342" />
+          <path class="connector" d="M500,398 L500,434" />
+          <!-- center -> right decision -->
+          <path class="connector" d="M1012,470 L1160,470" />
+          <!-- fallback dashed -->
+          <path class="connector-dashed" d="M1160,500 L1160,170" />
+          <path class="connector-dashed" d="M1160,170 L1012,170" />
+        </svg>
+
+        <div class="lane">
+          <div class="lane-title">输入 / 上下文</div>
+
+          <div class="block">
+            <div class="badge">来源页面</div>
+            <div class="block-name">ShowResult.tsx</div>
+            <div class="block-desc">`handleSave` 先调用新链路，再根据布尔结果决定分支。</div>
+          </div>
+
+          <div class="block">
+            <div class="badge">目标节点</div>
+            <div class="block-name">targetElement</div>
+            <div class="block-desc">通常是结果容器（`ref.current`），用于限制截图范围。</div>
+          </div>
+
+          <div class="block">
+            <div class="badge">约束条件</div>
+            <div class="block-name">浏览器能力</div>
+            <div class="block-desc">依赖实验性 <span class="mono">drawElementImage</span> API。</div>
+          </div>
+        </div>
+
+        <div class="lane">
+          <div class="lane-title">主链路：savePngByHtmlInCanvas</div>
+
+          <div class="phase-grid">
+            <div class="block">
+              <div class="badge">阶段 1</div>
+              <div class="block-name">能力门禁</div>
+              <div class="block-desc">`hasHtmlInCanvasSupport()` 检查上下文方法是否可用。</div>
+            </div>
+            <div class="block">
+              <div class="badge">阶段 2</div>
+              <div class="block-name">离屏构建</div>
+              <div class="block-desc">创建隐藏 host + `canvas[layoutsubtree]` + DOM 克隆子树。</div>
+            </div>
+
+            <div class="block">
+              <div class="badge">阶段 3</div>
+              <div class="block-name">样式对齐修正</div>
+              <div class="block-desc">补齐继承文本度量，并将 host 挂载到父级上下文。</div>
+            </div>
+            <div class="block">
+              <div class="badge">阶段 4</div>
+              <div class="block-name">图片内联修正</div>
+              <div class="block-desc">`inlineCloneImages`：远程图片 -> blob -> data URL，并等待 ready。</div>
+            </div>
+
+            <div class="block">
+              <div class="badge">阶段 5</div>
+              <div class="block-name">绘制调度</div>
+              <div class="block-desc">等待 2 帧，监听 `onpaint`，触发 `requestPaint`，保留 timeout 兜底。</div>
+            </div>
+            <div class="block">
+              <div class="badge">阶段 6</div>
+              <div class="block-name">栅格化与导出</div>
+              <div class="block-desc">clear + 填充背景 + scale + drawElementImage + blob 下载。</div>
+            </div>
+          </div>
+
+          <div class="decision">
+            <div class="decision-title">返回约定</div>
+            <div class="decision-rule">
+              仅当完整链路成功时返回 <span class="mono">true</span>。<br>
+              遇到 API 不支持、跨域图片未消解或绘制异常时返回 <span class="mono">false</span>。
+            </div>
+          </div>
+
+          <div class="io-grid">
+            <div class="block">
+              <div class="badge">缓存</div>
+              <div class="block-name">IMAGE_DATA_URL_CACHE</div>
+              <div class="block-desc">避免同一远程 URL 重复转换。</div>
+            </div>
+            <div class="block">
+              <div class="badge">输出</div>
+              <div class="block-name">Arknights.png</div>
+              <div class="block-desc">由 `saveAs(blob, EXPORT_FILENAME)` 生成。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lane">
+          <div class="lane-title">回退 / 旧链路</div>
+
+          <div class="block">
+            <div class="badge">分支</div>
+            <div class="block-name">if primary === false</div>
+            <div class="block-desc">调用方会立即切换到旧链路。</div>
+          </div>
+
+          <div class="block">
+            <div class="badge">旧链路</div>
+            <div class="block-name">savePngByCanvas</div>
+            <div class="block-desc">`domtoimage.toSvg` -> Image decode -> OffscreenCanvas draw -> saveAs。</div>
+          </div>
+
+          <div class="block">
+            <div class="badge">苹果路径</div>
+            <div class="block-name">isApple + waitFrames</div>
+            <div class="block-desc">最终下载前延迟若干帧，降低 Safari 时序问题影响。</div>
+          </div>
+
+          <div class="block">
+            <div class="badge">可靠性</div>
+            <div class="block-name">用户可见保障</div>
+            <div class="block-desc">优先现代链路，并在失败时保持导出可用性。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-section">
+        <div class="section-title">实现对比 / 扩展能力 / 上限 / 性能</div>
+        <div class="compare-grid">
+          <div class="compare-head">对比维度</div>
+          <div class="compare-head">新链路（html-in-canvas）</div>
+          <div class="compare-head">旧链路（dom-to-image + OffscreenCanvas）</div>
+
+          <div class="compare-label">扩展能力</div>
+          <div class="compare-cell">绘制前可插入更多钩子：样式修正、图片内联、帧调度与分阶段观测。</div>
+          <div class="compare-cell">固定短链路（<span class="mono">toSvg -> drawImage -> blob</span>），可介入点更少。</div>
+
+          <div class="compare-label">渲染上限</div>
+          <div class="compare-cell">对克隆 DOM 上下文与继承排版可控性更高，支持绘制前资源治理。</div>
+          <div class="compare-cell">更偏通用兜底；中间经过 SVG 栅格化，对特定偏差的精细修正能力有限。</div>
+
+          <div class="compare-label">导出范围</div>
+          <div class="compare-cell">通过传入 <span class="mono">targetElement</span> 可天然支持局部导出。</div>
+          <div class="compare-cell">当前实现对 <span class="mono">document.body</span> 快照，成本与整页复杂度强耦合。</div>
+
+          <div class="compare-label">性能画像</div>
+          <div class="compare-cell">缓存命中与局部渲染时更有优势；远程图转换与多阶段等待会引入额外成本。</div>
+          <div class="compare-cell">简单页面下编排开销更低；整页 DOM/SVG 规模上升时退化明显。</div>
+
+          <div class="compare-label">优化空间</div>
+          <div class="compare-cell">后续方向明确：fetch 并发上限、重试策略、阶段耗时指标与失败遥测。</div>
+          <div class="compare-cell">主要集中在快照规模与下游 canvas 阶段的粗粒度优化。</div>
+
+          <div class="compare-label">兼容性说明</div>
+          <div class="compare-cell">本区刻意不展开兼容性细节（由能力门禁 + 回退约定处理）。</div>
+          <div class="compare-cell">本区刻意不展开兼容性细节（作为稳定回退分支保留）。</div>
+        </div>
+      </div>
+
+      <div class="caption">
+        本蓝图描述 <span class="mono">src/utils/screenshot.ts</span> 当前行为：
+        采用能力门禁驱动的主渲染链路、显式回退语义、跨域图片治理，
+        并提供面向工程取舍分析的实现级对比矩阵。
+      </div>
+    </div>
+  </div>
+</body>
+</html>
