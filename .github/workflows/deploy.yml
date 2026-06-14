@@ -16,12 +16,16 @@ jobs:
           submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.26.0
+
       - name: Update date
         run: |
-          npm i pnpm -g
           pnpm -v
-          pnpm i
-          npx puppeteer browsers install chrome
+          PUPPETEER_SKIP_DOWNLOAD=true pnpm install --frozen-lockfile
+          pnpm exec puppeteer browsers install chrome
           npm run auto
 
       - name: Commit submodule updates

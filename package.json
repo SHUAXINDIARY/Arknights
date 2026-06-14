@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "packageManager": "pnpm@10.26.0",
   "scripts": {
     "dev": "rsbuild dev",
     "build": "rsbuild build",

@@ -1,0 +1,5 @@
+allowBuilds:
+  '@heroui/shared-utils@2.1.7': true
+  core-js@3.45.1: false
+  esbuild@0.25.6: true
+  puppeteer@24.6.1: true
