@@ -273,7 +273,7 @@ const task = [
   {
     dataKey: 'AvatarList',
     name: '头像',
-    url: 'https://prts.wiki/w/%E4%B8%AA%E4%BA%BA%E5%90%8D%E7%89%87%E5%A4%B4%E5%83%8F%E4%B8%80%E8%A7%88',
+    url: 'https://prts.wiki/w/%E4%B8%AA%E4%BA%BA%E5%A4%B4%E5%83%8F%E4%B8%80%E8%A7%88',
     fun: getAatar
   },
   {
