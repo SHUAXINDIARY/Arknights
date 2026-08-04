@@ -3,8 +3,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // @ts-ignore
 import fs from 'fs'
-import puppeteer, { Browser } from 'puppeteer'
+import puppeteer, { Browser, Page } from 'puppeteer'
 import { saveOperator, saveSkin } from './filterData'
+
+const NAVIGATION_TIMEOUT_MS = 120_000;
+const NAVIGATION_RETRIES = 3;
+const RETRY_DELAY_MS = 5_000;
+
+const gotoWithRetry = async (page: Page, url: string) => {
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= NAVIGATION_RETRIES; attempt++) {
+    try {
+      return await page.goto(url, {
+        waitUntil: 'domcontentloaded',
+        timeout: NAVIGATION_TIMEOUT_MS,
+      });
+    } catch (error) {
+      lastError = error;
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`访问 ${url} 失败（第 ${attempt}/${NAVIGATION_RETRIES} 次）：${message}`);
+
+      if (attempt < NAVIGATION_RETRIES) {
+        await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+      }
+    }
+  }
+
+  const message = lastError instanceof Error ? lastError.message : String(lastError);
+  throw new Error(`访问 ${url} 失败，已重试 ${NAVIGATION_RETRIES} 次：${message}`);
+};
 
 const getSkinList = async () => {
   // 执行原始提取逻辑
@@ -270,7 +298,7 @@ const task: readonly PrtsTask[] = [
         throw new Error('未提供页面提取函数');
       }
       const page = await browser.newPage();
-      await page.goto(url);
+      await gotoWithRetry(page, url);
       await new Promise(resolve => setTimeout(resolve, 2000)); // 延迟2秒
       const arr = await page.$$(".n-collapse-item__header-main")
       await arr[arr.length - 2]?.click()
@@ -301,7 +329,7 @@ const task: readonly PrtsTask[] = [
       while (i < 2) {
         if (i === 0) {
           const page = await browser.newPage();
-          await page.goto('https://prts.wiki/w/%E5%B9%B2%E5%91%98%E4%B8%80%E8%A7%88')
+          await gotoWithRetry(page, 'https://prts.wiki/w/%E5%B9%B2%E5%91%98%E4%B8%80%E8%A7%88')
           const selectHandles = await page.$$(`select[name="length"]`);
           await selectHandles[1].select('200');
           const _data = await page.evaluate(getPageSelectMemberList)
@@ -309,7 +337,7 @@ const task: readonly PrtsTask[] = [
           await page.close()
         } else {
           const page = await browser.newPage();
-          await page.goto('https://prts.wiki/w/%E5%B9%B2%E5%91%98%E4%B8%80%E8%A7%88')
+          await gotoWithRetry(page, 'https://prts.wiki/w/%E5%B9%B2%E5%91%98%E4%B8%80%E8%A7%88')
           const selectHandles = await page.$$(`select[name="length"]`);
           await selectHandles[1].select('200');
           const pageDom = await page.$$('.checkbox-container');
@@ -330,7 +358,7 @@ const task: readonly PrtsTask[] = [
     // fun: getActivityList,
     customFun: async (browser: Browser) => {
       const page = await browser.newPage();
-      await page.goto('https://prts.wiki/w/%E6%B4%BB%E5%8A%A8%E4%B8%80%E8%A7%88');
+      await gotoWithRetry(page, 'https://prts.wiki/w/%E6%B4%BB%E5%8A%A8%E4%B8%80%E8%A7%88');
       
       // 等待页面加载完成
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -375,7 +403,7 @@ const task: readonly PrtsTask[] = [
         throw new Error(`${name} 未提供页面提取函数`)
       }
       const page = await browser.newPage();
-      await page.goto(url);
+      await gotoWithRetry(page, url);
       const data = await page.evaluate(fun as () => Promise<ExtractedData>)
       console.log(name, data.length)
       dataMap[dataKey] = data
