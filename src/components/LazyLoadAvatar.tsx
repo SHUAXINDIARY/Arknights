@@ -1,4 +1,3 @@
-import { Avatar, Image } from "@heroui/react";
 import { useEffect, useRef, useState } from "react";
 import { useInViewport } from "ahooks";
 
@@ -22,16 +21,16 @@ const LazyLoadAvatar = (props: {
 
   if (!useLazyLoad) {
     if (props.useAvatar) {
-      return <Avatar className={props.className || ""} ref={ref} src={url} />;
+      return <img className={`h-10 w-10 rounded-full object-cover ${props.className || ""}`} ref={ref} src={url} alt="avatar" />;
     }
-    return <Image ref={ref} src={url} />;
+    return <img className={`max-w-full object-cover ${props.className || ""}`} ref={ref} src={url} alt="" />;
   } else {
     if (props.useAvatar) {
       return (
-        <Avatar className={props.className || ""} ref={ref} src={source} />
+        <img className={`h-10 w-10 rounded-full object-cover ${props.className || ""}`} ref={ref} src={source} alt="avatar" />
       );
     }
-    return <Image ref={ref} src={source} />;
+    return <img className={`max-w-full object-cover ${props.className || ""}`} ref={ref} src={source} alt="" />;
   }
 };
 

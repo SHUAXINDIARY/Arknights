@@ -9,7 +9,7 @@ import {
   Card,
   CardBody,
   Input,
-} from "@heroui/react";
+} from "./ui";
 import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 import { useEffect, useState } from "react";

@@ -4,7 +4,7 @@ import {
   CardBody,
   CardFooter,
   Chip,
-} from "@heroui/react";
+} from "./ui";
 import { FieldNameMap, FormField } from "../utils/constant";
 import LazyLoadAvatar from "./LazyLoadAvatar";
 

@@ -11,12 +11,11 @@ import ActivitySelect from "./ActivitySelect";
 import CustomInput from "./CustomInput";
 import MemberSelect from "./MemberSelect";
 import SkinSelect, { SkinSelectProps } from "./SkinSelect";
-import { SelectProps, InputProps } from "@heroui/react";
+import type { InputProps } from "./ui";
 
-type MemberInfo = (typeof memberNameAvatarMap)[0];
-
-type SelectPropsExtra = SelectProps & {
-  data?: MemberInfo[];
+type SelectPropsExtra = {
+  data?: unknown;
+  [key: string]: unknown;
 };
 
 const ActivityTypes = ["主线", "支线", "故事", "集成战略"];
@@ -397,7 +396,7 @@ export const FormMap = [
       // data:ActivityList
       data: ActivityList.filter((item) => {
         const isExist = ActivityTypes.filter((typeItem) =>
-          item?.type?.includes?.(typeItem)
+          (item as { type?: string }).type?.includes(typeItem)
         );
         return isExist.length;
       }),

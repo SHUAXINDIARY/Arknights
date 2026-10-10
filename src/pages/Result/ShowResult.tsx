@@ -7,7 +7,7 @@ import {
 } from "../../utils/constant";
 import LazyLoadAvatar from "../../components/LazyLoadAvatar";
 import RenderTextCard from "../../components/RenderTextCard";
-import { Button, Chip } from "@heroui/react";
+import { Button, Chip } from "../../components/ui";
 import { isApple, savePngByCanvas, savePngByHtmlInCanvas } from "../../utils";
 import { THook } from "../../utils/I18n/i18n";
 import { useLocalData, useToTop } from "../../hooks";

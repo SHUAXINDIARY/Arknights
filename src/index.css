@@ -70,3 +70,114 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Local theme tokens used by the app's components. These replace the former
+   component-library theme while keeping the existing visual language. */
+:root {
+  --app-background: 248 250 252;
+  --app-foreground: 30 41 59;
+  --default-50: 248 250 252;
+  --default-100: 241 245 249;
+  --default-200: 226 232 240;
+  --default-300: 203 213 225;
+  --default-400: 148 163 184;
+  --default-500: 100 116 139;
+  --default-600: 71 85 105;
+  --default-700: 51 65 85;
+  --default-800: 30 41 59;
+  --primary-300: 147 197 253;
+  --primary-400: 96 165 250;
+  --primary-500: 59 130 246;
+  --primary-950: 23 37 84;
+  --secondary-300: 196 181 253;
+  --secondary-400: 167 139 250;
+  --secondary-500: 139 92 246;
+  --success-400: 52 211 153;
+  --success-500: 16 185 129;
+  --success-600: 5 150 105;
+  --success-700: 4 120 87;
+  --success-50: 236 253 245;
+  --success-100: 209 250 229;
+  --warning-400: 251 191 36;
+  --warning-500: 245 158 11;
+  --danger-400: 251 113 133;
+  --danger-500: 244 63 94;
+}
+
+.dark {
+  --app-background: 15 23 42;
+  --app-foreground: 226 232 240;
+  --default-50: 30 41 59;
+  --default-100: 51 65 85;
+  --default-200: 71 85 105;
+  --default-300: 100 116 139;
+  --default-400: 148 163 184;
+  --default-500: 148 163 184;
+  --default-600: 203 213 225;
+  --default-700: 226 232 240;
+  --default-800: 241 245 249;
+}
+
+.bg-background { background-color: rgb(var(--app-background)); }
+.text-primary { color: rgb(var(--primary-500)); }
+.bg-primary\/40 { background-color: rgb(var(--primary-500) / .4); }
+.bg-success-50 { background-color: rgb(var(--success-50)); }
+.bg-success-100\/10 { background-color: rgb(var(--success-100) / .1); }
+.bg-default-50 { background-color: rgb(var(--default-50)); }
+.bg-default-100 { background-color: rgb(var(--default-100)); }
+.bg-default-100\/50 { background-color: rgb(var(--default-100) / .5); }
+.bg-default-200\/70 { background-color: rgb(var(--default-200) / .7); }
+.bg-default-300 { background-color: rgb(var(--default-300)); }
+.bg-default-500\/15 { background-color: rgb(var(--default-500) / .15); }
+.text-default-300 { color: rgb(var(--default-300)); }
+.text-default-400 { color: rgb(var(--default-400)); }
+.text-default-500 { color: rgb(var(--default-500)); }
+.text-default-500\/60 { color: rgb(var(--default-500) / .6); }
+.text-default-600 { color: rgb(var(--default-600)); }
+.text-default-700 { color: rgb(var(--default-700)); }
+.text-default-800 { color: rgb(var(--default-800)); }
+.border-default-200 { border-color: rgb(var(--default-200)); }
+.border-default-300 { border-color: rgb(var(--default-300)); }
+.text-primary-300 { color: rgb(var(--primary-300)); }
+.text-primary-300\/80 { color: rgb(var(--primary-300) / .8); }
+.text-primary-400 { color: rgb(var(--primary-400)); }
+.text-primary-400\/60 { color: rgb(var(--primary-400) / .6); }
+.text-primary-400\/70 { color: rgb(var(--primary-400) / .7); }
+.bg-primary-400\/40 { background-color: rgb(var(--primary-400) / .4); }
+.bg-primary-500\/15 { background-color: rgb(var(--primary-500) / .15); }
+.border-primary-400 { border-color: rgb(var(--primary-400)); }
+.border-primary-500\/10 { border-color: rgb(var(--primary-500) / .1); }
+.text-secondary-300 { color: rgb(var(--secondary-300)); }
+.text-secondary-400 { color: rgb(var(--secondary-400)); }
+.bg-secondary-400\/40 { background-color: rgb(var(--secondary-400) / .4); }
+.bg-secondary-500\/15 { background-color: rgb(var(--secondary-500) / .15); }
+.border-secondary-500\/20 { border-color: rgb(var(--secondary-500) / .2); }
+.text-success-400 { color: rgb(var(--success-400)); }
+.text-success-600 { color: rgb(var(--success-600)); }
+.text-success-700 { color: rgb(var(--success-700)); }
+.bg-success-500\/15 { background-color: rgb(var(--success-500) / .15); }
+.border-success-200 { border-color: rgb(var(--success-100)); }
+.border-success-500\/20 { border-color: rgb(var(--success-500) / .2); }
+.text-warning-400 { color: rgb(var(--warning-400)); }
+.bg-warning-500\/15 { background-color: rgb(var(--warning-500) / .15); }
+.text-danger-400 { color: rgb(var(--danger-400)); }
+.bg-danger-500\/15 { background-color: rgb(var(--danger-500) / .15); }
+.border-primary-500\/10 { border-color: rgb(var(--primary-500) / .1); }
+.ring-secondary-400\/40 { --tw-ring-color: rgb(var(--secondary-400) / .4); }
+.shadow-primary-500\/20 { --tw-shadow-color: rgb(var(--primary-500) / .2); }
+.shadow-primary-500\/25 { --tw-shadow-color: rgb(var(--primary-500) / .25); }
+.shadow-secondary-500\/20 { --tw-shadow-color: rgb(var(--secondary-500) / .2); }
+.from-background { --tw-gradient-from: rgb(var(--app-background)) var(--tw-gradient-from-position); --tw-gradient-to: rgb(var(--app-background) / 0) var(--tw-gradient-to-position); }
+.via-background { --tw-gradient-via: rgb(var(--app-background)) var(--tw-gradient-via-position); }
+.from-primary-500 { --tw-gradient-from: rgb(var(--primary-500)) var(--tw-gradient-from-position); --tw-gradient-to: rgb(var(--primary-500) / 0) var(--tw-gradient-to-position); }
+.from-primary-500\/20 { --tw-gradient-from: rgb(var(--primary-500) / .2) var(--tw-gradient-from-position); --tw-gradient-to: rgb(var(--primary-500) / 0) var(--tw-gradient-to-position); }
+.from-secondary-500\/15 { --tw-gradient-from: rgb(var(--secondary-500) / .15) var(--tw-gradient-from-position); --tw-gradient-to: rgb(var(--secondary-500) / 0) var(--tw-gradient-to-position); }
+.via-primary-500\/10 { --tw-gradient-via: rgb(var(--primary-500) / .1) var(--tw-gradient-via-position); }
+.via-primary-500\/20 { --tw-gradient-via: rgb(var(--primary-500) / .2) var(--tw-gradient-via-position); }
+.via-secondary-500\/20 { --tw-gradient-via: rgb(var(--secondary-500) / .2) var(--tw-gradient-via-position); }
+.to-primary-950\/\[0\.06\] { --tw-gradient-to: rgb(var(--primary-950) / .06) var(--tw-gradient-to-position); }
+.to-primary-950\/\[0\.08\] { --tw-gradient-to: rgb(var(--primary-950) / .08) var(--tw-gradient-to-position); }
+.to-secondary-500\/20 { --tw-gradient-to: rgb(var(--secondary-500) / .2) var(--tw-gradient-to-position); }
+.to-warning-500\/10 { --tw-gradient-to: rgb(var(--warning-500) / .1) var(--tw-gradient-to-position); }
+.text-small { font-size: .875rem; line-height: 1.25rem; }
+.text-tiny { font-size: .75rem; line-height: 1rem; }

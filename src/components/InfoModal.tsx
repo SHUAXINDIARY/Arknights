@@ -10,7 +10,7 @@ import {
   Card,
   CardBody,
   Avatar,
-} from "@heroui/react";
+} from "./ui";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import XHS from "../assets/img_v3_02gq_7ed31f29-4562-44e3-b3e9-fc76fea30ecg.jpeg";

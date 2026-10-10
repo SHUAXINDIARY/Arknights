@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
   PopoverContent,
   Progress,
-} from "@heroui/react";
+} from "../../components/ui";
 import { FormMap } from "../../components/FormRender";
 import { RESULT_DATA_KEY } from "../../utils/constant";
 import { useMemo, useRef, useState } from "react";

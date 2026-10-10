@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Button, Card, CardBody, CardHeader, Chip, Divider, Progress, Radio, RadioGroup, Spacer } from "@heroui/react";
+import { Button, Card, CardBody, CardHeader, Chip, Divider, Progress, Radio, RadioGroup, Spacer } from "../../components/ui";
 import { useNavigate } from "react-router";
 import { data as questionnaireData } from "./data";
 import { THook } from "../../utils/I18n/i18n";

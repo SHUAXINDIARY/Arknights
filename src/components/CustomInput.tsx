@@ -1,4 +1,4 @@
-import { Input, InputProps } from "@heroui/react";
+import { Input, type InputProps } from "./ui";
 
 interface CustomInputProps extends InputProps {
   onSave?: (val: string) => void;
