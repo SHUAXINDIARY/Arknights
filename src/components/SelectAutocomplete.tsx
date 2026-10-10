@@ -26,9 +26,11 @@ export default function SelectAutocomplete<T>({
   emptyText = "Nothing found",
 }: SelectAutocompleteProps<T>) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedKey, setSelectedKey] = useState(value ?? "");
+  const [scrollTop, setScrollTop] = useState(0);
 
   useEffect(() => {
     if (value !== undefined) setSelectedKey(value);
@@ -42,6 +44,11 @@ export default function SelectAutocomplete<T>({
     return () => document.removeEventListener("pointerdown", handleDocumentPointerDown);
   }, []);
 
+  useEffect(() => {
+    setScrollTop(0);
+    listRef.current?.scrollTo({ top: 0 });
+  }, [query]);
+
   const selectedItem = items.find((item) => getKey(item) === selectedKey);
   const selectedText = selectedItem ? getText(selectedItem) : "";
   const filteredItems = useMemo(() => {
@@ -49,6 +56,14 @@ export default function SelectAutocomplete<T>({
     if (!normalizedQuery) return items;
     return items.filter((item) => getText(item).toLocaleLowerCase().includes(normalizedQuery));
   }, [items, query, getText]);
+  const viewportHeight = 288;
+  const overscan = 4;
+  const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
+  const endIndex = Math.min(
+    filteredItems.length,
+    startIndex + Math.ceil(viewportHeight / itemHeight) + overscan * 2,
+  );
+  const visibleItems = filteredItems.slice(startIndex, endIndex);
 
   const choose = (item: T) => {
     const nextKey = getKey(item);
@@ -75,7 +90,7 @@ export default function SelectAutocomplete<T>({
       </button>
 
       {isOpen ? (
-        <div className="absolute left-0 right-0 top-full z-40 mt-1 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
+        <div className="ui-dropdown-panel absolute left-0 right-0 top-full z-40 mt-1 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
           <input
             autoFocus
             value={query}
@@ -85,20 +100,29 @@ export default function SelectAutocomplete<T>({
             className="w-full border-b border-slate-200 bg-transparent px-3 py-2 text-sm outline-none dark:border-slate-700 dark:text-slate-100"
             onChange={(event) => setQuery(event.target.value)}
           />
-          <div role="listbox" className="max-h-72 overflow-y-auto p-1">
-            {filteredItems.length > 0 ? filteredItems.map((item) => (
-              <button
-                type="button"
-                role="option"
-                aria-selected={getKey(item) === selectedKey}
-                key={getKey(item)}
-                className="block w-full rounded-lg px-2 py-1 text-left transition hover:bg-blue-50 dark:hover:bg-slate-800"
-                style={{ minHeight: itemHeight }}
-                onClick={() => choose(item)}
-              >
-                {renderItem(item)}
-              </button>
-            )) : <div className="px-3 py-4 text-center text-sm text-slate-500">{emptyText}</div>}
+          <div
+            ref={listRef}
+            role="listbox"
+            className="max-h-72 overflow-y-auto p-1"
+            onScroll={(event) => setScrollTop(event.currentTarget.scrollTop)}
+          >
+            {filteredItems.length > 0 ? (
+              <div style={{ paddingTop: startIndex * itemHeight, paddingBottom: (filteredItems.length - endIndex) * itemHeight }}>
+                {visibleItems.map((item) => (
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={getKey(item) === selectedKey}
+                    key={getKey(item)}
+                    className="block w-full rounded-lg px-2 py-1 text-left transition-[transform,background-color] duration-150 hover:translate-x-0.5 hover:bg-blue-50 active:scale-[0.99] dark:hover:bg-slate-800 motion-reduce:transform-none"
+                    style={{ minHeight: itemHeight }}
+                    onClick={() => choose(item)}
+                  >
+                    {renderItem(item)}
+                  </button>
+                ))}
+              </div>
+            ) : <div className="px-3 py-4 text-center text-sm text-slate-500">{emptyText}</div>}
           </div>
         </div>
       ) : null}

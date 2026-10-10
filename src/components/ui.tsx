@@ -75,7 +75,7 @@ export function Button({
         onClick?.(event);
         onPress?.();
       }}
-      className={`inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 disabled:cursor-not-allowed disabled:opacity-50 ${sizeClass} ${variantClass} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-[transform,background-color,color,box-shadow] duration-150 ease-out hover:scale-[1.02] active:scale-[0.97] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 disabled:cursor-not-allowed disabled:opacity-50 ${sizeClass} ${variantClass} ${className}`}
     >
       {isLoading ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" /> : null}
       {children}
@@ -184,7 +184,8 @@ export function Select({ className = "", label, startContent, defaultSelectedKey
 }
 
 export function SelectItem({ children, value, startContent }: { children: ReactNode; value: string; startContent?: ReactNode }) {
-  return <option value={value}>{startContent ? `${startContent} ` : ""}{children}</option>;
+  void startContent;
+  return <option value={value}>{children}</option>;
 }
 
 interface RadioGroupContextValue { value: string; onValueChange: (value: string) => void; }
@@ -221,15 +222,23 @@ interface ModalContextValue { close: () => void; }
 const ModalContext = createContext<ModalContextValue | null>(null);
 
 export function Modal({ isOpen, onOpenChange, children }: { isOpen: boolean; onOpenChange?: (open: boolean) => void; size?: string; classNames?: Record<string, string>; children: ReactNode }) {
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onOpenChange?.(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onOpenChange]);
   if (!isOpen) return null;
   const close = () => onOpenChange?.(false);
-  return <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}><ModalContext.Provider value={{ close }}>{children}</ModalContext.Provider></div>;
+  return <div className="ui-modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}><ModalContext.Provider value={{ close }}>{children}</ModalContext.Provider></div>;
 }
 
 export function ModalContent({ className = "", children }: { className?: string; children: ReactNode | ((onClose: () => void) => ReactNode) }) {
   const context = useContext(ModalContext);
   const content = typeof children === "function" ? children(context?.close ?? (() => undefined)) : children;
-  return <div role="dialog" aria-modal="true" className={`max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900 ${className}`}>{content}</div>;
+  return <div role="dialog" aria-modal="true" className={`ui-modal-panel max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900 ${className}`}>{content}</div>;
 }
 
 export function ModalHeader({ className = "", children }: HTMLAttributes<HTMLDivElement>) { return <div className={`border-b border-slate-200 px-5 py-4 dark:border-slate-700 ${className}`}>{children}</div>; }
@@ -240,15 +249,23 @@ interface DrawerContextValue { close: () => void; }
 const DrawerContext = createContext<DrawerContextValue | null>(null);
 
 export function Drawer({ isOpen, onOpenChange, children }: { isOpen: boolean; onOpenChange?: (open: boolean) => void; placement?: "left" | "right"; size?: string; classNames?: Record<string, string>; children: ReactNode }) {
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onOpenChange?.(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onOpenChange]);
   if (!isOpen) return null;
   const close = () => onOpenChange?.(false);
-  return <div className="fixed inset-0 z-50 bg-slate-950/50" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}><DrawerContext.Provider value={{ close }}>{children}</DrawerContext.Provider></div>;
+  return <div className="ui-drawer-backdrop fixed inset-0 z-50 bg-slate-950/50" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}><DrawerContext.Provider value={{ close }}>{children}</DrawerContext.Provider></div>;
 }
 
 export function DrawerContent({ children }: { children: ReactNode | ((onClose: () => void) => ReactNode) }) {
   const context = useContext(DrawerContext);
   const content = typeof children === "function" ? children(context?.close ?? (() => undefined)) : children;
-  return <aside className="h-full w-full max-w-xs overflow-y-auto bg-white shadow-2xl dark:bg-slate-900">{content}</aside>;
+  return <aside className="ui-drawer-panel h-full w-full max-w-xs overflow-y-auto bg-white shadow-2xl dark:bg-slate-900">{content}</aside>;
 }
 export function DrawerHeader({ className = "", children }: HTMLAttributes<HTMLDivElement>) { return <div className={`px-5 py-4 ${className}`}>{children}</div>; }
 export function DrawerBody({ className = "", children }: HTMLAttributes<HTMLDivElement>) { return <div className={`px-5 py-4 ${className}`}>{children}</div>; }
@@ -274,6 +291,6 @@ export function PopoverTrigger({ children }: { children: ReactElement }) {
 export function PopoverContent({ children }: { children: ReactNode }) {
   const context = useContext(PopoverContext);
   if (!context?.open) return null;
-  return <div className="absolute bottom-full left-1/2 z-30 mb-2 w-64 -translate-x-1/2 rounded-xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-700 dark:bg-slate-900">{children}</div>;
+  return <div className="ui-popover-panel absolute bottom-full left-1/2 z-30 mb-2 w-64 -translate-x-1/2 rounded-xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-700 dark:bg-slate-900">{children}</div>;
 }
 

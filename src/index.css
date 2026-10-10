@@ -40,18 +40,12 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  border: 0;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: transparent;
 }
 button:focus,
 button:focus-visible {
@@ -65,9 +59,6 @@ button:focus-visible {
   }
   a:hover {
     color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
   }
 }
 
@@ -181,3 +172,42 @@ button:focus-visible {
 .to-warning-500\/10 { --tw-gradient-to: rgb(var(--warning-500) / .1) var(--tw-gradient-to-position); }
 .text-small { font-size: .875rem; line-height: 1.25rem; }
 .text-tiny { font-size: .75rem; line-height: 1rem; }
+
+/* Motion primitives shared by locally implemented controls. */
+@keyframes ui-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ui-panel-in {
+  from { opacity: 0; transform: translateY(8px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes ui-drawer-in {
+  from { opacity: 0; transform: translateX(-18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes ui-dropdown-in {
+  from { opacity: 0; transform: translateY(-5px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ui-modal-backdrop,
+.ui-drawer-backdrop { animation: ui-fade-in 220ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
+.ui-modal-panel { animation: ui-panel-in 300ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
+.ui-drawer-panel { animation: ui-drawer-in 300ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
+.ui-popover-panel,
+.ui-dropdown-panel { animation: ui-dropdown-in 200ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; transform-origin: top center; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

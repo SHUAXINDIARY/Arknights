@@ -32,7 +32,7 @@ const DATA_SOURCES = [
   },
 ];
 
-/** 联系方式：统一使用 HeroUI 主题色 */
+/** 联系方式：统一使用本地主题色 */
 const CONTACT_LINKS = [
   {
     key: "xhs",

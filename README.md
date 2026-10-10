@@ -17,7 +17,7 @@
 
 # 技术栈
 
-React + Rsbuild + [@nextui-org/react](https://nextui.org/docs/frameworks/vite) + Cloudflare （ps. nextui改名了，现在是这个[仓库](https://github.com/heroui-inc/heroui))
+React + Rsbuild + 本地 React/CSS 组件 + Cloudflare
 
 # 食用指南
 
