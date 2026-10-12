@@ -79,13 +79,13 @@ export default function SkinSelect({
         </Button>
       </div>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent className="h-2/3 ">
+        <ModalContent className="h-[min(44rem,calc(100dvh-2rem))]">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
                 {currentSelect?.name || label || t("selectSkin")}
               </ModalHeader>
-              <ModalBody className="overflow-y-scroll">
+              <ModalBody>
                 <div className="p-2 flex">
                   <Input
                     defaultValue={search}
@@ -127,14 +127,16 @@ export default function SkinSelect({
                     return (
                       <div
                         key={item.skinName + item.img}
+                        className="cursor-pointer rounded-2xl transition-shadow duration-150 hover:ring-2 hover:ring-blue-400/70"
                         onClick={() => {
                           setCurrentSelect?.(item);
                         }}
                       >
                         {useCardShow ? (
-                          <Card className="py-4 h-36 w-20">
-                            <CardBody className="overflow-visible py-2 h-full w-full">
+                          <Card className="skin-preview h-36 w-20 overflow-hidden">
+                            <CardBody className="flex h-full w-full items-center justify-center p-2">
                               <LazyLoadAvatar
+                                className={useAvatarShowImg ? undefined : "h-full w-full"}
                                 useAvatar={useAvatarShowImg}
                                 url={item.img}
                               />

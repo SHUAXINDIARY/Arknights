@@ -197,6 +197,7 @@ button:focus-visible {
 .ui-modal-backdrop,
 .ui-drawer-backdrop { animation: ui-fade-in 220ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
 .ui-modal-panel { animation: ui-panel-in 300ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
+.skin-preview img { max-height: 100%; object-fit: contain; }
 .ui-drawer-panel { animation: ui-drawer-in 300ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
 .ui-popover-panel,
 .ui-dropdown-panel { animation: ui-dropdown-in 200ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; transform-origin: top center; }

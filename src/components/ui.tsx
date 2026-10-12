@@ -13,6 +13,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 
 type Color = "default" | "primary" | "secondary" | "success" | "warning" | "danger";
 type Variant = "solid" | "flat" | "light" | "bordered";
@@ -232,18 +233,21 @@ export function Modal({ isOpen, onOpenChange, children }: { isOpen: boolean; onO
   }, [isOpen, onOpenChange]);
   if (!isOpen) return null;
   const close = () => onOpenChange?.(false);
-  return <div className="ui-modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}><ModalContext.Provider value={{ close }}>{children}</ModalContext.Provider></div>;
+  return createPortal(
+    <div className="ui-modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}><ModalContext.Provider value={{ close }}>{children}</ModalContext.Provider></div>,
+    document.body,
+  );
 }
 
 export function ModalContent({ className = "", children }: { className?: string; children: ReactNode | ((onClose: () => void) => ReactNode) }) {
   const context = useContext(ModalContext);
   const content = typeof children === "function" ? children(context?.close ?? (() => undefined)) : children;
-  return <div role="dialog" aria-modal="true" className={`ui-modal-panel max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900 ${className}`}>{content}</div>;
+  return <div role="dialog" aria-modal="true" className={`ui-modal-panel flex max-h-[calc(100dvh-2rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900 ${className}`}>{content}</div>;
 }
 
-export function ModalHeader({ className = "", children }: HTMLAttributes<HTMLDivElement>) { return <div className={`border-b border-slate-200 px-5 py-4 dark:border-slate-700 ${className}`}>{children}</div>; }
-export function ModalBody({ className = "", children }: HTMLAttributes<HTMLDivElement>) { return <div className={`px-5 py-4 ${className}`}>{children}</div>; }
-export function ModalFooter({ className = "", children }: HTMLAttributes<HTMLDivElement>) { return <div className={`flex justify-end gap-2 border-t border-slate-200 px-5 py-4 dark:border-slate-700 ${className}`}>{children}</div>; }
+export function ModalHeader({ className = "", children, ...props }: HTMLAttributes<HTMLDivElement>) { return <div {...props} className={`shrink-0 border-b border-slate-200 px-5 py-4 dark:border-slate-700 ${className}`}>{children}</div>; }
+export function ModalBody({ className = "", children, ...props }: HTMLAttributes<HTMLDivElement>) { return <div {...props} className={`min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-4 ${className}`}>{children}</div>; }
+export function ModalFooter({ className = "", children, ...props }: HTMLAttributes<HTMLDivElement>) { return <div {...props} className={`flex shrink-0 justify-end gap-2 border-t border-slate-200 px-5 py-4 dark:border-slate-700 ${className}`}>{children}</div>; }
 
 interface DrawerContextValue { close: () => void; }
 const DrawerContext = createContext<DrawerContextValue | null>(null);

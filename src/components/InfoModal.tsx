@@ -175,6 +175,7 @@ const InfoModal = () => {
       <ModalContent>
         {(onClose) => (
           <motion.div
+            className="flex min-h-0 flex-col"
             initial="hidden"
             animate="visible"
           >
