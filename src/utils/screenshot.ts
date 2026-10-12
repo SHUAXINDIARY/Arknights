@@ -8,8 +8,8 @@ const userDevice = UAParser(window.navigator.userAgent);
 const EXPORT_FILENAME = "Arknights.png";
 /** html-in-canvas 导出超采样倍率 */
 const HTML_IN_CANVAS_SCALE = 3;
-/** html-in-canvas paint 兜底等待时间（毫秒） */
-const HTML_IN_CANVAS_TIMEOUT_MS = 240;
+/** 等不到 paint 时回退，不在事件外强行绘制 */
+const HTML_IN_CANVAS_TIMEOUT_MS = 1000;
 /** 克隆图片等待加载超时（毫秒） */
 const IMAGE_READY_TIMEOUT_MS = 4000;
 /** 远程图片转 data URL 的缓存 */
@@ -24,7 +24,7 @@ interface Canvas2DWithDrawElementImage extends CanvasRenderingContext2D {
         dy: number,
         dWidth?: number,
         dHeight?: number,
-    ) => DOMMatrix;
+    ) => DOMMatrix | undefined;
 }
 
 /** html-in-canvas 扩展 canvas 类型 */
@@ -41,33 +41,17 @@ interface HtmlInCanvasElement extends HTMLCanvasElement {
 export const isApple = () => {
     return (
         userDevice.os.name === "iOS" ||
-        userDevice.browser.name?.includes("Safari") ||
-        window.navigator.userAgent.includes("Safari")
+        Boolean(userDevice.browser.name?.includes("Safari"))
     );
 };
 
-/** 获取当前系统主题 */
-const getColorScheme = () => {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
+/** 使用页面实际背景色，避免系统主题与页面主题不一致 */
+const getBackgroundColor = (target: HTMLElement) => {
+    for (let node: HTMLElement | null = target; node; node = node.parentElement) {
+        const color = getComputedStyle(node).backgroundColor;
+        if (color !== "transparent" && color !== "rgba(0, 0, 0, 0)") return color;
     }
-    return "light";
-};
-
-/** 等待指定帧数 */
-const waitFrames = (frameCount: number, callback: () => void) => {
-    let currentFrame = 0;
-
-    const frameStep = () => {
-        currentFrame++;
-        if (currentFrame >= frameCount) {
-            callback();
-        } else {
-            requestAnimationFrame(frameStep);
-        }
-    };
-
-    requestAnimationFrame(frameStep);
+    return "#fff";
 };
 
 /** 等待下一帧，确保离屏节点完成布局 */
@@ -90,6 +74,59 @@ const canvasToPngBlob = async (canvas: HTMLCanvasElement) => {
     });
 };
 
+/** 缩小采样检查内容，拒绝全透明或纯背景的 PNG */
+const hasRenderedContent = (canvas: HTMLCanvasElement) => {
+    const sample = document.createElement("canvas");
+    sample.width = 64;
+    sample.height = 64;
+    const context = sample.getContext("2d", { willReadFrequently: true });
+    if (!context) throw new Error("无法检查截图内容");
+    context.drawImage(canvas, 0, 0, 64, 64);
+    const pixels = context.getImageData(0, 0, 64, 64).data;
+    for (let i = 4; i < pixels.length; i += 4) {
+        for (let channel = 0; channel < 4; channel++) {
+            if (Math.abs(pixels[i + channel] - pixels[channel]) > 3) return true;
+        }
+    }
+    return false;
+};
+
+/** 冻结计算样式和入场动画，保持离屏克隆与结果页布局一致 */
+const createSnapshotClone = (target: HTMLElement) => {
+    const clone = target.cloneNode(true) as HTMLElement;
+    const sources = [target, ...target.querySelectorAll("*")];
+    const clones = [clone, ...clone.querySelectorAll("*")];
+    sources.forEach((source, index) => {
+        const destination = clones[index];
+        if (!(destination instanceof HTMLElement || destination instanceof SVGElement)) return;
+        const computed = getComputedStyle(source);
+        for (let i = 0; i < computed.length; i++) {
+            const property = computed[i];
+            destination.style.setProperty(property, computed.getPropertyValue(property));
+        }
+        destination.style.animation = "none";
+        destination.style.transition = "none";
+        if (source.hasAttribute("data-export-motion")) {
+            destination.style.opacity = "1";
+            destination.style.transform = "none";
+        }
+    });
+    for (const control of clone.querySelectorAll<HTMLElement>("[data-export-label]")) {
+        control.textContent = control.getAttribute("data-export-label");
+        control.removeAttribute("disabled");
+        control.style.opacity = "1";
+    }
+    clone.style.margin = "0";
+    clone.style.transform = "none";
+    return clone;
+};
+
+const waitForExportResources = async (target: HTMLElement) => {
+    await document.fonts.ready;
+    await Promise.all(Array.from(target.querySelectorAll("img")).map(waitImageReady));
+    await waitNextFrame();
+};
+
 /** 判断 URL 是否是跨域 http(s) 资源 */
 const isCrossOriginHttpUrl = (url: string) => {
     try {
@@ -108,7 +145,7 @@ const convertRemoteImageToDataUrl = async (url: string) => {
     const cached = IMAGE_DATA_URL_CACHE.get(url);
     if (cached) return cached;
 
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: AbortSignal.timeout(15000) });
     if (!response.ok) {
         throw new Error(`图片请求失败: ${response.status}`);
     }
@@ -213,22 +250,17 @@ export const savePngByHtmlInCanvas = async (
     if (!hasHtmlInCanvasSupport()) {
         return false;
     }
+    await waitForExportResources(targetElement);
 
     /** 截图区域宽度（CSS 像素） */
     const targetWidth = Math.max(
         1,
-        Math.round(
-            targetElement.getBoundingClientRect().width ||
-                targetElement.clientWidth,
-        ),
+        Math.ceil(targetElement.clientWidth),
     );
     /** 截图区域高度（CSS 像素） */
     const targetHeight = Math.max(
         1,
-        Math.round(
-            targetElement.getBoundingClientRect().height ||
-                targetElement.clientHeight,
-        ),
+        Math.ceil(Math.max(targetElement.scrollHeight, targetElement.clientHeight)),
     );
 
     /** 离屏容器节点 */
@@ -237,14 +269,13 @@ export const savePngByHtmlInCanvas = async (
     host.style.left = "-99999px";
     host.style.top = "0";
     host.style.pointerEvents = "none";
-    host.style.opacity = "0";
-    host.style.zIndex = "-1";
     host.style.width = `${targetWidth}px`;
     host.style.height = `${targetHeight}px`;
 
     /** 承载 html-in-canvas 绘制的 canvas */
     const canvas = document.createElement("canvas") as HtmlInCanvasElement;
     canvas.setAttribute("layoutsubtree", "");
+    canvas.setAttribute("content", "drawable");
     canvas.layoutSubtree = true;
     canvas.style.width = `${targetWidth}px`;
     canvas.style.height = `${targetHeight}px`;
@@ -252,25 +283,15 @@ export const savePngByHtmlInCanvas = async (
     canvas.height = targetHeight * HTML_IN_CANVAS_SCALE;
 
     /** 待绘制的 DOM 克隆节点 */
-    const clone = targetElement.cloneNode(true) as HTMLElement;
-    /** 源节点计算样式（用于补齐继承样式） */
-    const targetComputedStyle = window.getComputedStyle(targetElement);
-    clone.style.margin = "0";
+    const clone = createSnapshotClone(targetElement);
+    clone.setAttribute("drawable", "");
     clone.style.width = `${targetWidth}px`;
     clone.style.height = `${targetHeight}px`;
-    clone.style.textAlign = targetComputedStyle.textAlign;
-    clone.style.color = targetComputedStyle.color;
-    clone.style.fontFamily = targetComputedStyle.fontFamily;
-    clone.style.fontSize = targetComputedStyle.fontSize;
-    clone.style.fontWeight = targetComputedStyle.fontWeight;
-    clone.style.lineHeight = targetComputedStyle.lineHeight;
-    clone.style.letterSpacing = targetComputedStyle.letterSpacing;
 
     canvas.appendChild(clone);
     host.appendChild(canvas);
-    /** 与原节点保持同一继承上下文，避免文本/对齐样式偏差 */
-    const mountContainer = targetElement.parentElement ?? document.body;
-    mountContainer.appendChild(host);
+    /** 已冻结计算样式，挂到 body 避免继承页面转场的透明度/变换 */
+    document.body.appendChild(host);
 
     try {
         const context = canvas.getContext(
@@ -298,33 +319,36 @@ export const savePngByHtmlInCanvas = async (
                 try {
                     context.setTransform(1, 0, 0, 1, 0, 0);
                     context.clearRect(0, 0, canvas.width, canvas.height);
-                    context.fillStyle =
-                        getColorScheme() === "dark" ? "#000" : "#fff";
+                    context.fillStyle = getBackgroundColor(targetElement);
                     context.fillRect(0, 0, canvas.width, canvas.height);
                     context.scale(HTML_IN_CANVAS_SCALE, HTML_IN_CANVAS_SCALE);
                     context.drawElementImage!(
                         clone,
                         0,
                         0,
-                        targetWidth,
-                        targetHeight,
                     );
+                    clearTimeout(timeout);
                     resolve();
                 } catch (error) {
+                    clearTimeout(timeout);
                     reject(error);
                 }
             };
 
+            const timeout = setTimeout(() => {
+                if (settled) return;
+                settled = true;
+                reject(new Error("截图未收到 paint 事件"));
+            }, HTML_IN_CANVAS_TIMEOUT_MS);
             canvas.onpaint = () => draw();
             try {
                 canvas.requestPaint?.();
             } catch {
-                // 忽略 requestPaint 异常，依赖兜底定时器触发绘制
+                // 等待 paint 事件或超时回退
             }
-
-            setTimeout(draw, HTML_IN_CANVAS_TIMEOUT_MS);
         });
 
+        if (!hasRenderedContent(canvas)) return false;
         saveAs(await canvasToPngBlob(canvas), EXPORT_FILENAME);
         return true;
     } catch {
@@ -335,55 +359,48 @@ export const savePngByHtmlInCanvas = async (
     }
 };
 
-/** 老截图逻辑：dom-to-image + OffscreenCanvas */
-export const savePngByCanvas = async (isDown = false) => {
-    const svgString = await domtoimage.toSvg(document.body!, {
-        bgcolor: getColorScheme() === "dark" ? "black" : "white",
-    });
+/** 回退链路：同一结果区域的样式快照 → SVG → 普通 Canvas */
+export const savePngByCanvas = async (targetElement: HTMLElement = document.body) => {
+    await waitForExportResources(targetElement);
+    const width = Math.ceil(targetElement.clientWidth);
+    const height = Math.ceil(Math.max(targetElement.scrollHeight, targetElement.clientHeight));
+    if (!width || !height) throw new Error("结果区域尺寸无效");
 
-    return new Promise((res, rej) => {
-        /** 超采样倍率 */
-        const scaleFactor = 3;
-        /** 离屏 Canvas 元素 */
-        const canvas = new OffscreenCanvas(
-            document.body.clientWidth * scaleFactor,
-            document.body.clientHeight * scaleFactor,
-        );
-        const ctx = canvas.getContext("2d");
-        ctx?.scale(scaleFactor, scaleFactor);
-        /** SVG 渲染图像对象 */
+    const clone = createSnapshotClone(targetElement);
+    clone.style.width = `${width}px`;
+    clone.style.height = `${height}px`;
+    const host = document.createElement("div");
+    host.style.cssText = `position:fixed;left:-99999px;top:0;width:${width}px;pointer-events:none;`;
+    host.setAttribute("aria-hidden", "true");
+    host.appendChild(clone);
+    document.body.appendChild(host);
+
+    try {
+        await inlineCloneImages(targetElement, clone);
+        const svgString = await domtoimage.toSvg(clone, {
+            width,
+            height,
+            bgcolor: getBackgroundColor(targetElement),
+        });
         const img = new Image();
-        img.id = "result";
-        img.onload = async (e) => {
-            try {
-                if (e.target) {
-                    ctx!.drawImage(img, 0, 0);
-                    if (isApple()) {
-                        waitFrames(5, async () => {
-                            if (isDown) {
-                                saveAs(
-                                    await canvas.convertToBlob(),
-                                    EXPORT_FILENAME,
-                                );
-                            }
-                        });
-                    } else {
-                        saveAs(await canvas.convertToBlob(), EXPORT_FILENAME);
-                    }
+        await new Promise<void>((resolve, reject) => {
+            img.onload = () => resolve();
+            img.onerror = () => reject(new Error("截图 SVG 渲染失败"));
+            img.src = svgString;
+        });
+        await img.decode();
+        await waitNextFrame();
 
-                    res(true);
-                }
-                res(true);
-            } catch (error) {
-                rej(`图片保存失败${String(error)}`);
-            }
-        };
-
-        img.onerror = (error) => {
-            rej(`图片导出失败：渲染失败,${String(error)}`);
-        };
-
-        // 加载 SVG 数据到图像对象
-        img.src = svgString;
-    });
+        const canvas = document.createElement("canvas");
+        canvas.width = width * HTML_IN_CANVAS_SCALE;
+        canvas.height = height * HTML_IN_CANVAS_SCALE;
+        const context = canvas.getContext("2d");
+        if (!context) throw new Error("无法创建截图画布");
+        context.scale(HTML_IN_CANVAS_SCALE, HTML_IN_CANVAS_SCALE);
+        context.drawImage(img, 0, 0, width, height);
+        if (!hasRenderedContent(canvas)) throw new Error("截图内容为空，请重试导出");
+        saveAs(await canvasToPngBlob(canvas), EXPORT_FILENAME);
+    } finally {
+        host.remove();
+    }
 };

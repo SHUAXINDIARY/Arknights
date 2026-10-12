@@ -10,7 +10,7 @@ import {
   Card,
   CardBody,
   Avatar,
-} from "@heroui/react";
+} from "./ui";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import XHS from "../assets/img_v3_02gq_7ed31f29-4562-44e3-b3e9-fc76fea30ecg.jpeg";
@@ -32,7 +32,7 @@ const DATA_SOURCES = [
   },
 ];
 
-/** 联系方式：统一使用 HeroUI 主题色 */
+/** 联系方式：统一使用本地主题色 */
 const CONTACT_LINKS = [
   {
     key: "xhs",
@@ -175,6 +175,7 @@ const InfoModal = () => {
       <ModalContent>
         {(onClose) => (
           <motion.div
+            className="flex min-h-0 flex-col"
             initial="hidden"
             animate="visible"
           >

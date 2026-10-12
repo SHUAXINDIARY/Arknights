@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
-import { Button, Card, CardBody, CardHeader, Chip, Divider, Progress, Radio, RadioGroup, Spacer } from "@heroui/react";
+import { Button, Card, CardBody, CardHeader, Chip, Divider, Progress, Radio, RadioGroup, Spacer } from "../../components/ui";
 import { useNavigate } from "react-router";
 import { data as questionnaireData } from "./data";
 import { THook } from "../../utils/I18n/i18n";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 interface QuestionOption {
   id: string;
@@ -21,6 +22,7 @@ type ResultType = "rational" | "edgy" | "casual" | "chaotic";
 const Questionnaire = () => {
   const navigate = useNavigate();
   const { t } = THook();
+  const shouldReduceMotion = useReducedMotion();
   const questions: QuestionItem[] = questionnaireData.questions as unknown as QuestionItem[];
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedOptionIdByQuestionId, setSelectedOptionIdByQuestionId] = useState<Record<number, string>>({});
@@ -81,8 +83,14 @@ const Questionnaire = () => {
   }, [hasFinishedAllQuestions, questions, selectedOptionIdByQuestionId]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-xl">
+    <motion.div
+      className="min-h-screen flex items-center justify-center p-4"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+      animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
+    >
+      <motion.div layout className="w-full max-w-xl">
+      <Card className="w-full">
         <CardHeader className="flex flex-col items-start gap-2 p-4 sm:p-6">
           <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <h2 className="text-lg sm:text-xl font-semibold">{questionnaireData.title}</h2>
@@ -96,8 +104,15 @@ const Questionnaire = () => {
         </CardHeader>
         <Divider />
         <CardBody className="p-4 sm:p-6">
+          <AnimatePresence mode="wait" initial={false}>
           {!hasFinishedAllQuestions ? (
-            <div>
+            <motion.div
+              key={`question-${currentQuestion.id}`}
+              initial={shouldReduceMotion ? false : { opacity: 0, x: 12 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, x: -12 }}
+              transition={{ duration: 0.24, ease: [0.25, 1, 0.5, 1] }}
+            >
               <div className="text-sm sm:text-base font-medium leading-6 sm:leading-7">{currentQuestion.text}</div>
               <Spacer y={4} />
               <RadioGroup
@@ -135,9 +150,14 @@ const Questionnaire = () => {
                   </Button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ) : (
-            <div>
+            <motion.div
+              key="question-result"
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.98 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, scale: 1 }}
+              transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+            >
               <div className="text-base sm:text-lg font-semibold mb-3">测试结果：{result?.title}</div>
               <div className="text-default-600 leading-6 sm:leading-7 text-sm sm:text-base">{result?.description}</div>
               <Spacer y={5} />
@@ -147,11 +167,13 @@ const Questionnaire = () => {
                   <Button variant="light" onPress={() => navigate("/")} size="sm">{t("go_back")}</Button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
+          </AnimatePresence>
         </CardBody>
       </Card>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

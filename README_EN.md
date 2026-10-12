@@ -17,7 +17,7 @@ From [prts](https://prts.wiki/w/%E9%A6%96%E9%A1%B5) and [Bilibili Arknights Wiki
 
 # Tech Stack
 
-React + Rsbuild + [@nextui-org/react](https://nextui.org/docs/frameworks/vite) + Cloudflare (Note: nextui has been renamed, now it's this [repository](https://github.com/heroui-inc/heroui))
+React + Rsbuild + local React/CSS components + Cloudflare
 
 # User Guide
 

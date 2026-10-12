@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
   PopoverContent,
   Progress,
-} from "@heroui/react";
+} from "../../components/ui";
 import { FormMap } from "../../components/FormRender";
 import { RESULT_DATA_KEY } from "../../utils/constant";
 import { useMemo, useRef, useState } from "react";
@@ -235,7 +235,7 @@ function App() {
             return (
               <motion.div
                 key={item.field + item.name}
-                className="w-fit mx-auto rounded-xl transition-shadow duration-200 hover:shadow-[0_0_12px_-3px_hsl(var(--heroui-primary)/0.3)]"
+                className="w-fit mx-auto rounded-xl transition-shadow duration-200 hover:shadow-[0_0_12px_-3px_rgb(59_130_246_/_0.3)]"
                 variants={formItemVariants}
                 initial={shouldReduceMotion ? undefined : "hidden"}
                 whileInView={shouldReduceMotion ? undefined : "visible"}

@@ -7,8 +7,8 @@ import {
 } from "../../utils/constant";
 import LazyLoadAvatar from "../../components/LazyLoadAvatar";
 import RenderTextCard from "../../components/RenderTextCard";
-import { Button, Chip } from "@heroui/react";
-import { isApple, savePngByCanvas, savePngByHtmlInCanvas } from "../../utils";
+import { Button, Chip } from "../../components/ui";
+import { savePngByCanvas, savePngByHtmlInCanvas } from "../../utils";
 import { THook } from "../../utils/I18n/i18n";
 import { useLocalData, useToTop } from "../../hooks";
 import { useNavigate } from "react-router";
@@ -105,7 +105,7 @@ const ShowRes = () => {
     const [isSaving, setIsSaving] = useState(false);
     /** 是否显示导出成功的 toast */
     const [showSuccess, setShowSuccess] = useState(false);
-    /** 结果区域根节点，用于新截图方案的目标容器 */
+    /** 两条导出链路共用的结果区域 */
     const ref = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -122,18 +122,11 @@ const ShowRes = () => {
 
         setIsSaving(true);
         try {
-            /** 新截图链路是否执行成功 */
-            const savedByHtmlInCanvas = await savePngByHtmlInCanvas(
-                ref.current ?? document.body,
-            );
+            const target = ref.current;
+            if (!target) throw new Error("结果页尚未就绪");
+            const savedByHtmlInCanvas = await savePngByHtmlInCanvas(target);
             if (!savedByHtmlInCanvas) {
-                if (isApple()) {
-                    await savePngByCanvas();
-                    await savePngByCanvas();
-                    await savePngByCanvas(true);
-                } else {
-                    await savePngByCanvas(true);
-                }
+                await savePngByCanvas(target);
             }
             setShowSuccess(true);
         } catch (error) {
@@ -200,6 +193,7 @@ const ShowRes = () => {
     return (
         <div className="min-h-screen p-4 sm:p-8 relative">
             <motion.div
+                data-export-motion
                 ref={ref}
                 className="max-w-md mx-auto"
                 initial="hidden"
@@ -207,11 +201,12 @@ const ShowRes = () => {
                 {...motionProps}
             >
                 {/* 页头 */}
-                <motion.div variants={sectionVariants} custom={0}>
+                <motion.div data-export-motion className="flow-root" variants={sectionVariants} custom={0}>
                     <Footer />
                 </motion.div>
 
                 <motion.div
+                    data-export-motion
                     className="mb-6"
                     variants={sectionVariants}
                     custom={1}
@@ -223,6 +218,7 @@ const ShowRes = () => {
 
                 {/* 干员区域 — 头像交错弹出 + hover 上浮 */}
                 <motion.div
+                    data-export-motion
                     className="flex flex-wrap justify-center mb-6"
                     variants={avatarContainerVariants}
                 >
@@ -231,6 +227,7 @@ const ShowRes = () => {
                         if (!filterData[_key]) return null;
                         return (
                             <motion.div
+                                data-export-motion
                                 key={filterData[_key] + _key}
                                 className="w-20 flex flex-col items-center cursor-default"
                                 variants={avatarItemVariants}
@@ -264,6 +261,7 @@ const ShowRes = () => {
 
                 {/* 活动区域 — 依次滑入 + hover 缩放 */}
                 <motion.div
+                    data-export-motion
                     className="space-y-4 mb-6"
                     variants={{
                         hidden: {},
@@ -280,6 +278,7 @@ const ShowRes = () => {
                         if (!activity[_key]) return null;
                         return (
                             <motion.div
+                                data-export-motion
                                 key={_key + activity[_key]}
                                 variants={imageItemVariants}
                                 whileHover={
@@ -310,6 +309,7 @@ const ShowRes = () => {
 
                 {/* 皮肤区域 — 左右交替滑入 + hover 缩放 */}
                 <motion.div
+                    data-export-motion
                     className="grid grid-cols-2 gap-4 mb-6"
                     variants={{
                         hidden: {},
@@ -326,6 +326,7 @@ const ShowRes = () => {
                         if (!skin[_key]) return null;
                         return (
                             <motion.div
+                                data-export-motion
                                 key={_key + skin[_key]}
                                 className="overflow-hidden rounded-xl"
                                 variants={{
@@ -369,6 +370,7 @@ const ShowRes = () => {
 
                 {/* 文字信息卡片 */}
                 <motion.div
+                    data-export-motion
                     className="mb-6"
                     variants={sectionVariants}
                     custom={5}
@@ -392,6 +394,7 @@ const ShowRes = () => {
 
                 {/* 装饰性渐变分割线 */}
                 <motion.div
+                    data-export-motion
                     variants={sectionVariants}
                     custom={6}
                     className="my-6 flex items-center gap-3"
@@ -403,11 +406,13 @@ const ShowRes = () => {
 
                 {/* 操作按钮 */}
                 <motion.div
+                    data-export-motion
                     className="flex flex-wrap gap-2"
                     variants={sectionVariants}
                     custom={7}
                 >
                     <motion.div
+                        data-export-motion
                         whileHover={
                             shouldReduceMotion ? undefined : { scale: 1.03 }
                         }
@@ -418,6 +423,7 @@ const ShowRes = () => {
                     >
                         <Button
                             color="primary"
+                            data-export-label={t("export_result")}
                             onPress={handleSave}
                             isDisabled={isSaving}
                             isLoading={isSaving}
@@ -426,6 +432,7 @@ const ShowRes = () => {
                         </Button>
                     </motion.div>
                     <motion.div
+                        data-export-motion
                         whileHover={
                             shouldReduceMotion ? undefined : { scale: 1.03 }
                         }
@@ -449,6 +456,7 @@ const ShowRes = () => {
             <AnimatePresence>
                 {showSuccess && (
                     <motion.div
+                        data-export-motion
                         className="fixed bottom-8 left-1/2 z-50 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-success-50 dark:bg-success-100/10 shadow-lg border border-success-200 dark:border-success-500/20"
                         style={{ x: "-50%" }}
                         variants={toastVariants}

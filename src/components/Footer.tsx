@@ -11,7 +11,7 @@ import {
   useDisclosure,
   Card,
   CardBody,
-} from "@heroui/react";
+} from "./ui";
 import i18n, { THook } from "../utils/I18n/i18n";
 
 // 语言选项
@@ -165,6 +165,7 @@ const Footer = () => {
                       {LANGUAGES.map((lang) => (
                         <SelectItem
                           key={lang.value}
+                          value={lang.value}
                           startContent={<span>{lang.flag}</span>}
                         >
                           {lang.label}

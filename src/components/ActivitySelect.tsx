@@ -1,13 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  // Select,
-  // SelectItem,
-  Autocomplete,
-  AutocompleteItem,
-} from "@heroui/react";
-import LazyLoadAvatar from "./LazyLoadAvatar";
 import { ActivityList } from "../data/ActivityImg";
-import { useState } from "react";
+import LazyLoadAvatar from "./LazyLoadAvatar";
+import SelectAutocomplete from "./SelectAutocomplete";
 import i18n from "../utils/I18n/i18n";
 
 interface ActivitySelectProps {
@@ -18,61 +11,27 @@ interface ActivitySelectProps {
   data?: (typeof ActivityList)[0][];
 }
 
-const ActivitySelect = ({
-  name,
-  label,
-  onSave,
-  formValue,
-  data,
-}: ActivitySelectProps) => {
-  const [isOpenSearch, setIsOpenSearch] = useState(false);
-
-  return (
-    <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
-      <Autocomplete
-        itemHeight={100}
-        defaultSelectedKey={formValue}
-        label={label}
-        placeholder={name}
-        className="w-52"
-        defaultItems={data!}
-        inputMode={isOpenSearch ? "search" : "none"}
-        onBlur={() => {
-          setIsOpenSearch(false);
-        }}
-        onClick={(e) => {
-          // @ts-ignore
-          if (e.target.tagName === "INPUT") {
-            setIsOpenSearch(true);
-          }
-          e.stopPropagation();
-        }}
-        onSelectionChange={(val: any) => {
-          onSave?.(val);
-        }}
-        listboxProps={{
-          get emptyContent() {
-            return i18n.t("Nothing found");
-          },
-        }}
-      >
-        {(item) => (
-          <AutocompleteItem
-            key={item.img}
-            textValue={item.name}
-            className="flex-col"
-          >
-            <div className="text-center">
-              <LazyLoadAvatar url={item.img!} useAvatar={false} />
-              <span>
-                {i18n.language !== "zh" ? "" : item.name.split(" ")[0]}
-              </span>
-            </div>
-          </AutocompleteItem>
-        )}
-      </Autocomplete>
-    </div>
-  );
-};
+const ActivitySelect = ({ name, label, onSave, formValue, data = ActivityList }: ActivitySelectProps) => (
+  <div className="flex w-full flex-wrap justify-center gap-4 md:flex-nowrap">
+    <SelectAutocomplete
+      items={data}
+      value={formValue}
+      label={label}
+      placeholder={name}
+      itemHeight={100}
+      getKey={(item) => item.img}
+      getText={(item) => item.name}
+      renderItem={(item) => (
+        <div className="text-center">
+          <LazyLoadAvatar url={item.img} useAvatar={false} />
+          {i18n.language === "zh" ? <span>{item.name.split(" ")[0]}</span> : null}
+        </div>
+      )}
+      emptyText={i18n.t("Nothing found")}
+      onChange={onSave}
+    />
+  </div>
+);
 
 export default ActivitySelect;
+

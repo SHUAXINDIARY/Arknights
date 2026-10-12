@@ -16,7 +16,6 @@
     "update:submodule": "git submodule update --remote"
   },
   "dependencies": {
-    "@heroui/react": "2.7.6",
     "@rsbuild/plugin-react": "^1.0.7",
     "ahooks": "^3.8.1",
     "bowser": "^2.11.0",
