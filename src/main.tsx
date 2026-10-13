@@ -5,7 +5,6 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import "./utils/I18n/i18n.ts";
 import { createBrowserRouter, Outlet, RouterProvider, useLocation } from "react-router";
 import ShowRes from "./pages/Result/ShowResult.tsx";
-import Questionnaire from "./pages/Questionnaire/index.tsx";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 function RouteTransition() {
@@ -34,7 +33,6 @@ const ROUTES = createBrowserRouter([
     children: [
       { path: "/", Component: App },
       { path: "/result", Component: ShowRes },
-      { path: "/questionnaire", Component: Questionnaire },
     ],
   },
 ]);

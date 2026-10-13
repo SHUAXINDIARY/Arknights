@@ -312,19 +312,6 @@ function App() {
               {t("previewExample")}
             </Button>
           </motion.div>
-
-          <motion.div
-            variants={formItemVariants}
-            {...(shouldReduceMotion ? {} : buttonMotionProps)}
-          >
-            <Button
-              variant="bordered"
-              className="border-default-300 text-default-500 hover:border-primary-400 hover:text-primary-300"
-              onPress={() => goto("/questionnaire")}
-            >
-              {t("questionnaire")}
-            </Button>
-          </motion.div>
         </motion.div>
         <InfoModal />
       </motion.div>

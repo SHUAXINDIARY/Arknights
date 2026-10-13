@@ -4,7 +4,6 @@ import {
   isValidElement,
   useContext,
   useEffect,
-  useId,
   useState,
   type ButtonHTMLAttributes,
   type ChangeEvent,
@@ -125,14 +124,6 @@ export function Progress({ value = 0, label, showValueLabel = false, className =
   );
 }
 
-export function Divider({ className = "", ...props }: HTMLAttributes<HTMLHRElement>) {
-  return <hr {...props} className={`border-0 border-t border-slate-200 dark:border-slate-700 ${className}`} />;
-}
-
-export function Spacer({ y = 1 }: { y?: number }) {
-  return <div aria-hidden="true" style={{ height: `${y * 0.25}rem` }} />;
-}
-
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   onValueChange?: (value: string) => void;
   onClear?: () => void;
@@ -187,19 +178,6 @@ export function Select({ className = "", label, startContent, defaultSelectedKey
 export function SelectItem({ children, value, startContent }: { children: ReactNode; value: string; startContent?: ReactNode }) {
   void startContent;
   return <option value={value}>{children}</option>;
-}
-
-interface RadioGroupContextValue { value: string; onValueChange: (value: string) => void; }
-const RadioGroupContext = createContext<RadioGroupContextValue | null>(null);
-
-export function RadioGroup({ value = "", onValueChange, className = "", children }: { value?: string; onValueChange: (value: string) => void; className?: string; children: ReactNode }) {
-  return <div className={`flex flex-col ${className}`} role="radiogroup"><RadioGroupContext.Provider value={{ value, onValueChange }}>{children}</RadioGroupContext.Provider></div>;
-}
-
-export function Radio({ value, description, className = "", children }: { value: string; description?: string; className?: string; children: ReactNode }) {
-  const context = useContext(RadioGroupContext);
-  const id = useId();
-  return <label htmlFor={id} className={`flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 p-3 transition hover:border-blue-300 dark:border-slate-700 ${className}`}><input id={id} type="radio" checked={context?.value === value} onChange={() => context?.onValueChange(value)} className="mt-1 accent-blue-600" /><span><span className="block text-slate-800 dark:text-slate-100">{children}</span>{description ? <span className="text-xs text-slate-500">{description}</span> : null}</span></label>;
 }
 
 export function Avatar({ src, className = "", alt = "avatar" }: { src?: string; className?: string; alt?: string }) {
