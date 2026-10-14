@@ -12,7 +12,7 @@ import {
 } from "./ui";
 import { skinList } from "../data/Skin";
 import LazyLoadAvatar from "./LazyLoadAvatar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { useThrottleFn } from "ahooks";
 import i18n, { THook } from "../utils/I18n/i18n";
 
@@ -41,6 +41,7 @@ export default function SkinSelect({
   const [pageData, setPageData] = useState(data);
   // 搜索数据
   const [search, setSearch] = useState("");
+  const hoverFrame = useRef<number | null>(null);
   const { t } = THook();
   const { run: updateSearch } = useThrottleFn(
     (val) => {
@@ -54,6 +55,50 @@ export default function SkinSelect({
     },
     { wait: 500 }
   );
+
+  useEffect(() => () => {
+    if (hoverFrame.current !== null) {
+      cancelAnimationFrame(hoverFrame.current);
+    }
+  }, []);
+
+  const updateHover = (event: PointerEvent<HTMLButtonElement>) => {
+    const target = event.currentTarget;
+    if (target.dataset.floating !== "true" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const { clientX, clientY } = event;
+    if (hoverFrame.current !== null) cancelAnimationFrame(hoverFrame.current);
+    hoverFrame.current = requestAnimationFrame(() => {
+      hoverFrame.current = null;
+      // Measure the stationary hit area, not the transformed card.
+      const bounds = target.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, (clientX - bounds.left) / bounds.width * 2 - 1));
+      const y = Math.max(-1, Math.min(1, (clientY - bounds.top) / bounds.height * 2 - 1));
+      target.style.setProperty("--skin-offset-x", `${x * 8}px`);
+      target.style.setProperty("--skin-offset-y", `${y * 8}px`);
+      target.style.setProperty("--skin-rotate-x", `${-y * 8}deg`);
+      target.style.setProperty("--skin-rotate-y", `${x * 10}deg`);
+    });
+  };
+
+  const startHover = (event: PointerEvent<HTMLButtonElement>) => {
+    if (event.pointerType !== "mouse" ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    event.currentTarget.dataset.floating = "true";
+    updateHover(event);
+  };
+
+  const resetHover = (event: PointerEvent<HTMLButtonElement>) => {
+    if (hoverFrame.current !== null) {
+      cancelAnimationFrame(hoverFrame.current);
+      hoverFrame.current = null;
+    }
+    delete event.currentTarget.dataset.floating;
+    for (const property of ["--skin-offset-x", "--skin-offset-y", "--skin-rotate-x", "--skin-rotate-y"]) {
+      event.currentTarget.style.removeProperty(property);
+    }
+  };
 
   useEffect(() => {
     if (formValue) {
@@ -122,33 +167,41 @@ export default function SkinSelect({
                     }}
                   />
                 </div>
-                <div className="flex justify-center flex-wrap gap-2">
+                <div className="skin-options flex justify-center flex-wrap gap-2">
                   {pageData.map((item) => {
                     return (
-                      <div
+                      <button
                         key={item.skinName + item.img}
-                        className="cursor-pointer rounded-2xl transition-shadow duration-150 hover:ring-2 hover:ring-blue-400/70"
+                        type="button"
+                        aria-label={`${item.name} · ${item.skinName}`}
+                        className="skin-option"
+                        onPointerEnter={startHover}
+                        onPointerMove={updateHover}
+                        onPointerLeave={resetHover}
+                        onPointerCancel={resetHover}
                         onClick={() => {
                           setCurrentSelect?.(item);
                         }}
                       >
-                        {useCardShow ? (
-                          <Card className="skin-preview h-36 w-20 overflow-hidden">
-                            <CardBody className="flex h-full w-full items-center justify-center p-2">
-                              <LazyLoadAvatar
-                                className={useAvatarShowImg ? undefined : "h-full w-full"}
-                                useAvatar={useAvatarShowImg}
-                                url={item.img}
-                              />
-                            </CardBody>
-                          </Card>
-                        ) : (
-                          <LazyLoadAvatar
-                            useAvatar={useAvatarShowImg}
-                            url={item.img}
-                          />
-                        )}
-                      </div>
+                        <div className="skin-option__surface">
+                          {useCardShow ? (
+                            <Card className="skin-preview h-36 w-20 overflow-hidden">
+                              <CardBody className="flex h-full w-full items-center justify-center p-2">
+                                <LazyLoadAvatar
+                                  className={useAvatarShowImg ? undefined : "h-full w-full"}
+                                  useAvatar={useAvatarShowImg}
+                                  url={item.img}
+                                />
+                              </CardBody>
+                            </Card>
+                          ) : (
+                            <LazyLoadAvatar
+                              useAvatar={useAvatarShowImg}
+                              url={item.img}
+                            />
+                          )}
+                        </div>
+                      </button>
                     );
                   })}
                 </div>

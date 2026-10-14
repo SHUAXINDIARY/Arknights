@@ -198,6 +198,49 @@ button:focus-visible {
 .ui-drawer-backdrop { animation: ui-fade-in 220ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
 .ui-modal-panel { animation: ui-panel-in 300ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
 .skin-preview img { max-height: 100%; object-fit: contain; }
+
+.skin-option {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  padding: 0;
+  border-radius: 1rem;
+  background: transparent;
+  perspective: 700px;
+}
+
+.skin-option__surface {
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: transform 160ms cubic-bezier(.25, 1, .5, 1), box-shadow 160ms cubic-bezier(.25, 1, .5, 1);
+}
+
+.skin-option:focus-visible {
+  z-index: 10;
+  outline: 2px solid rgb(var(--primary-400));
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* Reserve space for the enlarged first/last rows inside the scroll area. */
+  .skin-options { padding-block: 24px; }
+
+  .skin-option[data-floating="true"] { z-index: 10; }
+
+  .skin-option[data-floating="true"] .skin-option__surface {
+    transform: translate3d(var(--skin-offset-x, 0px), calc(var(--skin-offset-y, 0px) - 6px), 0)
+      rotateX(var(--skin-rotate-x, 0deg)) rotateY(var(--skin-rotate-y, 0deg)) scale(1.24);
+    box-shadow: 0 16px 28px -8px rgb(15 23 42 / .4), 0 0 0 2px rgb(var(--primary-400) / .7);
+    transition-duration: 220ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skin-option[data-floating="true"] .skin-option__surface {
+    transform: scale(1.24);
+  }
+}
 .ui-drawer-panel { animation: ui-drawer-in 300ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
 .ui-popover-panel,
 .ui-dropdown-panel { animation: ui-dropdown-in 200ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; transform-origin: top center; }
