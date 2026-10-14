@@ -123,7 +123,7 @@ export default function SkinSelect({
           {currentSelect ? currentSelect.skinName : ""}
         </Button>
       </div>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} animateClose>
         <ModalContent className="h-[min(44rem,calc(100dvh-2rem))]">
           {(onClose) => (
             <>

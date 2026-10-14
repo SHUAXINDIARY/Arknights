@@ -184,6 +184,16 @@ button:focus-visible {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+@keyframes ui-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes ui-panel-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(10px) scale(.97); }
+}
+
 @keyframes ui-drawer-in {
   from { opacity: 0; transform: translateX(-18px); }
   to { opacity: 1; transform: translateX(0); }
@@ -197,6 +207,13 @@ button:focus-visible {
 .ui-modal-backdrop,
 .ui-drawer-backdrop { animation: ui-fade-in 220ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
 .ui-modal-panel { animation: ui-panel-in 300ms var(--ease-out-quart, cubic-bezier(.25, 1, .5, 1)) both; }
+.ui-modal-backdrop[data-state="closed"] {
+  pointer-events: none;
+  animation: ui-fade-out 220ms cubic-bezier(.25, 1, .5, 1) both;
+}
+.ui-modal-backdrop[data-state="closed"] .ui-modal-panel {
+  animation: ui-panel-out 220ms cubic-bezier(.25, 1, .5, 1) both;
+}
 .skin-preview img { max-height: 100%; object-fit: contain; }
 
 .skin-option {

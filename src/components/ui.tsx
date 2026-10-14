@@ -200,7 +200,24 @@ export function useDisclosure(initial = false) {
 interface ModalContextValue { close: () => void; }
 const ModalContext = createContext<ModalContextValue | null>(null);
 
-export function Modal({ isOpen, onOpenChange, children }: { isOpen: boolean; onOpenChange?: (open: boolean) => void; size?: string; classNames?: Record<string, string>; children: ReactNode }) {
+export function Modal({ isOpen, onOpenChange, animateClose = false, children }: { isOpen: boolean; onOpenChange?: (open: boolean) => void; animateClose?: boolean; size?: string; classNames?: Record<string, string>; children: ReactNode }) {
+  const [isPresent, setIsPresent] = useState(isOpen);
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsPresent(true);
+      return;
+    }
+    if (!animateClose || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsPresent(false);
+      return;
+    }
+    if (!isPresent) return;
+    // Fallback if animationend is skipped; cancel on reopen or unmount.
+    const timeout = window.setTimeout(() => setIsPresent(false), 260);
+    return () => window.clearTimeout(timeout);
+  }, [isOpen, isPresent, animateClose]);
+
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -209,10 +226,21 @@ export function Modal({ isOpen, onOpenChange, children }: { isOpen: boolean; onO
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onOpenChange]);
-  if (!isOpen) return null;
-  const close = () => onOpenChange?.(false);
+  if (!isOpen && (!animateClose || !isPresent)) return null;
+  const close = () => { if (isOpen) onOpenChange?.(false); };
   return createPortal(
-    <div className="ui-modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}><ModalContext.Provider value={{ close }}>{children}</ModalContext.Provider></div>,
+    <div
+      ref={(node) => { if (node) node.inert = !isOpen; }}
+      data-state={isOpen ? "open" : "closed"}
+      aria-hidden={!isOpen || undefined}
+      className="ui-modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4"
+      onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}
+      onAnimationEnd={(event) => {
+        if (!isOpen && event.target === event.currentTarget) setIsPresent(false);
+      }}
+    >
+      <ModalContext.Provider value={{ close }}>{children}</ModalContext.Provider>
+    </div>,
     document.body,
   );
 }
