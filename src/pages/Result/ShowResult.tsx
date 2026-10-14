@@ -6,6 +6,7 @@ import {
     RESULT_DATA_KEY,
 } from "../../utils/constant";
 import LazyLoadAvatar from "../../components/LazyLoadAvatar";
+import { AlbumList } from "../../data/Album";
 import RenderTextCard from "../../components/RenderTextCard";
 import { Button, Chip } from "../../components/ui";
 import { savePngByCanvas, savePngByHtmlInCanvas } from "../../utils";
@@ -175,7 +176,7 @@ const ShowRes = () => {
             Object.keys(data).reduce(
                 (total, key) => {
                     const _key = key as FormField;
-                    if (!skin[_key] && !activity[_key] && !text[_key]) {
+                    if (_key !== 'favoriteAlbum' && !skin[_key] && !activity[_key] && !text[_key]) {
                         total[_key] = data[_key];
                     }
                     return total;
@@ -184,6 +185,8 @@ const ShowRes = () => {
             ),
         [data, skin, activity, text],
     );
+
+    const favoriteAlbum = AlbumList.find((album) => album.img === data.favoriteAlbum || album.sourceImg === data.favoriteAlbum);
 
     /** 关闭动画时的降级配置 */
     const motionProps = shouldReduceMotion
@@ -306,6 +309,23 @@ const ShowRes = () => {
                         );
                     })}
                 </motion.div>
+
+                {data.favoriteAlbum ? (
+                    <motion.div
+                        data-export-motion
+                        className="mb-6 flex flex-col items-center text-center"
+                        variants={imageItemVariants}
+                    >
+                        <LazyLoadAvatar
+                            useLazyLoad={false}
+                            useAvatar={false}
+                            url={favoriteAlbum?.img || data.favoriteAlbum}
+                            className="h-52 w-52 rounded-xl object-cover"
+                        />
+                        <p className="mt-2 text-sm text-default-600">{t('favoriteAlbum')}</p>
+                        {favoriteAlbum ? <p className="mt-1 text-sm text-default-800">{favoriteAlbum.name}</p> : null}
+                    </motion.div>
+                ) : null}
 
                 {/* 皮肤区域 — 左右交替滑入 + hover 缩放 */}
                 <motion.div

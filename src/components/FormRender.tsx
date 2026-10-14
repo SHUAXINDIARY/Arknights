@@ -8,6 +8,7 @@ import {
 } from "../data/NameAvatar";
 import { getT } from "../utils/I18n/i18n";
 import ActivitySelect from "./ActivitySelect";
+import AlbumSelect from "./AlbumSelect";
 import CustomInput from "./CustomInput";
 import MemberSelect from "./MemberSelect";
 import SkinSelect, { SkinSelectProps } from "./SkinSelect";
@@ -451,6 +452,14 @@ export const FormMap = [
         return getT("favoriteEP");
       },
     } as InputProps,
+  },
+  {
+    get name() {
+      return getT("favoriteAlbum");
+    },
+    field: "favoriteAlbum",
+    components: AlbumSelect,
+    params: {} as SelectPropsExtra,
   },
   {
     get name() {

@@ -1,4 +1,5 @@
 import { FieldNameMap } from "../utils/constant";
+import { AlbumList } from "./Album";
 
 export const testData = {
     firstSkin:
@@ -33,6 +34,7 @@ export const testData = {
     customAvatar: 'https://patchwiki.biligame.com/images/arknights/thumb/a/a2/jy6iblon8fsd9vlwvvurkrxvvn9rjpy.png/120px-%E5%A4%B4%E5%83%8F_%E2%80%9C2024%E4%BD%99%E9%9F%B5%E5%88%87%E7%89%87%E2%80%9D.png',
     favoriteMode: "萨卡兹肉鸽",
     favoriteEP: "All",
+    favoriteAlbum: AlbumList[0]?.img || "",
     hopeMember: "克莱门莎",
     name: "刷新#4086",
 } as typeof FieldNameMap;
