@@ -313,17 +313,46 @@ const ShowRes = () => {
                 {data.favoriteAlbum ? (
                     <motion.div
                         data-export-motion
-                        className="mb-6 flex flex-col items-center text-center"
+                        className="mb-6 border-y border-default-200 py-5"
                         variants={imageItemVariants}
                     >
-                        <LazyLoadAvatar
-                            useLazyLoad={false}
-                            useAvatar={false}
-                            url={favoriteAlbum?.img || data.favoriteAlbum}
-                            className="h-52 w-52 rounded-xl object-cover"
-                        />
-                        <p className="mt-2 text-sm text-default-600">{t('favoriteAlbum')}</p>
-                        {favoriteAlbum ? <p className="mt-1 text-sm text-default-800">{favoriteAlbum.name}</p> : null}
+                        <p className="mb-4 flex items-center gap-2 text-sm font-medium text-default-600">
+                            <svg
+                                aria-hidden="true"
+                                className="h-4 w-4 shrink-0"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="9" />
+                                <circle cx="12" cy="12" r="2" />
+                                <path d="M7 12a5 5 0 0 1 5-5m0 10a5 5 0 0 0 5-5" />
+                            </svg>
+                            {t('favoriteAlbum')}
+                        </p>
+                        <figure className="flex items-center gap-4 sm:gap-5">
+                            <img
+                                src={favoriteAlbum?.img || data.favoriteAlbum}
+                                alt={favoriteAlbum?.name || t('favoriteAlbum')}
+                                width={144}
+                                height={144}
+                                className="h-28 w-28 shrink-0 rounded-md bg-default-100 object-cover sm:h-36 sm:w-36"
+                            />
+                            <figcaption className="min-w-0 flex-1">
+                                <p className="mb-2 text-[10px] font-medium tracking-[0.18em] text-default-500">
+                                    MONSTER SIREN RECORDS
+                                </p>
+                                {favoriteAlbum ? (
+                                    <p className="break-words text-lg font-semibold leading-snug text-default-800 sm:text-xl">
+                                        {favoriteAlbum.name}
+                                    </p>
+                                ) : null}
+                                <div aria-hidden="true" className="mt-4 h-px w-8 bg-default-300" />
+                            </figcaption>
+                        </figure>
                     </motion.div>
                 ) : null}
 
