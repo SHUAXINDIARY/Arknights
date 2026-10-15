@@ -5,6 +5,7 @@ import { FieldNameMapForI18n, type FormField } from "../../utils/constant";
 import { sectionVariants, EASE_OUT_QUART } from "./resultMotion";
 import type { ResultModel } from "./useResult";
 import "./DesktopResult.css";
+import SupersampledImage from "./SupersampledImage";
 
 function SectionHeading({ number, title, caption }: { number: string; title: string; caption: string }) {
     return (
@@ -97,7 +98,7 @@ export default function DesktopResult({ result }: { result: ResultModel }) {
                                 <div className="desktop-result__events">
                                     {activities.map(([key, url], index) => (
                                         <figure key={key} className={`desktop-result__event${key === "favoriteMedalGroup" ? " desktop-result__event--medals" : ""}`}>
-                                            <div className="desktop-result__event-image"><img src={url} alt={labels[key as FormField]} /></div>
+                                            <div className="desktop-result__event-image"><SupersampledImage key={url} src={url!} alt={labels[key as FormField]} /></div>
                                             <figcaption>
                                                 <span>{labels[key as FormField]}</span>
                                                 <span aria-hidden="true" className="desktop-result__event-index">0{index + 1} /</span>
@@ -131,7 +132,7 @@ export default function DesktopResult({ result }: { result: ResultModel }) {
                                     <div className="desktop-result__skins">
                                         {skins.map(([key, url]) => (
                                             <figure key={key} className="desktop-result__skin">
-                                                <div className="desktop-result__skin-image"><img src={url} alt={labels[key as FormField]} /></div>
+                                                <div className="desktop-result__skin-image"><SupersampledImage key={url} src={url!} alt={labels[key as FormField]} /></div>
                                                 <figcaption>{labels[key as FormField]}</figcaption>
                                             </figure>
                                         ))}
