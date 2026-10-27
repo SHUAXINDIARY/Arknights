@@ -8,12 +8,15 @@ import { useNavigate } from "react-router";
 import { useReducedMotion } from "framer-motion";
 import { TOAST_DURATION_MS } from "./resultMotion";
 
+const EMPTY_RESULT_DATA: Record<string, string> = {};
+
 export function useResult() {
     const shouldReduceMotion = useReducedMotion();
-    const { localData: data } = useLocalData<Record<string, string>>(
+    const { localData } = useLocalData<Record<string, string>>(
         RESULT_DATA_KEY,
         {},
     );
+    const data = localData ?? EMPTY_RESULT_DATA;
     const goto = useNavigate();
     const { t } = THook();
     const [isSaving, setIsSaving] = useState(false);
