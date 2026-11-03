@@ -8,6 +8,18 @@ export interface Album {
 // Generated from https://monster-siren.hypergryph.com/music; covers are stored in public/albums.
 export const AlbumList: Album[] = [
   {
+    "id": "9369",
+    "name": "时间啊，向前！",
+    "img": "/albums/9369-1a09415e1f8b.jpg",
+    "sourceImg": "https://web.hycdn.cn/siren/pic/20261102/a0f25b1287570bfe96872019183b8edd.jpg"
+  },
+  {
+    "id": "3870",
+    "name": "[classified]entity.dominion.turmoil",
+    "img": "/albums/3870-9e5900577815.png",
+    "sourceImg": "https://web.hycdn.cn/siren/pic/20261030/819b84390a907c3af721589fe253daa0.png"
+  },
+  {
     "id": "1005",
     "name": "Тысячу лет спустя",
     "img": "/albums/1005-e0251284d456.png",
