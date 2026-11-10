@@ -8,6 +8,12 @@ export interface Album {
 // Generated from https://monster-siren.hypergryph.com/music; covers are stored in public/albums.
 export const AlbumList: Album[] = [
   {
+    "id": "5182",
+    "name": "卫戍协议：规程OST",
+    "img": "/albums/5182-a534d7425996.jpg",
+    "sourceImg": "https://web.hycdn.cn/siren/pic/20261109/670a1ab61b8a83fdf6e0364daa3ef14d.jpg"
+  },
+  {
     "id": "9369",
     "name": "时间啊，向前！",
     "img": "/albums/9369-1a09415e1f8b.jpg",
